@@ -48,8 +48,16 @@ This web is a cine serie and movies rate.
 - Button to close trailer is add. 
 - Add timeout for this trailer, is this didn't open, the message has view
 
+## Version 0.3
+
+- Add section series TOP TEN
+- Add section series PREMIER
+- Add section footer in the page.
+- Design logo(favicon)
 
 
 ## PROX
 - Add the JWT in login and register.
 - Add the backend (for JWT and BD)
+- ¿Implement the api for Cine Rate or continue used of a TMDB API?
+- (Screen for phone and tablet)
