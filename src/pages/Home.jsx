@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getDetailsOfSerie, getAiringTodaySerie } from '../api/tmdb';
-import { TrailerModal } from './trailerComponents/trailerModal';
+import { TrailerModal } from '../components/trailerComponents/trailerModal';
+import SeriesGrid from '../components/cardsComponents/SeriesGrid';
 
 export const Home = () => {
   const [currentSerie, setCurrentSerie] = useState();
@@ -80,6 +81,9 @@ export const Home = () => {
             {showTrailerID && <TrailerModal trailerID={showTrailerID} />}
        </div>
       </div>
+       <main className="xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] ">
+        <SeriesGrid/>
+        </main> 
       </>
   )
 }
