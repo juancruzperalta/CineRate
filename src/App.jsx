@@ -1,33 +1,25 @@
 
-import { useEffect, useState } from "react"
 import { Footer } from "./components/Footer"
 import { Header } from "./components/Header"
 import { Home } from "./pages/Home"
 import { Search } from "./pages/Search"
 import { NotFoundPage } from "./pages/NotFoundPage"
+import { useRouter } from "./hooks/useRouter"
+import { Premiere } from "./pages/Premiere"
 
 function App() {
 
-  const [currentPath, setCurrentPath] = useState(window.location.pathname)
+  const {currentPath} = useRouter();
 
   let page = <NotFoundPage />;
   if (currentPath === '/') {
     page = <Home className="min-h-screen flex items-center justify-center" />
   } else if(currentPath == '/search'){
     page = <Search/> 
+  } else if (currentPath == '/premiere') {
+    page = <Premiere/>
   }
 
-  useEffect(() => {
-    const handleLocationChange = () => {
-      setCurrentPath(window.location.pathname)
-    }
-    window.addEventListener('popstate',handleLocationChange)
-  
-    return () => {
-      window.removeEventListener('popstate',handleLocationChange)
-    }
-  }, [])
-  
 
   return (
     <>

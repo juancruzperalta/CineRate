@@ -30,13 +30,13 @@ export const Header = () => {
         Explorar
       </Link>
       <Link
-        to="/favorites"
+        to="/premiere"
         className="
            hover:bg-gray-400/20
           rounded-lg px-3 py-2 transition-colors
         "
       >
-        Favorite
+        Premiere
       </Link>
       <Link
         to="/comparate"
