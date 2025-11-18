@@ -1,5 +1,5 @@
 import React from 'react'
-import { SeriesPremier } from '../components/cardsComponents/SeriesPremier'
+import { SeriesPremier } from '../components/home/SeriesPremier'
 
 export const Premiere = () => {
   return (

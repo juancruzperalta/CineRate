@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { CardDetails } from './CardDetails'
-import { TrailerModal } from '../trailerComponents/trailerModal';
+import { TrailerModal } from '../trailer/trailerModal';
 import { getPopularSeries } from '../../api/tmdb';
 
 export const SeriesPopulars = () => {
@@ -65,11 +65,9 @@ export const SeriesPopulars = () => {
               : 'opacity-0 -translate-y-3 h-0 overflow-hidden'
             }`}
             >
-              {serieId.id === DetailsID && (
-                <CardDetails
-                  serieId={serieId.id}
-                />
-              )}
+{serieId.id === DetailsID && (
+  <CardDetails serieId={serieId.id} />
+)}
             <button className='p-0.5 w-full bg-white text-gray-900 uppercase hover:bg-gray-300 cursor-pointer' onClick={() => viewTrailer(serieId.id)}>View Trailer</button>
           </div>
 

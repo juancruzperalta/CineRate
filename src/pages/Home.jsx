@@ -1,36 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { getDetailsOfSerie, getAiringTodaySerie } from '../api/tmdb';
-import { TrailerModal } from '../components/trailerComponents/trailerModal';
-import SeriesGrid from '../components/cardsComponents/SeriesGrid';
+import { useState } from 'react';
+import SeriesGrid from '../components/home/SeriesGrid';
+  import { useDetailsSerie } from '../hooks/useDetailsSerie';
+  import { useGetAiringToday } from '../hooks/useGetAiringToday';
 
 export const Home = () => {
-  const [currentSerie, setCurrentSerie] = useState();
-  const [currentSerieDetails, setCurrentSerieDetails] = useState();
+  const {currentSerie} = useGetAiringToday();
   const [showTrailerID, setShowTrailer] = useState(null)
-  const serieOne = currentSerie?.results?.[0];
-  useEffect(() => {
-    async function getRated() {
-      const key = await getAiringTodaySerie();
-      setCurrentSerie(key);
-    }
-    const timer = setTimeout(() => {
-    getRated();
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [])
-  useEffect(() => {
-    async function getDetails() {
-      if (serieOne?.id) {
-        const detailsData = await getDetailsOfSerie(serieOne?.id);
-        setCurrentSerieDetails(detailsData);
-      }
-    }
+  const serieOne = currentSerie?.results?.[0]; 
+  const { currentSerieDetails } = useDetailsSerie({serieOne});
+  if (!currentSerie) return <p>Cargando...</p>;
+  if (!serieOne) return null;
 
-    getDetails();
-  }, [serieOne]);
   function showTrailerFunc() {
     setShowTrailer(serieOne.id)
   }
+
   return (
     <>
       <div className='relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  shadow-2xl shadow-gray-800 backdrop-brightness-[30%]

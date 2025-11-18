@@ -1,7 +1,6 @@
 'use client'
 import { SeriesPopulars } from './SeriesPopulars.jsx'
 import { SeriesPremier } from './SeriesPremier.jsx';
-import { SeriesRecommended } from './SeriesRecommended.jsx';
 import { SeriesTopTen } from './SeriesTopTen.jsx';
 
 export default function SeriesGrid() {

@@ -1,6 +1,6 @@
 
-import { Footer } from "./components/Footer"
-import { Header } from "./components/Header"
+import { Footer } from "./components/common/Footer"
+import { Header } from "./components/common/Header"
 import { Home } from "./pages/Home"
 import { Search } from "./pages/Search"
 import { NotFoundPage } from "./pages/NotFoundPage"
