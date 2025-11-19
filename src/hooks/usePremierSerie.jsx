@@ -6,7 +6,6 @@ export const usePremierSerie = () => {
   useEffect(() => {
     async function getPremiereSeries() {
       const key = await getPremiereSer();
-      console.log(key);
       setPremiereSeries(key);
     }
     getPremiereSeries();

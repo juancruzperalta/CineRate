@@ -7,7 +7,7 @@ export const Home = () => {
   const {currentSerie} = useGetAiringToday();
   const [showTrailerID, setShowTrailer] = useState(null)
   const serieOne = currentSerie?.results?.[0]; 
-  const { currentSerieDetails } = useDetailsSerie({serieOne});
+const { currentSerieDetails } = useDetailsSerie(serieOne?.id);
   if (!currentSerie) return <p>Cargando...</p>;
   if (!serieOne) return null;
 

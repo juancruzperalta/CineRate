@@ -47,7 +47,7 @@ backgroundPosition: "center",
     <svg className='w-8 h-8 fill-white cursor-pointer' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M491 100.8C478.1 93.8 462.3 94.5 450 102.6L192 272.1L192 128C192 110.3 177.7 96 160 96C142.3 96 128 110.3 128 128L128 512C128 529.7 142.3 544 160 544C177.7 544 192 529.7 192 512L192 367.9L450 537.5C462.3 545.6 478 546.3 491 539.3C504 532.3 512 518.8 512 504.1L512 136.1C512 121.4 503.9 107.9 491 100.9z"/></svg>
             </button>
         {topSerie.slice(0, 10).map((serie,i) => (
-        <div id={serie.id} className='relative flex-shrink-0 transition-all duration-500 w-full h-full rounded-md bg-gradient-to-t from-black/80 via-black/30 to-transparent'>
+          <div id={serie.id} key={serie.id} className='relative flex-shrink-0 transition-all duration-500 w-full h-full rounded-md bg-gradient-to-t from-black/80 via-black/30 to-transparent'>
             <img key={serie.id} src={`https://image.tmdb.org/t/p/original/${serie.backdrop_path}`} alt={serie.name} className='w-full max-w-full h-[580px] object-cover  opacity-65 rounded-md' />
             <span className='text-yellow-300 absolute left-0 top-0 right-0 m-auto text-2xl font-bold'>#{i+1}</span>
           <span className='absolute bottom-0 m-auto left-0 right-0 p-2 bg-gray-800/80'>

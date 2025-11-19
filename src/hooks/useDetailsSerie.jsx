@@ -5,15 +5,18 @@ export const useDetailsSerie = (serieId) => {
   const [currentSerieDetails, setCurrentSerieDetails] = useState();
  useEffect(() => {
     async function getDetails() {
-          if (!serieId || currentSerieDetails?.id === serieId) return;
-
-      if (serieId) {
+    if (!serieId) return; 
+      if (currentSerieDetails?.id === serieId) return;
+      try {
         const detailsData = await getDetailsOfSerie(serieId);
         setCurrentSerieDetails(detailsData);
+      }catch (error) {
+        console.error("Error cargando detalles:", error);
       }
-    }
 
+    }
     getDetails();
+ 
  }, [serieId]);
   
   return {currentSerieDetails}

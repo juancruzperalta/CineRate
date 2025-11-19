@@ -7,7 +7,7 @@ export const SeriesPopulars = () => {
     const [DetailsID, setDetailsID] = useState(null)
   const [TrailerID, setTrailerID] = useState()
   const [series, setSerieTV] = useState([]);
-
+let leaveTimer;
 
   useEffect(() => {
     getPopularSeries().then(setSerieTV)
@@ -43,8 +43,10 @@ export const SeriesPopulars = () => {
       : serieId.id === DetailsID
         ? 'opacity-100'
         : 'opacity-35'
-  }` }  onMouseEnter={() => viewDetails(serieId.id)}
-      onMouseLeave={() => viewDetails(null)}>
+          }`} onMouseEnter={() => { clearTimeout(leaveTimer), viewDetails(serieId.id) }}
+      onMouseLeave={() => {
+  leaveTimer = setTimeout(() => viewDetails(null), 200);
+}}>
           <img key={serieId.id} src={`https://image.tmdb.org/t/p/w500${serieId.backdrop_path}`} alt={serieId.name} className='h-[300px] object-cover rounded-lg shadow-md cursor-pointer ' />
         <div
           className="absolute bottom-0 w-full bg-[var(--bgSecondary)]/90 flex flex-col items-center transition-all duration-300  rounded-b-lg py-2 px-2 border-t-1 border-gray-300/45 shadow-md max-w-full overflow-hidden whitespace-nowrap text-ellipsis"
