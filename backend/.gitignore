@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+# Ignorar configuración de Spring Boot
+src/main/java/resources/application.properties
+src/main/java/resources/application.yml
+src/main/java/resources/*.properties
+src/main/java/resources/*.yml
