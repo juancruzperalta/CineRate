@@ -31,13 +31,23 @@ public class TMDBService {
       }
       throw new UnsupportedOperationException("Unimplemented method 'getTrailerId'");
     }
-          public ResponseEntity<String> getDetailsId(int id) {
-        String url = "https://api.themoviedb.org/3/tv/" + id + "?language=en-US";
+
+    public ResponseEntity<String> getDetailsId(int id) {
+      String url = "https://api.themoviedb.org/3/tv/" + id + "?language=en-US";
       ResponseEntity<String> response = this.serviceCall.getSerieInfo(url);
 
-      if(response != null){
+      if (response != null) {
         return response;
       }
       throw new UnsupportedOperationException("Unimplemented method 'getDetailsId'");
     }
+    public ResponseEntity<String> getAiringTodaySerie() {
+      String url = "https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=1";
+                  ResponseEntity<String> response = this.serviceCall.getSerieInfo(url);
+
+      if (response != null) {
+        return response;
+      }
+         throw new UnsupportedOperationException("Unimplemented method 'getAiringTodaySerie'");
+          }
 }
