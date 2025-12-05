@@ -62,10 +62,29 @@ public class TMDBController{
         }
         throw new Error("ERROR: Dind't get airing today");
       }
+
+       @GetMapping("/recommended-series/{id}")
+       public ResponseEntity<String> getRecommendedSeries(@PathVariable int id) {
+         ResponseEntity<String> data = service.getRecommendedSeries(id);
+         if (data != null) {
+           return ResponseEntity.ok()
+               .contentType(MediaType.APPLICATION_JSON)
+               .body(data.getBody());
+         }
+         throw new Error("ERROR: Dind't get recommended series");
+       }
+      @GetMapping("/premiere-series")
+      public ResponseEntity<String> getPremiereSe() {
+        ResponseEntity<String> data = service.getPremiereSeries();
+                if(data != null){
+          return ResponseEntity.ok()
+          .contentType(MediaType.APPLICATION_JSON)
+          .body(data.getBody());
+        }
+        throw new Error("ERROR: Dind't get premiere series");
+      }
+
  
-// export async function getAiringTodaySerie() { //series of tv that today is a new episodio
-// export async function getRecommendationsSerie(serieId) {
-// //Top ten series of popular...
 // export async function topTenSeries() {
 // export async function getPremiereSer() {
 }

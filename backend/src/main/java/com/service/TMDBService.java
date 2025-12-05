@@ -1,5 +1,9 @@
 package com.service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -50,4 +54,34 @@ public class TMDBService {
       }
          throw new UnsupportedOperationException("Unimplemented method 'getAiringTodaySerie'");
           }
+
+    public ResponseEntity<String> getRecommendedSeries(int id) {
+      String url = "https://api.themoviedb.org/3/tv/" + id + "/recommendations?language=en-US&page=1";
+                 ResponseEntity<String> response = this.serviceCall.getSerieInfo(url);
+
+      if (response != null) {
+        return response;
+      }
+      throw new UnsupportedOperationException("Unimplemented method 'getRecommendedSerie'");
+          
+    }
+
+    public ResponseEntity<String> getPremiereSeries() {
+        LocalDate today = LocalDate.now();
+        LocalDate nextWeek = today.plusDays(7);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String startDate = today.format(fmt);
+        String endDate = nextWeek.format(fmt);
+
+ String url = "https://api.themoviedb.org/3/discover/tv?language=es-ES&page=1"
+        + "&sort_by=first_air_date.asc"
+        + "&first_air_date.gte=" + startDate
+        + "&first_air_date.lte=" + endDate;
+      ResponseEntity<String> response = this.serviceCall.getSerieInfo(url);
+
+      if (response != null) {
+        return response;
+      }
+      throw new UnsupportedOperationException("Unimplemented method 'getPremiereSer'");
+    }
 }
