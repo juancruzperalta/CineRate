@@ -39,9 +39,8 @@ export async function getRecommendationsSerie(serieId) {
   return data;
 }
 
-//Top ten series of popular...
 export async function topTenSeries() {
-    const response = await fetch(`${import.meta.env.VITE_URL}/populars`)
+    const response = await fetch(`${import.meta.env.VITE_URL}/top-ten`)
 
   const data = await response.json();
   return data.results;

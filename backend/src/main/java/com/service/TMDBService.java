@@ -84,4 +84,16 @@ public class TMDBService {
       }
       throw new UnsupportedOperationException("Unimplemented method 'getPremiereSer'");
     }
+
+
+    public ResponseEntity<String> getTopTen() {
+      String url = "https://api.themoviedb.org/3/tv/top_rated?language=es-ES&page=1";
+                 ResponseEntity<String> response = this.serviceCall.getSerieInfo(url);
+
+      if (response != null) {
+        return response;
+      }
+      throw new UnsupportedOperationException("Unimplemented method 'getTopTen serie'");
+          
+    }
 }

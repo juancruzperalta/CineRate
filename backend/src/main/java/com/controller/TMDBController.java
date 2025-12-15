@@ -83,8 +83,15 @@ public class TMDBController{
         }
         throw new Error("ERROR: Dind't get premiere series");
       }
-
+   @GetMapping("/top-ten")
+      public ResponseEntity<String> getTopTenSeries() {
+        ResponseEntity<String> data = service.getTopTen();
+                if(data != null){
+          return ResponseEntity.ok()
+          .contentType(MediaType.APPLICATION_JSON)
+          .body(data.getBody());
+        }
+        throw new Error("ERROR: Dind't get top ten series");
+      }
  
-// export async function topTenSeries() {
-// export async function getPremiereSer() {
 }
