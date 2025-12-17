@@ -36,7 +36,7 @@ export const PremiereDetails = ({serieId}) => {
         <div className='flex items-center gap-2 text-sm text-gray-300'>
         <p className='flex gap-2'>Seasons:<span className='font-semibold  max-w-14'>{currentSerieDetails?.number_of_seasons ? currentSerieDetails?.number_of_seasons : 'Loading...'}</span></p>
         <p className='flex gap-2'>Episodes:<span className='font-semibold  max-w-14'>{currentSerieDetails?.number_of_episodes ? currentSerieDetails?.number_of_episodes : 'Loading...'}</span></p>
-          <p className='flex gap-2'>Status:<span className="font-semibold max-w-14 overflow-hidden whitespace-nowrap text-ellipsis">{currentSerieDetails?.status ? currentSerieDetails?.status : 'Loading...'}</span></p>
+          <p className='flex gap-2'>Status:<span className="font-semibold">{currentSerieDetails?.status ? currentSerieDetails?.status : 'Loading...'}</span></p>
             </div>
             <div className='flex items-center gap-2 text-sm text-gray-300'>
               
