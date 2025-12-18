@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SeriesGrid from '../components/home/SeriesGrid';
   import { useDetailsSerie } from '../hooks/useDetailsSerie';
   import { useGetAiringToday } from '../hooks/useGetAiringToday';
@@ -7,9 +7,19 @@ export const Home = () => {
   const {currentSerie} = useGetAiringToday();
   const [showTrailerID, setShowTrailer] = useState(null)
   const serieOne = currentSerie?.results?.[0]; 
-const { currentSerieDetails } = useDetailsSerie(serieOne?.id);
-  if (!currentSerie) return <p>Cargando...</p>;
-  if (!serieOne) return null;
+  const { currentSerieDetails } = useDetailsSerie(serieOne?.id);
+  const [isLoading, setIsLoading] = useState(true)
+  useEffect(() => {
+    if (currentSerie)
+      setIsLoading(false);
+  }, [currentSerie])
+  if (isLoading) {
+  return (
+    <div className="relative flex items-center justify-center w-full h-[100vh]">
+      <div className="h-6 w-48 bg-gray-700 rounded animate-pulse"></div>
+    </div>
+  );
+}
 
   function showTrailerFunc() {
     setShowTrailer(serieOne.id)
@@ -17,8 +27,7 @@ const { currentSerieDetails } = useDetailsSerie(serieOne?.id);
 
   return (
     <>
-      <div className='relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  shadow-2xl shadow-gray-800 backdrop-brightness-[30%]
-'>
+          <div className='relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  shadow-2xl shadow-gray-800 backdrop-brightness-[30%]'>
         <img className="object-cover opacity-80 absolute top-0 left-0 w-full h-full overflow-hidden" src={`https://image.tmdb.org/t/p/original/${serieOne?.backdrop_path}`} alt={serieOne?.name} />
         
         <div className="text-left text-[0.9rem]  z-20 text-gray-300  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 ">
@@ -64,10 +73,11 @@ const { currentSerieDetails } = useDetailsSerie(serieOne?.id);
           </div>
             {showTrailerID && <TrailerModal trailerID={showTrailerID} />}
        </div>
-      </div>
+    </div>
        <main className="xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] ">
         <SeriesGrid/>
-        </main> 
+              </main> 
+
       </>
   )
 }

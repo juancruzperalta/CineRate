@@ -3,9 +3,7 @@ import { useDetailsSerie } from '../../hooks/useDetailsSerie'
 export const PremiereDetails = ({serieId}) => {
 
   const { currentSerieDetails } = useDetailsSerie(serieId);
-  if (!currentSerieDetails) {
-    return <p className="text-gray-400">Loading...</p>;
-  }
+
 
   return (
     <> 
