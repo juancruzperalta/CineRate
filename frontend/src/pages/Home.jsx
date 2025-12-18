@@ -14,9 +14,31 @@ export const Home = () => {
       setIsLoading(false);
   }, [currentSerie])
   if (isLoading) {
-  return (
-    <div className="relative flex items-center justify-center w-full h-[100vh]">
-      <div className="h-6 w-48 bg-gray-700 rounded animate-pulse"></div>
+    return (
+    
+    <div className="relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  shadow-2xl shadow-gray-800 backdrop-brightness-[30%]">
+        <div className='h-full w-full'>
+          
+        <div className="text-left text-[0.9rem]  z-20 text-gray-300  absolute  left-0 top-auto   mt-auto mb-auto gap-[12px] flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 ">
+        
+      <div className="h-4 w-32 bg-gray-700 rounded animate-pulse"></div>
+      <div className="h-8 w-60 bg-gray-700 rounded animate-pulse"></div>
+      <div className="flex gap-2">
+      <div className="h-6 w-10 bg-gray-700 rounded animate-pulse"></div>
+      <div className="h-6 w-10 bg-gray-700 rounded animate-pulse"></div>
+      <div className="h-6 w-10 bg-gray-700 rounded animate-pulse"></div>
+      <div className="h-6 w-10 bg-gray-700 rounded animate-pulse"></div>
+      </div>
+      <div className="h-40 w-[400px] bg-gray-700/50 rounded animate-pulse mb-2"></div>
+      <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
+            <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
+            <div className="flex gap-2">
+              <div className="h-8 w-24 bg-gray-700 rounded animate-pulse"></div>
+      <div className="h-8 w-24 bg-gray-700 rounded animate-pulse"></div>
+              
+                  </div>
+    </div>
+      </div>
     </div>
   );
 }
