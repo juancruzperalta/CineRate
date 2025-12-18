@@ -1,12 +1,17 @@
 import { Link } from "./Link"
 
-export const Header = () => {
+export const Header = ({ className = "" }) => {
 
   return (
-    <header
-      className="relative top-0 w-full z-10 transition-all duration-300 2xl:max-w-[96vw] xl:max-w-[1200px]   lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] "
+<header
+  className={`relative top-0 w-dvw z-10 transition-all duration-300 ${className}`}
 >
-  <div className="w-full flex items-center justify-between mx-0 py-4">
+  <div
+    className="mx-auto flex items-center justify-between h-18
+    2xl:max-w-[96vw] xl:max-w-[1200px] lg:max-w-[1000px]
+    md:max-w-[700px] sm:max-w-[600px] max-w-[400px]
+    "
+  >
  <Link to="/" className="cursor-pointer">
           <span className="text-2xl font-bold tracking-wide">
             <span className="text-[var(--colorAccent)]">Cine</span>

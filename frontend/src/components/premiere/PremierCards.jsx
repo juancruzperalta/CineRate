@@ -46,7 +46,7 @@ useEffect(() => {
                     </div>
         ) :(
         premiereSeries?.map(serie => (
-          <div key={serie.id} className='grid grid-cols-[30%_70%] items-center justify-center'>
+          <div key={serie.id} className='grid grid-cols-[30%_70%] mt-0 items-center justify-center bg-gray-800/40 border-1 border-gray-900'>
               {(serie.backdrop_path || serie.poster_path) ?
                 <div className='relative m-2 w-[220px] h-[300px]   backdrop-blur-md rounded-md shadow-[0_10px_10px_rgba(0,0,0,0.7)] hover:scale-[1.01] transition-all'>
                   <h2 className='absolute top-0 left-0 right-0 z-10 bg-gray-800/50'>{serie.name}</h2>

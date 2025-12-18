@@ -17,15 +17,15 @@ function App() {
   } else if(currentPath == '/search'){
     page = <Search/> 
   } else if (currentPath == '/premiere') {
-    page = <Premiere/>
+    page = <Premiere />
   }
 
 
   return (
     <>
-      <div className="w-dvw flex flex-col min-h-screen items-center xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] m-auto">
-    <Header/>
-      <div className="text-white text-center gap-8 flex items-center justify-center flex-col absolute top-0 m-auto left-0 right-0">
+      <div className="flex flex-col min-h-screen items-center w-dvw m-auto">
+        <Header className={`${currentPath==="/" ? 'bg-transparent' : 'bg-[#0b1220]/40 backdrop-blur-md'} `} />
+      <div className="text-white text-center gap-8 flex items-center justify-center flex-col absolute top-0 m-auto left-0 right-0  w-full ">
           {page}
         <Footer className="mt-auto" />
         </div>
