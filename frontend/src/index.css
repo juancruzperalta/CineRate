@@ -1,9 +1,9 @@
 @import "tailwindcss";
 :root {
---bgColor:rgb(16, 25, 48);
+--bgColor:#090c0f;
 --bgSecondary:rgb(12, 18, 33);
---textPrimary: #F2F6FE;
---textSecondary: #e5e7eb;
+--textPrimary: #ffffff;
+--textSecondary: #fafafa;
 --colorAccent: #0ed395;
 --colorHover: rgb(13, 229, 161);
 }
@@ -30,8 +30,8 @@ body {
   inset: 0;
   
   background: linear-gradient(to right,
-    rgba(5, 10, 20, 0.30) 12%,
-    rgba(5, 10, 20, 0.15)50%
+    rgba(3, 5, 10, 0.3) 12%,
+    rgba(2, 4, 8, 0.15)50%
   );
   z-index: 6;
 }
@@ -40,8 +40,8 @@ body {
   position: absolute;
   inset: 0;
   background: linear-gradient(to left,
-     rgba(5, 10, 20, 0.30) 12%,
-    rgba(5, 10, 20, 0.15)50%
+    rgba(3, 5, 10, 0.3) 12%,
+    rgba(2, 4, 8, 0.15)50%
   );
   z-index: 5;
 }

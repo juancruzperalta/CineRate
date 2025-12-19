@@ -7,9 +7,9 @@ export const PremiereDetails = ({serieId}) => {
 
   return (
     <> 
-      <div className='grid grid-cols-2 justify-center h-full items-center'>
+      <div className='grid grid-cols-2 justify-center h-full items-center overflow-hidden'>
 
-      <div className='max-h-full h-full z-10 relative items-start justify-center flex flex-col'>
+      <div className='max-h-full h-full z-10 relative items-start justify-center flex flex-col overflow-hidden'>
         <div className="pt-1 flex flex-col w-full text-[0.9rem] text-gray-300 max-w-full">
           <h2 className='items-start text-start flex text-2xl font-semibold text-gray-100'>{currentSerieDetails?.name}</h2>
           <span className='items-start flex text-md'>{currentSerieDetails?.first_air_date}</span>

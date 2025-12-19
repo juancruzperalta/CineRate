@@ -19,7 +19,7 @@ export const Home = () => {
     <div className="relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  shadow-2xl shadow-gray-800 backdrop-brightness-[30%]">
         <div className='h-full w-full'>
           
-        <div className="text-left text-[0.9rem]  z-20 text-gray-300  absolute  left-0 top-auto   mt-auto mb-auto gap-[12px] flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 ">
+        <div className="text-left text-[0.9rem]  z-20 text-gray-300  absolute  left-0 top-auto   mt-auto mb-auto gap-[12px] flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 overflow-hidden ">
         
       <div className="h-4 w-32 bg-gray-700 rounded animate-pulse"></div>
       <div className="h-8 w-60 bg-gray-700 rounded animate-pulse"></div>
@@ -49,10 +49,10 @@ export const Home = () => {
 
   return (
     <>
-          <div className='relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  shadow-2xl shadow-gray-800 backdrop-brightness-[30%]'>
+          <div className='relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  backdrop-brightness-[30%] mb-6'>
         <img className="object-cover opacity-80 absolute top-0 left-0 w-full h-full overflow-hidden" src={`https://image.tmdb.org/t/p/original/${serieOne?.backdrop_path}`} alt={serieOne?.name} />
         
-        <div className="text-left text-[0.9rem]  z-20 text-gray-300  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 ">
+        <div className="text-left text-[0.9rem]  z-20 text-gray-200  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 ">
           <h2 className='text-md font-semibold uppercase text-[#0ed395]'>On Air Today</h2>
           <h3 className='text-4xl font-bold uppercase text-white leading-tight'>
             {serieOne?.name}</h3>
@@ -91,7 +91,7 @@ export const Home = () => {
           </div>
           <div className='gap-4 flex flex-row items-center'>
             <button className='p-2 bg-white text-gray-900 uppercase hover:bg-gray-300 cursor-pointer' onClick={() => showTrailerFunc(serieOne)}>View Trailer</button>
-            <button className='p-2 text-white bg-gray-300/30 uppercase hover:bg-gray-700/60 cursor-pointer  backdrop-blur-md '>More Information</button>
+            <button className='p-2 text-white bg-gray-300/40 uppercase hover:bg-gray-700/60 cursor-pointer  backdrop-blur-md '>More Information</button>
           </div>
             {showTrailerID && <TrailerModal trailerID={showTrailerID} />}
        </div>
