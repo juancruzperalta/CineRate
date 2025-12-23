@@ -1,17 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PremierCards } from '../components/premiere/PremierCards.jsx'
-import { useSearchParams } from 'react-router-dom';
+
 import { usePremierSerie } from '../hooks/usePremierSerie.jsx';
+import {  useNavigate, useSearchParams } from 'react-router-dom';
 const IMAGES_PER_PAGE = 10;
 
 export const Premiere = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [pageAct, setPageAct] = useSearchParams();
+    const pageFromUrl = Number(pageAct.get("pageAct")) || 1;
 
-  const page = Number(searchParams.get('page')) || 1;
+  const [page, setPage] = useState(pageFromUrl);
   const start = (page - 1) * IMAGES_PER_PAGE;
 const end = start + IMAGES_PER_PAGE;
   const { premiereSeries } = usePremierSerie();
-const imagesToShow = premiereSeries.slice(start, end);
+   const series = premiereSeries || [];
+const imagesToShow = series.slice(start, end);
+  const [isPage, setIsPage] = useState(pageFromUrl);
+  const navigate = useNavigate();  
+const ultPage= series.length/IMAGES_PER_PAGE;
+useEffect(() => {
+  setPageAct({ pageAct: isPage });
+}, [page])
+useEffect(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    setPageAct({ pageAct: pageFromUrl });
+    }, [pageFromUrl])
+  useEffect(() => {
+  if (ultPage > 0 && isPage < 1 || ultPage > 0 && isPage > ultPage) {
+    navigate("/404", { replace: true });
+  }
+}, [isPage, ultPage, navigate]);
   return (
     <>
       <div className='mt-24 flex flex-col 2xl:max-w-[96vw] xl:max-w-[1200px] lg:max-w-[1000px]
@@ -29,7 +50,16 @@ const imagesToShow = premiereSeries.slice(start, end);
 
           <PremierCards premiereSeries={imagesToShow} />
         </div>
-        <button onClick={setSearchParams(page+1)}>Pagina</button>
+        <div className='flex gap-2 items-center justify-center w-full mt-8 mb-4'>
+        {Array.from({ length: series.length/IMAGES_PER_PAGE }, (_,i) => i + 1).map((num) => (
+          <button className={`cursor-pointer rounded-full flex items-center justify-center p-1 w-8 h-8 border-1 border-gray-800  ${(isPage === num || isPage === 0 && isPage+1 === num) ? 'bg-white text-black' : 'bg-transparent'}`} key={num} onClick={(() => {
+            setPage(num); setIsPage(num);
+          }
+          )}>
+            {num}
+          </button>
+        ))}
+        </div>
     </div>
     </>
   )
