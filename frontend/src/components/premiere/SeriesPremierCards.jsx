@@ -1,8 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { UserButtons } from '../UserButtons';
-import { PremiereDetails } from './PremiereDetails';
-export const PremierCards = ({premiereSeries}) => {
+import { SeriesPremiereDetails } from './SeriesPremiereDetails';
+export const SeriesPremierCards = ({premiereSeries}) => {
   const [isLoading, setIsLoading] = useState(true);
 
 useEffect(() => {
@@ -53,7 +53,7 @@ useEffect(() => {
                 <div className="hidden overflow-hidden"></div>
             }
             {
-              (serie.backdrop_path || serie.poster_path) ? <div className='relative h-full overflow-hidden'><PremiereDetails serieId={serie.id} />
+              (serie.backdrop_path || serie.poster_path) ? <div className='relative h-full overflow-hidden'><SeriesPremiereDetails serieId={serie.id} />
               <div className=''><UserButtons serieId={serie.id}/></div>
               </div> : <div className='hidden'></div>
             }

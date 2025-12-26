@@ -17,7 +17,7 @@ export const SeriesPremier = () => {
       ))}
       </div>
         <div className='h-20'>
-          <Link to="/premiere" className='border-1 border-gray-500 rounded-md py-1 px-6 cursor-pointer  hover:border-gray-700 hover:bg-[var(--bgSecondary)'>
+          <Link to="/series/premiere" className='border-1 border-gray-500 rounded-md py-1 px-6 cursor-pointer  hover:border-gray-700 hover:bg-[var(--bgSecondary)'>
             More Premiere Series
           </Link>
         </div>

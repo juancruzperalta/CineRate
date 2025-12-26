@@ -1,6 +1,6 @@
 
 import { useDetailsSerie } from '../../hooks/useDetailsSerie'
-export const PremiereDetails = ({serieId}) => {
+export const SeriesPremiereDetails = ({serieId}) => {
 
   const { currentSerieDetails } = useDetailsSerie(serieId);
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getAiringTodaySerie } from '../api/tmdb';
 
-export const useGetAiringToday = () => {
+export const useGetAiringTodaySerie = () => {
   const [currentSerie, setCurrentSerie] = useState();
 
   useEffect(() => {

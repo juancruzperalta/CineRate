@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { CardDetails } from './CardDetails'
-import { TrailerModal } from '../trailer/trailerModal';
+import { SerieCardDetails } from './SerieCardDetails'
+import { TrailerModalSerie } from '../trailer/trailerModalSerie';
 import { getPopularSeries } from '../../api/tmdb';
 
 export const SeriesPopulars = () => {
@@ -26,7 +26,7 @@ let leaveTimer;
 
   return (
     <>
-      {TrailerID && <TrailerModal trailerID={TrailerID} />}
+      {TrailerID && <TrailerModalSerie trailerID={TrailerID} />}
       
     <div className='flex flex-row relative '>
       <button
@@ -68,7 +68,7 @@ let leaveTimer;
             }`}
             >
 {serieId.id === DetailsID && (
-  <CardDetails serieId={serieId.id} />
+  <SerieCardDetails serieId={serieId.id} />
 )}
             <button className='p-0.5 w-full bg-white text-gray-900 uppercase hover:bg-gray-300 cursor-pointer' onClick={() => viewTrailer(serieId.id)}>View Trailer</button>
           </div>

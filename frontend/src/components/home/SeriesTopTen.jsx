@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { topTenSeries } from '../../api/tmdb';
+import { TrailerModalSerie } from '../trailer/trailerModalSerie';
 
 export const SeriesTopTen = () => {
   const [topSerie, setTopSerie] = useState([])
   const [serieAct, setSerieAct] = useState(0)
+  const [trailerView, setTrailerView] = useState(null)
   useEffect(() => {
     async function topSeries() {
       const top = await topTenSeries();
@@ -71,11 +73,12 @@ backgroundPosition: "center",
                    </div>
 
                       <div className='gap-4 flex flex-row items-center justify-center mt-2'>
-            <button className='p-2 bg-white text-gray-900 uppercase hover:bg-gray-300 cursor-pointer'>View Trailer</button>
+                <button className='p-2 bg-white text-gray-900 uppercase hover:bg-gray-300 cursor-pointer' onClick={() => setTrailerView(serie?.id)}>View Trailer</button>
           </div>
             </span>
           </div>
     ))}
+    {trailerView && <TrailerModalSerie trailerID={trailerView} />}
         <button
                 className="absolute right-0.5 top-1/2 -translate-y-1/2 z-10 bg-black/90 text-white rounded-sm p-2 hover:bg-black" 
               onClick={() => { scrollButton(serieRef.current.querySelector('img').clientWidth + 16); setSerieAct(prev => Math.min(prev + 1, 9)); }

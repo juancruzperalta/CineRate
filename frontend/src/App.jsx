@@ -4,8 +4,9 @@ import { Header } from "./components/common/Header"
 import { Home } from "./pages/Home"
 import { Search } from "./pages/Search"
 import { NotFoundPage } from "./pages/NotFoundPage"
-import { Premiere } from "./pages/Premiere"
-import { Route, Routes, useLocation } from "react-router-dom"
+import { SeriesPremiere } from "./pages/SeriesPremiere"
+import { Route, Routes } from "react-router-dom"
+import { SeriesDetails } from "./pages/SeriesDetails"
 
 function App() {
   return (
@@ -15,8 +16,9 @@ function App() {
       <div className="text-white text-center flex items-center justify-center flex-col absolute top-0 m-auto left-0 right-0  w-full ">
         <Routes>
           <Route path="/" element={<Home className="min-h-screen flex items-center justify-center" />} />
-          <Route path="/search" element={<Search />} />
-            <Route path="/premiere" element={<Premiere />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/series/details/:id" element={<SeriesDetails />} />
+            <Route path="/series/premiere" element={<SeriesPremiere />} />
             <Route path="/404" element={<NotFoundPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

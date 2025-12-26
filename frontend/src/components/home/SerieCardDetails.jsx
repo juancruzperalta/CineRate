@@ -1,6 +1,6 @@
 
 import { useDetailsSerie } from '../../hooks/useDetailsSerie'
-export const CardDetails = ({serieId}) => {
+export const SerieCardDetails = ({serieId}) => {
 
   const { currentSerieDetails } = useDetailsSerie(serieId);
   if (!currentSerieDetails) {

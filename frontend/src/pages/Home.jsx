@@ -1,25 +1,31 @@
 import { useEffect, useState } from 'react';
 import SeriesGrid from '../components/home/SeriesGrid';
   import { useDetailsSerie } from '../hooks/useDetailsSerie';
-  import { useGetAiringToday } from '../hooks/useGetAiringToday';
+  import { useGetAiringTodaySerie } from '../hooks/useGetAiringTodaySerie';
+
+import { TrailerModalSerie } from '../components/trailer/trailerModalSerie';
+import { useNavigate } from 'react-router-dom';
 
 export const Home = () => {
-  const {currentSerie} = useGetAiringToday();
+  const {currentSerie} = useGetAiringTodaySerie();
   const [showTrailerID, setShowTrailer] = useState(null)
   const serieOne = currentSerie?.results?.[0]; 
   const { currentSerieDetails } = useDetailsSerie(serieOne?.id);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  
+  const navigate = useNavigate();
   useEffect(() => {
     if (currentSerie)
+      //si no viene la serie, la posiciono como "cargando"
       setIsLoading(false);
   }, [currentSerie])
   if (isLoading) {
     return (
-    
-    <div className="relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  shadow-2xl shadow-gray-800 backdrop-brightness-[30%]">
-        <div className='h-full w-full'>
+    <>
+<div className="relative flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0   mb-6 bg-[#090c0f]">
+        <div className="text-left text-[0.9rem]  z-20 text-gray-200  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 ">
           
-        <div className="text-left text-[0.9rem]  z-20 text-gray-300  absolute  left-0 top-auto   mt-auto mb-auto gap-[12px] flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 overflow-hidden ">
+        <div className="flex flex-col gap-3 text-gray-300 ">
         
       <div className="h-4 w-32 bg-gray-700 rounded animate-pulse"></div>
       <div className="h-8 w-60 bg-gray-700 rounded animate-pulse"></div>
@@ -38,15 +44,36 @@ export const Home = () => {
               
                   </div>
     </div>
+        </div>
       </div>
-    </div>
+    <main className="xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] " >
+      <div className='justify-center items-center flex flex-col'>
+      <section className='w-full mb-8'>
+        <div className='text-start relative'>
+          <span className='h-4 w-30 bg-gray-700 rounded animate-pulse'></span>
+          <span className='h-4 w-30 bg-gray-700 rounded animate-pulse'></span>
+              </div>
+          <div className='relative flex gap-6 min-w-[200px] transition-all duration-500 overflow-hidden'>
+              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
+
+          </div>
+            </section>
+            </div>
+            </main>
+    </>
   );
 }
 
   function showTrailerFunc() {
     setShowTrailer(serieOne.id)
+    //paso al usestate, la id con el trailer para buscar sobre esa id.
   }
-
   return (
     <>
           <div className='relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  backdrop-brightness-[30%] mb-6'>
@@ -91,9 +118,10 @@ export const Home = () => {
           </div>
           <div className='gap-4 flex flex-row items-center'>
             <button className='p-2 bg-white text-gray-900 uppercase hover:bg-gray-300 cursor-pointer' onClick={() => showTrailerFunc(serieOne)}>View Trailer</button>
-            <button className='p-2 text-white bg-gray-300/40 uppercase hover:bg-gray-700/60 cursor-pointer  backdrop-blur-md '>More Information</button>
+            <button className='p-2 text-white bg-gray-300/40 uppercase hover:bg-gray-700/60 cursor-pointer  backdrop-blur-md' onClick={() => navigate(`/series/details/${serieOne.id}`)}>More Information</button>
           </div>
-            {showTrailerID && <TrailerModal trailerID={showTrailerID} />}
+          {showTrailerID && <TrailerModalSerie trailerID={showTrailerID} />}
+        {/* le pido al componente trailer modal, que me busque por esa trailer id. */}
        </div>
     </div>
        <main className="xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] ">

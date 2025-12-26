@@ -35,7 +35,7 @@ export const Header = ({ className = "" }) => {
         Explorar
       </Link>
       <Link
-        to="/premiere"
+        to="/series/premiere"
         className="
            hover:bg-gray-400/20
           rounded-lg px-3 py-2 transition-colors
