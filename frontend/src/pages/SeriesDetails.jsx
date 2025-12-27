@@ -1,20 +1,25 @@
 import React from 'react'
-import { useSearchParams } from 'react-router-dom';
-
-export const SeriesDetails = ({serieId}) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+import { useParams } from 'react-router-dom';
+  import { useDetailsSerie } from '../hooks/useDetailsSerie';
+import { ShowTrailerSerie } from '../components/trailer/ShowTrailerSerie';
+export const SeriesDetails = () => {
+  const { id } = useParams();
+  const { currentSerieDetails } = useDetailsSerie(id);
   
-  setSearchParams({ details: serieId });
-
-  const detailsId = searchParams.get("details");
+  console.log(currentSerieDetails)
   return (
     <div className='flex flex-col 2xl:max-w-[96vw] xl:max-w-[1200px] lg:max-w-[1000px]
     md:max-w-[700px] sm:max-w-[600px] max-w-[400px] h-dvh min-h-100vh w-full overflow-hidden'>
-      <div className='max-w-full w-full h-full overflow-hidden mt-24 '>
-        <p>
-          
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, laudantium ipsa architecto, optio sapiente cupiditate, quis eaque iste alias ducimus laboriosam aperiam cum eligendi dolore? Consequuntur rerum aperiam commodi fugit! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit voluptate mollitia quae non accusantium illum, voluptatum blanditiis libero itaque beatae quasi corporis voluptatem, ratione aut reprehenderit eum sunt? Reiciendis, esse. {detailsId}
-</p>
+      <div className='max-w-full w-full h-full min-h-[400px] max-h-full grid grid-cols-2 overflow-hidden mt-24  items-center justify-center gap-6'>
+        <img className="overflow-hidden p-0 m-0 w-full h-full  object-cover object-center" src={`https://image.tmdb.org/t/p/original/${currentSerieDetails?.backdrop_path}`} alt={currentSerieDetails?.name} />
+        <ShowTrailerSerie serieId={id} />
+        <div className='flex flex-col items-start justify-start w-[400px] h-[400px] '>
+          <span className='text-start text-2xl text-gray-300 font-bold uppercase'>{currentSerieDetails?.name}</span>
+          <div className='flex gap-2'>{currentSerieDetails?.genres?.map(gen => (
+            <span className='border-1 border-gray-200/40 bg-gray-600/20 p-1 rounded-md' key={gen.id}>{gen.name}</span>
+              ))}
+          </div>          
+        </div>
       </div>
       </div>
   )

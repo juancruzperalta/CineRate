@@ -16,7 +16,7 @@ export const ShowTrailerSerie = ({ serieId }) => {
   return (
       <>
       {trailerKey === undefined &&(
-        <div className='w-[400px] h-full flex items-center justify-center relative'>
+        <div className='w-full h-full flex items-center justify-center relative'>
             <span className="text-2xl uppercase font-semibold text-gray-200 max-w-[300px] right-0">The trailer is Loading...</span>
           </div>
       )}
@@ -24,13 +24,13 @@ export const ShowTrailerSerie = ({ serieId }) => {
         <div className='w-full h-full flex items-center justify-center relative' >
           <iframe
             width="100%"
-            height="500"
+            height="100%"
             src={`https://www.youtube.com/embed/${trailerKey}`}
             title="Trailer"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             id="iframeVideo"
             allowFullScreen
-            className='w-[600px] h-[400px] '
+            className='w-full h-full min-h-[400px] min-w-[500px]'
           ></iframe>
         </div >)}
       {trailerKey === null && (
