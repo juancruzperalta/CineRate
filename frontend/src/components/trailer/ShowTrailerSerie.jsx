@@ -12,7 +12,6 @@ export const ShowTrailerSerie = ({ serieId }) => {
     }
     fetchTrailer()
   }, [serieId])
-  console.log(trailerKey);
   return (
       <>
       {trailerKey === undefined &&(
