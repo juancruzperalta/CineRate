@@ -96,4 +96,14 @@ public class TMDBService {
       throw new UnsupportedOperationException("Unimplemented method 'getTopTen serie'");
           
     }
+
+    public ResponseEntity<String> getCreditsSerie(int id) {
+       String url = "https://api.themoviedb.org/3/tv/" + id + "/credits?language=en-US";
+      ResponseEntity<String> response = this.serviceCall.getSerieInfo(url);
+
+      if (response != null) {
+        return response;
+      }
+      throw new UnsupportedOperationException("Unimplemented method 'getDetailsId'");
+    }
 }

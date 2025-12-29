@@ -52,3 +52,10 @@ export async function getPremiereSer() {
   const data = await response.json();
   return data.results;
 }
+export async function getCreditsSerie(serieId) {
+    if (!serieId) return null;
+    const response = await fetch(`${import.meta.env.VITE_URL}/details/${serieId}/credits`)
+
+  const data = await response.json();
+  return data;
+}

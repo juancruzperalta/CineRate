@@ -2,14 +2,14 @@ import React from 'react'
 import { useParams } from 'react-router-dom';
   import { useDetailsSerie } from '../hooks/useDetailsSerie';
 import { ShowTrailerSerie } from '../components/trailer/ShowTrailerSerie';
+import { useCreditsSerie } from '../hooks/useCreditsSerie';
 export const SeriesDetails = () => {
   const { id } = useParams();
   const { currentSerieDetails } = useDetailsSerie(id);
-  
-  console.log(currentSerieDetails)
+  const creditsSerie = useCreditsSerie(id);
   return (
     <div className='flex flex-col 2xl:max-w-[96vw] xl:max-w-[1200px] lg:max-w-[1000px]
-    md:max-w-[700px] sm:max-w-[600px] max-w-[400px] h-full min-h-100vh w-full overflow-hidden'>
+    md:max-w-[700px] sm:max-w-[600px] max-w-[400px] mb-4 h-full min-h-100vh w-full overflow-hidden'>
       <div className='mt-24 w-full grid grid-cols-3 justify-around items-center border-1 border-gray-200/40 bg-gray-600/20 p-1'>
         <span className='text-start text-3xl text-gray-200 font-bold uppercase'>{currentSerieDetails?.name}</span>
         <div className='flex flex-row items-center justify-center '>
@@ -21,16 +21,45 @@ export const SeriesDetails = () => {
           <span className='text-[0.9rem] text-gray-300'>{currentSerieDetails?.popularity}</span>
           </div>
       </div>
-      <div className='max-w-full w-full h-full min-h-[400px] max-h-full grid grid-cols-2 overflow-hidden mt-2 items-center justify-center gap-6'>
+      <div className='max-w-full w-full h-full min-h-[400px] max-h-full grid grid-cols-2 overflow-hidden mt-2 items-center justify-center gap-6 relative'>
         <img className="overflow-hidden p-0 m-0 w-full h-full  object-cover object-center" src={`https://image.tmdb.org/t/p/original/${currentSerieDetails?.backdrop_path}`} alt={currentSerieDetails?.name} />
         <ShowTrailerSerie serieId={id} />
+          <span className='absolute bottom-1 p-1 rounded-md left-1 bg-green-300 text-black font-semibold'>{currentSerieDetails?.in_production ? "In Production" : ""}</span>
       </div>
-        <div className='flex flex-col items-start justify-start w-full h-full mt-4'>
-          <div className='flex gap-2'>{currentSerieDetails?.genres?.map(gen => (
+        <div className='flex flex-col items-start justify-start w-full h-full mt-4 gap-2'>
+        <div className='flex gap-2 items-center justify-start'>
+          {currentSerieDetails?.genres?.map(gen => (
             <span className='border-1 border-gray-200/40 bg-gray-600/20 p-1 rounded-md' key={gen.id}>{gen.name}</span>
               ))}
-          </div>          
-          <p>{currentSerieDetails?.overview}</p>
+        <div>{currentSerieDetails?.first_air_date?.slice(0, 4)} - {" "}
+          {currentSerieDetails?.last_air_date?.slice(0, 4)}</div>
+        </div>
+        <span>{currentSerieDetails?.languages?.map(language => (
+          <span key={language}>{language}</span>
+        ))}</span>
+        <span>episodes{currentSerieDetails?.number_of_episodes}</span>
+        <span>seasons {currentSerieDetails?.number_of_seasons}</span>
+
+          <p className='text-start'>{currentSerieDetails?.overview}</p>
+        <div className='gap-2 flex items-center justify-center '>
+          <span>Created by:</span>
+          {currentSerieDetails?.created_by?.map(creator => (
+            <span key={creator.id}>{creator.name}</span>
+          ))}
+          </div>
+        </div>
+      <div className=' flex flex-col items-start justify-start gap-1'>
+        <span>Reparto</span>
+        <div className='flex gap-4'>
+
+        {creditsSerie?.useCreditsSerie?.cast?.map(casting => (
+          <div key={casting.id} className='flex flex-col items-center justify-center'>
+            <img src={`https://image.tmdb.org/t/p/original${casting?.profile_path}`} alt={casting.name} className='w-[150px] h-[200px] rounded-md object-center' />
+            <span>{casting.original_name}</span>
+            <span className="text-[0.8rem] text-gray-300 max-w-[150px] truncate block">Character: {casting.name}</span>
+          </div>
+        ))}
+        </div>
         </div>
       </div>
   )

@@ -51,6 +51,14 @@ public class TMDBController{
         }
         throw new Error("ERROR: Dind't get details");
       }
+          @GetMapping("/details/{id}/credits")
+      public ResponseEntity<String> getCreditsSerie(@PathVariable int id) {
+        ResponseEntity<String> data = service.getCreditsSerie(id);
+        if(data != null){
+          return data;
+        }
+        throw new Error("ERROR: Dind't get credits");
+      }
 
       @GetMapping("/airing-today")
       public ResponseEntity<String> getAiringTodaySerie(){

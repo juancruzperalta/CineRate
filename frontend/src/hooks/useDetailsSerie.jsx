@@ -11,7 +11,7 @@ export const useDetailsSerie = (serieId) => {
         const detailsData = await getDetailsOfSerie(serieId);
         setCurrentSerieDetails(detailsData);
       }catch (error) {
-        console.error("Error cargando detalles:", error);
+        console.error("Error", error);
       }
 
     }

@@ -16,7 +16,7 @@ export const ShowTrailerSerie = ({ serieId }) => {
       <>
       {trailerKey === undefined &&(
         <div className='w-full h-full flex items-center justify-center relative'>
-            <span className="text-2xl uppercase font-semibold text-gray-200 max-w-[300px] right-0">The trailer is Loading...</span>
+            <span className="text-2xl uppercase font-semibold text-gray-200 max-w-[260px] right-0">The trailer is Loading...</span>
           </div>
       )}
       {trailerKey&&(
@@ -33,7 +33,7 @@ export const ShowTrailerSerie = ({ serieId }) => {
           ></iframe>
         </div >)}
       {trailerKey === null && (
-        <div className='w-[300px] h-full flex items-center justify-center relative'>
+        <div className='h-full flex items-center justify-center relative'>
           <span className="text-2xl uppercase font-semibold text-gray-200 max-w-[200px] right-0">The trailer for this serie is not available</span>
         </div>)}
       </>
