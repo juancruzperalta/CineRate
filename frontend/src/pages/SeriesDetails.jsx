@@ -24,33 +24,46 @@ export const SeriesDetails = () => {
       <div className='max-w-full w-full h-full min-h-[400px] max-h-full grid grid-cols-2 overflow-hidden mt-2 items-center justify-center gap-6 relative'>
         <img className="overflow-hidden p-0 m-0 w-full h-full  object-cover object-center" src={`https://image.tmdb.org/t/p/original/${currentSerieDetails?.backdrop_path}`} alt={currentSerieDetails?.name} />
         <ShowTrailerSerie serieId={id} />
-          <span className='absolute bottom-1 p-1 rounded-md left-1 bg-green-300 text-black font-semibold'>{currentSerieDetails?.in_production ? "In Production" : ""}</span>
+          <span className='absolute text-sm bottom-1 p-[0.23rem] left-1 bg-green-300 text-black font-semibold'>{currentSerieDetails?.in_production ? "In Production" : ""}</span>
       </div>
-        <div className='flex flex-col items-start justify-start w-full h-full mt-4 gap-2'>
+        <div className='flex flex-col items-start justify-start w-full h-full mt-4 gap-6'>
         <div className='flex gap-2 items-center justify-start'>
           {currentSerieDetails?.genres?.map(gen => (
             <span className='border-1 border-gray-200/40 bg-gray-600/20 p-1 rounded-md' key={gen.id}>{gen.name}</span>
               ))}
-        <div>{currentSerieDetails?.first_air_date?.slice(0, 4)} - {" "}
+        <div className='border-1 border-gray-200/40 bg-gray-600/20 p-1 rounded-md'>{currentSerieDetails?.first_air_date?.slice(0, 4)} - {" "}
           {currentSerieDetails?.last_air_date?.slice(0, 4)}</div>
-        </div>
-        <span>{currentSerieDetails?.languages?.map(language => (
+        <span className='uppercase border-1 border-gray-200/40 bg-gray-600/20 p-1 rounded-md'>{currentSerieDetails?.languages?.map(language => (
           <span key={language}>{language}</span>
         ))}</span>
-        <span>episodes{currentSerieDetails?.number_of_episodes}</span>
-        <span>seasons {currentSerieDetails?.number_of_seasons}</span>
+        </div>
+        <p className='text-start text-md'>{currentSerieDetails?.overview}</p>
+        <div className='flex items-center justify-start gap-4 text-lg'>
 
-          <p className='text-start'>{currentSerieDetails?.overview}</p>
+        <div className='border-1 border-gray-200/40 px-14 py-3 bg-gray-100'>
+          <span className='text-black font-semibold'>
+          {currentSerieDetails?.number_of_seasons}
+          </span>{" "}
+          <span className='text-black font-semibold'>Seasons</span>
+        </div>
+        <div className='border-1 border-gray-200/40 px-14 py-3 bg-gray-100'>
+          <span className='text-black font-semibold'>
+          {currentSerieDetails?.number_of_episodes}
+          </span>{" "}
+          <span className='text-black font-semibold'>Episodes</span>
+        </div>
+        </div>
+
         <div className='gap-2 flex items-center justify-center '>
-          <span>Created by:</span>
+          <span className='text-gray-200 text-md'>Created by:</span>
           {currentSerieDetails?.created_by?.map(creator => (
-            <span key={creator.id}>{creator.name}</span>
+            <span className='text-gray-100 font-semibold' key={creator.id}>{creator.name}</span>
           ))}
           </div>
         </div>
-      <div className=' flex flex-col items-start justify-start gap-1'>
-        <span>Reparto</span>
-        <div className='flex gap-4'>
+      <div className=' flex flex-col items-start justify-start gap-1 mt-4'>
+        <span className='border-l-3 border-[var(--colorAccent)] pl-2 uppercase font-bold text-xl'>Reparto</span>
+        <div className='flex gap-4 mt-2'>
 
         {creditsSerie?.useCreditsSerie?.cast?.map(casting => (
           <div key={casting.id} className='flex flex-col items-center justify-center'>
