@@ -33,7 +33,7 @@ public class TMDBController{
       }
 
       @GetMapping("/trailer/{id}")
-      public ResponseEntity<String> getTrailerSerie(@PathVariable int id) {
+      public ResponseEntity<String> getTrailerSerie(@PathVariable("id") int id) {
         ResponseEntity<String> data = service.getTrailerId(id);
         if(data != null){
           return ResponseEntity.ok()
@@ -44,7 +44,7 @@ public class TMDBController{
       }
 
       @GetMapping("/details/{id}")
-      public ResponseEntity<String> getDetailsSerie(@PathVariable int id) {
+      public ResponseEntity<String> getDetailsSerie(@PathVariable("id") int id) {
         ResponseEntity<String> data = service.getDetailsId(id);
         if(data != null){
           return data;
@@ -52,7 +52,7 @@ public class TMDBController{
         throw new Error("ERROR: Dind't get details");
       }
           @GetMapping("/details/{id}/credits")
-      public ResponseEntity<String> getCreditsSerie(@PathVariable int id) {
+      public ResponseEntity<String> getCreditsSerie(@PathVariable("id") int id) {
         ResponseEntity<String> data = service.getCreditsSerie(id);
         if(data != null){
           return data;
@@ -72,7 +72,7 @@ public class TMDBController{
       }
 
        @GetMapping("/recommended-series/{id}")
-       public ResponseEntity<String> getRecommendedSeries(@PathVariable int id) {
+       public ResponseEntity<String> getRecommendedSeries(@PathVariable("id") int id) {
          ResponseEntity<String> data = service.getRecommendedSeries(id);
          if (data != null) {
            return ResponseEntity.ok()
@@ -101,5 +101,14 @@ public class TMDBController{
         }
         throw new Error("ERROR: Dind't get top ten series");
       }
- 
+    @GetMapping("/similar/{id}")
+    public ResponseEntity<String> getSeimilarSeries(@PathVariable("id") int id) {
+         ResponseEntity<String> data = service.getSimilarSerie(id);
+                if(data != null){
+          return ResponseEntity.ok()
+          .contentType(MediaType.APPLICATION_JSON)
+          .body(data.getBody());
+        }
+        throw new Error("ERROR: Dind't get similar serie");
+      }
 }

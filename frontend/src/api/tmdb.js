@@ -59,3 +59,10 @@ export async function getCreditsSerie(serieId) {
   const data = await response.json();
   return data;
 }
+export async function getSimilarSerie(serieId) {
+    if (!serieId) return null;
+    const response = await fetch(`${import.meta.env.VITE_URL}/similar/${serieId}`)
+
+  const data = await response.json();
+  return data;
+}

@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
   import { useDetailsSerie } from '../hooks/useDetailsSerie';
 import { ShowTrailerSerie } from '../components/trailer/ShowTrailerSerie';
 import { useCreditsSerie } from '../hooks/useCreditsSerie';
+import { useSimilarSerie } from '../hooks/useSimilarSerie';
+
 export const SeriesDetails = () => {
+  const [isVisible, setIsVisible] = useState(false)
   const { id } = useParams();
   const { currentSerieDetails } = useDetailsSerie(id);
+  const similarSerie = useSimilarSerie(id);
   const creditsSerie = useCreditsSerie(id);
+  const visible = isVisible ? similarSerie : 
+  similarSerie?.similarSerie?.results?.slice(0,9);
   return (
     <div className='flex flex-col 2xl:max-w-[96vw] xl:max-w-[1200px] lg:max-w-[1000px]
     md:max-w-[700px] sm:max-w-[600px] max-w-[400px] mb-4 h-full min-h-100vh w-full overflow-hidden'>
@@ -72,6 +78,16 @@ export const SeriesDetails = () => {
             <span className="text-[0.8rem] text-gray-300 max-w-[150px] truncate block">Character: {casting.name}</span>
           </div>
         ))}
+        </div>
+        <div className=' flex flex-col w-full  items-center justify-center gap-1 mt-4'>
+          <span className='text-start w-full border-l-3 border-[var(--colorAccent)] pl-2 uppercase font-bold text-xl'>Similars</span>
+          <div className='flex flex-row gap-4 items-center justify-center w-full '>
+
+          {visible?.map(serie => (
+            <img src={`https://image.tmdb.org/t/p/original${serie?.poster_path}`} alt={serie?.name} className='w-[150px] h-[200px] rounded-md object-center' />
+          ))}
+          </div>
+        <button onClick={() => setIsVisible(true)}>Ver Más</button>
         </div>
         </div>
       </div>
