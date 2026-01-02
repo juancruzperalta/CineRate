@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SeriesPremierCards } from '../components/premiere/SeriesPremierCards.jsx'
+import { SeriesMoviesCards } from '../components/SerieOrMovieCards/SeriesMoviesCards.jsx'
 
 import { usePremierSerie } from '../hooks/usePremierSerie.jsx';
 import {  useNavigate, useSearchParams } from 'react-router-dom';
@@ -48,7 +48,7 @@ useEffect(() => {
 </p>
          <div className="mx-auto mt-2 mb-2 h-px w-28 bg-gradient-to-r from-transparent via-white/35 to-transparent" />
 
-          <SeriesPremierCards premiereSeries={imagesToShow} />
+          <SeriesMoviesCards seriesOrMovie={imagesToShow} />
         </div>
         <div className='flex gap-2 items-center justify-center w-full mt-8 mb-4'>
         {Array.from({ length: series.length/IMAGES_PER_PAGE }, (_,i) => i + 1).map((num) => (

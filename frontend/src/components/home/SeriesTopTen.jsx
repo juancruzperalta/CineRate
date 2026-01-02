@@ -61,7 +61,7 @@ backgroundPosition: "center",
                 )}
                   </span>
             </div>
-          <p className=' text-[1rem] text-gray-200  line-clamp-7 '>{serie?.overview ? serie?.overview  :
+          <p className=' text-[1rem] text-gray-200  line-clamp-5 '>{serie?.overview ? serie?.overview  :
             <span className='bg-gray-500/20 rounded p-1 inline-block animate-pulse'>Loading...</span>}</p>
               <div className='flex gap-2 items-center justify-center mt-1'>
 

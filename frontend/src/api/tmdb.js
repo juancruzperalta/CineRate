@@ -66,3 +66,10 @@ export async function getSimilarSerie(serieId) {
   const data = await response.json();
   return data;
 }
+export async function getSearchMovieOrSerie(query) {
+    if (!query) return null;
+    const response = await fetch(`${import.meta.env.VITE_URL}/search/${query}`)
+
+  const data = await response.json();
+  return data;
+}

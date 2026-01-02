@@ -111,4 +111,15 @@ public class TMDBController{
         }
         throw new Error("ERROR: Dind't get similar serie");
       }
+
+      @GetMapping("/search/{query}")
+    public ResponseEntity<String> getSearchMoviesAndSeries(@PathVariable("query") String query) {
+         ResponseEntity<String> data = service.getSearchMoviesAndSeries(query);
+                if(data != null){
+          return ResponseEntity.ok()
+          .contentType(MediaType.APPLICATION_JSON)
+          .body(data.getBody());
+        }
+        throw new Error("ERROR: Dind't get movie or serie");
+      }
 }

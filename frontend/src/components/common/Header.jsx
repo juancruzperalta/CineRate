@@ -26,13 +26,13 @@ export const Header = ({ className = "" }) => {
           rounded-lg px-3 py-2 transition-colors
         "
       >
-        Inicio
+        Home
       </Link>
  <Link to="/search" className="cursor-pointer      hover:bg-gray-400/20
           rounded-lg px-3 py-2 transition-colors
         "
       >
-        Explorar
+        Search
       </Link>
       <Link
         to="/series/premiere"

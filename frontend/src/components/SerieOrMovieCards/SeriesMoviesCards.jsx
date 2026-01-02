@@ -1,15 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { UserButtons } from '../UserButtons';
-import { SeriesPremiereDetails } from './SeriesPremiereDetails';
-export const SeriesPremierCards = ({premiereSeries}) => {
+import { SeriesOrMovieDetails } from './SeriesOrMovieDetails';
+export const SeriesMoviesCards = ({seriesOrMovie}) => {
   const [isLoading, setIsLoading] = useState(true);
-
+  let isSerie = false;
 useEffect(() => {
-  if (premiereSeries && premiereSeries.length > 0) {
+  if (seriesOrMovie && seriesOrMovie.length > 0) {
     setIsLoading(false);
   }
-}, [premiereSeries]);
+}, [seriesOrMovie]);
   return (
     <div>
       {
@@ -42,7 +42,7 @@ useEffect(() => {
             ))}
                     </div>
         ) :(
-        premiereSeries?.map(serie => (
+        seriesOrMovie?.map(serie => (
           <div key={serie.id} className={`grid grid-cols-[30%_70%] mt-0 items-center justify-center bg-gray-200/5 overflow-hidden ${(serie.backdrop_path || serie.poster_path) ? 'border-b-2 border-gray-800/50 p': 'border-b-0 p-0'}`}>
           {(serie.backdrop_path || serie.poster_path) ?
                 <div  className='relative m-2 w-[220px] h-[300px]   backdrop-blur-md rounded-md shadow-[0_10px_10px_rgba(0,0,0,0.7)] hover:scale-[1.01] transition-all '>
@@ -52,9 +52,17 @@ useEffect(() => {
                 :
                 <div className="hidden overflow-hidden"></div>
             }
+
             {
-              (serie.backdrop_path || serie.poster_path) ? <div className='relative h-full overflow-hidden'><SeriesPremiereDetails serieId={serie.id} />
+              (serie.backdrop_path || serie.poster_path) ? <div className='relative h-full overflow-hidden'>
+                {isSerie = serie?.media_type == "tv"}
+                {/* Antes de pedir los detalles: mando si es tv o movie para que me mande los detalles correctos */}
+            <SeriesOrMovieDetails
+              serieId={serie.id}
+              serie={isSerie}
+              />
               <div className=''><UserButtons serieId={serie.id}/></div>
+              
               </div> : <div className='hidden'></div>
             }
             </div>

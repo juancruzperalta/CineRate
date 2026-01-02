@@ -114,4 +114,13 @@ public class TMDBService {
       }
       throw new UnsupportedOperationException("Unimplemented method 'getSimilarSerie'");
     }
+
+    public ResponseEntity<String> getSearchMoviesAndSeries(String query) {
+   String url = "https://api.themoviedb.org/3/search/multi?query=" + query + "&include_adult=false&language=es-ES&page=1";
+      ResponseEntity<String> response = this.serviceCall.getSerieInfo(url);
+      if (response != null) {
+        return response;
+      }
+      throw new UnsupportedOperationException("Unimplemented method 'getSimilarSerie'");
+    }
 }
