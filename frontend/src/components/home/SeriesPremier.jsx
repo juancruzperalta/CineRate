@@ -1,8 +1,10 @@
 
 import { Link } from '../common/Link'
 import { usePremierSerie } from '../../hooks/usePremierSerie';
+import { useNavigate } from 'react-router-dom';
 
 export const SeriesPremier = () => {
+    const navigate = useNavigate();
   const { premiereSeries } = usePremierSerie();
   return (
     <>
@@ -11,7 +13,7 @@ export const SeriesPremier = () => {
 
       {premiereSeries?.slice(0,9).map(serie => (
         <div key={serie?.id} className='flex h-full flex-col w-full items-center justify-center'>
-          <img src={`https://image.tmdb.org/t/p/w500${serie?.backdrop_path ? serie?.backdrop_path : serie?.poster_path}`} alt={`Error al cargar la imágen de la serie: ${serie?.name}`} className='min-h-[180px] max-h-[180px] min-w-[120px] max-w-[120px] object-cover rounded-lg shadow-md cursor-pointer  hover:opacity-80' />
+          <img src={`https://image.tmdb.org/t/p/w500${serie?.backdrop_path ? serie?.backdrop_path : serie?.poster_path}`} alt={`Error al cargar la imágen de la serie: ${serie?.name}`} className='min-h-[180px] max-h-[180px] min-w-[120px] max-w-[120px] object-cover rounded-lg shadow-md cursor-pointer  hover:opacity-80' onClick={() => navigate(`/series/details/${serie?.id}`)}/>
           <span className='max-w-[100px] whitespace-nowrap text-ellipsis line-clamp-1  text-gray-200 font-bold'>{serie?.name}</span>
         </div>
       ))}

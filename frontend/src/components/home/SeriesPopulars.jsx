@@ -3,13 +3,14 @@ import { SerieCardDetails } from './SerieCardDetails'
 import { TrailerModalSerie } from '../trailer/trailerModalSerie';
 import { getPopularSeries } from '../../api/tmdb';
 import { ButtonsScrollRef } from '../helpers/buttonsScrollRef';
+import { useNavigate } from 'react-router-dom';
 
 export const SeriesPopulars = () => {
     const [DetailsID, setDetailsID] = useState(null)
   const [TrailerID, setTrailerID] = useState()
   const [series, setSerieTV] = useState([]);
 let leaveTimer;
-
+  const navigate = useNavigate();
   useEffect(() => {
     getPopularSeries().then(setSerieTV)
   }, [])
@@ -40,7 +41,7 @@ let leaveTimer;
       onMouseLeave={() => {
   leaveTimer = setTimeout(() => viewDetails(null), 200);
 }}>
-          <img key={serieId.id} src={`https://image.tmdb.org/t/p/w500${serieId.backdrop_path}`} alt={serieId.name} className='h-[300px] object-cover rounded-lg shadow-md cursor-pointer ' />
+          <img key={serieId.id} src={`https://image.tmdb.org/t/p/w500${serieId.backdrop_path}`} alt={serieId.name} className='h-[300px] object-cover rounded-lg shadow-md cursor-pointer ' onClick={() => navigate(`/series/details/${serieId.id}`)} />
         <div
           className="absolute bottom-0 w-full bg-[var(--bgSecondary)]/90 flex flex-col items-center transition-all duration-300  rounded-b-lg py-2 px-2 border-t-1 border-gray-300/45 shadow-md max-w-full overflow-hidden whitespace-nowrap text-ellipsis"
             style={{
