@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getTrailerSerie } from '../../api/tmdb';
+import { Skeleton } from '../helpers/skeleton';
 
 export const ShowTrailerSerie = ({ serieId }) => {
 
@@ -33,7 +34,8 @@ export const ShowTrailerSerie = ({ serieId }) => {
           ></iframe>
         </div >)}
       {trailerKey === null && (
-        <div className='h-full flex items-center justify-center relative'>
+        <div className='h-full flex-col flex items-center justify-center relative'>
+          <Skeleton w={300} h={200} error={true}/>
           <span className="text-2xl uppercase font-semibold text-gray-200 max-w-[200px] right-0">The trailer for this serie is not available</span>
         </div>)}
       </>

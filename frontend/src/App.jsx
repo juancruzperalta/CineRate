@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home className="min-h-screen flex items-center justify-center" />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/series/details/:id" element={<SeriesDetails />} />
+            <Route path="/series/details/:id" element={<SeriesDetails key={location.key} />}/>
             <Route path="/series/premiere" element={<SeriesPremiere />} />
             <Route path="/404" element={<NotFoundPage />} />
           <Route path="*" element={<NotFoundPage />} />
