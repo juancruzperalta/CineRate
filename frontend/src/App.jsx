@@ -7,6 +7,7 @@ import { NotFoundPage } from "./pages/NotFoundPage"
 import { SeriesPremiere } from "./pages/SeriesPremiere"
 import { Route, Routes } from "react-router-dom"
 import { SeriesDetails } from "./pages/SeriesDetails"
+import { MovieCardDetails } from "./components/home/movies/MovieCardDetails"
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
             <Route path="/series/details/:id" element={<SeriesDetails key={location.key} />}/>
             <Route path="/series/premiere" element={<SeriesPremiere />} />
             <Route path="/404" element={<NotFoundPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/movies/details/:id" element={<MovieCardDetails key={location.key} />}/>
         </Routes>
         <Footer className="mt-auto" />
         </div>

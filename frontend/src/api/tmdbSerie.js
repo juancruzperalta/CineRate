@@ -1,12 +1,12 @@
 
 export async function getPopularSeries() { //popular series for users.
-  const response = await fetch(`${import.meta.env.VITE_URL}/populars`)
+  const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/populars`)
   const data = await response.json();
   return data.results;
 }
 export async function getTrailerSerie(serieId) { //trailer of serie ID
   if (!serieId) return null;
-    const response = await fetch(`${import.meta.env.VITE_URL}/trailer/${serieId}`)
+    const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/trailer/${serieId}`)
 
   const data = await response.json();
   const trailer = data.results.find(
@@ -18,13 +18,13 @@ export async function getTrailerSerie(serieId) { //trailer of serie ID
 
 export async function getDetailsOfSerie(serieId) { //details of serie
     if (!serieId) return null;
-    const response = await fetch(`${import.meta.env.VITE_URL}/details/${serieId}`)
+    const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/details/${serieId}`)
 
   const data = await response.json();
   return data;
 }
 export async function getAiringTodaySerie() { //series of tv that today is a new episodio
-    const response = await fetch(`${import.meta.env.VITE_URL}/airing-today`)
+    const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/airing-today`)
 
   const data = await response.json();
   return data;
@@ -33,14 +33,14 @@ export async function getAiringTodaySerie() { //series of tv that today is a new
 
 export async function getRecommendationsSerie(serieId) {
     if (!serieId) return null;
-    const response = await fetch(`${import.meta.env.VITE_URL}/trailer/${serieId}`)
+    const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/trailer/${serieId}`)
 
   const data = await response.json();
   return data;
 }
 
 export async function topTenSeries() {
-    const response = await fetch(`${import.meta.env.VITE_URL}/top-ten`)
+    const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/top-ten`)
 
   const data = await response.json();
   return data.results;
@@ -48,27 +48,27 @@ export async function topTenSeries() {
 
 export async function getPremiereSer() {
 
-    const response = await fetch(`${import.meta.env.VITE_URL}/premiere-series`)
+    const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/premiere-series`)
   const data = await response.json();
   return data.results;
 }
 export async function getCreditsSerie(serieId) {
     if (!serieId) return null;
-    const response = await fetch(`${import.meta.env.VITE_URL}/details/${serieId}/credits`)
+    const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/details/${serieId}/credits`)
 
   const data = await response.json();
   return data;
 }
 export async function getSimilarSerie(serieId) {
     if (!serieId) return null;
-    const response = await fetch(`${import.meta.env.VITE_URL}/similar/${serieId}`)
+    const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/similar/${serieId}`)
 
   const data = await response.json();
   return data;
 }
 export async function getSearchMovieOrSerie(query) {
     if (!query) return null;
-    const response = await fetch(`${import.meta.env.VITE_URL}/search/${query}`)
+    const response = await fetch(`${import.meta.env.VITE_SERIE_URL}/search/${query}`)
 
   const data = await response.json();
   return data;

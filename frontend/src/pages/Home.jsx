@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import SeriesGrid from '../components/home/SeriesGrid';
+import SeriesGrid from '../components/home/series/SeriesGrid';
   import { useDetailsSerie } from '../hooks/useDetailsSerie';
   import { useGetAiringTodaySerie } from '../hooks/useGetAiringTodaySerie';
 
 import { TrailerModalSerie } from '../components/trailer/trailerModalSerie';
 import { useNavigate } from 'react-router-dom';
+import { MoviesGrid } from '../components/home/movies/MoviesGrid';
 
 export const Home = () => {
   const {currentSerie} = useGetAiringTodaySerie();
@@ -125,8 +126,9 @@ export const Home = () => {
        </div>
     </div>
        <main className="xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] ">
-        <SeriesGrid/>
-              </main> 
+        <SeriesGrid />
+        <MoviesGrid/>
+        </main> 
 
       </>
   )

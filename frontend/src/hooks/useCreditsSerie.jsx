@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getCreditsSerie } from '../api/tmdb';
+import { getCreditsSerie } from '../api/tmdbSerie';
 
 export const useCreditsSerie = (serieId) => {
   const [useCreditsSerie, setUseCreditsSerie] = useState();

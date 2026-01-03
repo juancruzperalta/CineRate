@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getSearchMovieOrSerie } from '../api/tmdb';
+import { getSearchMovieOrSerie } from '../api/tmdbSerie';
 
 export const useSearch = (query) => {
   const [QuerySearch, setQuerySearch] = useState();

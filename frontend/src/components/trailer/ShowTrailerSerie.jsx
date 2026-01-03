@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getTrailerSerie } from '../../api/tmdb';
+import { getTrailerSerie } from '../../api/tmdbSerie';
 import { Skeleton } from '../helpers/skeleton';
 
 export const ShowTrailerSerie = ({ serieId }) => {

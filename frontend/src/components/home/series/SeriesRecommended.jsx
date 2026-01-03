@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getRecommendationsSerie } from '../../api/tmdb'
+import { getRecommendationsSerie } from '../../../api/tmdbSerie'
 
 export const SeriesRecommended = () => {
   // const [serieRecommended, setSerieRecommended] = useState(null)

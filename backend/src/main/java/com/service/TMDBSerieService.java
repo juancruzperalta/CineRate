@@ -1,6 +1,5 @@
 package com.service;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -9,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TMDBService {
+public class TMDBSerieService {
   @Autowired
   private CallApiService serviceCall;
     // @Autowired

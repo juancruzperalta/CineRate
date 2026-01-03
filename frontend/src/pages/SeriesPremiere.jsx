@@ -47,7 +47,6 @@ useEffect(() => {
   This week premieres
 </p>
          <div className="mx-auto mt-2 mb-2 h-px w-28 bg-gradient-to-r from-transparent via-white/35 to-transparent" />
-
           <SeriesMoviesCards seriesOrMovie={imagesToShow} />
         </div>
         <div className='flex gap-2 items-center justify-center w-full mt-8 mb-4'>
