@@ -34,15 +34,12 @@ export const MovieCardDetails = ({movieId}) => {
           </ul>
         </div>
         <div className='flex items-center justify-center  gap-2 text-sm text-gray-300'>
-          <span>
-          {currentMovieDetails?.runtime
-            ? `${Math.floor(currentMovieDetails.runtime / 60)}h ${currentMovieDetails.runtime % 60}m`
-            : 'Loading...'}
-
-          </span>
-        <p className='flex flex-col'>Status<span className="font-semibold text-[var(--colorAccent)] max-w-14 overflow-hidden">{currentMovieDetails?.status ? currentMovieDetails?.status : 'Loading...'}</span></p>
+          <p className='flex flex-col'>Duration<span className="font-semibold text-[var(--colorAccent)] max-w-14 overflow-hidden">          {currentMovieDetails?.runtime
+                      ? `${Math.floor(currentMovieDetails.runtime / 60)}h ${currentMovieDetails.runtime % 60}m`
+                      : 'Loading...'}</span></p>
+                  <p className='flex flex-col'>Status<span className="font-semibold text-[var(--colorAccent)] max-w-14 overflow-hidden">{currentMovieDetails?.status ? currentMovieDetails?.status : 'Loading...'}</span></p>
+         </div>
         </div>
-          </div>
     </>
   )
 }

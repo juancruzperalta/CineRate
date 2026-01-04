@@ -5,42 +5,39 @@ import { SeriesOrMovieDetails } from './SeriesOrMovieDetails';
 export const SeriesMoviesCards = ({seriesOrMovie}) => {
   const [isLoading, setIsLoading] = useState(true);
   let isSerie = false;
-useEffect(() => {
-  if (seriesOrMovie && seriesOrMovie.length > 0) {
-    setIsLoading(false);
-  }
-}, [seriesOrMovie]);
+  useEffect(() => {
+    if (seriesOrMovie && seriesOrMovie.length > 0) {
+      setIsLoading(false);
+    }
+  }, [seriesOrMovie]);
   return (
     <div>
       {
         isLoading ? (
-                   <div className='grid grid-cols-[25%_35%_40%] items-center justify-center overflow-hidden '>
-            {Array.from({ length: 8 }).map((_, i) => (
-              <React.Fragment key={i}>
-          <div className='relative m-2 w-[220px] h-[300px]
-            rounded-md bg-gray-800 animate-pulse
-            shadow-[0_10px_10px_rgba(0,0,0,0.7)]'
-                ></div>
-                <div className='relative h-full flex items-center justify-center'>
+        <div className='grid grid-cols-[25%_35%_40%] items-center justify-center overflow-hidden '>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <React.Fragment key={i}>
+            <div className='relative m-2 w-[220px] h-[300px] rounded-md bg-gray-800 animate-pulse shadow-[0_10px_10px_rgba(0,0,0,0.7)]'></div>
+            <div className='relative h-full flex items-center justify-center'>
                   
-          <div className="space-y-2 ">
-          <div className="h-6 w-48 bg-gray-700 rounded animate-pulse"></div>
-          <div className="h-4 w-64 bg-gray-700 rounded animate-pulse"></div>
-          <div className="h-4 w-56 bg-gray-700 rounded animate-pulse"></div>
+              <div className="space-y-2 ">
+              <div className="h-6 w-48 bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-4 w-64 bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-4 w-56 bg-gray-700 rounded animate-pulse"></div>
 
-          <div className="flex gap-4 mt-3 absolute bottom-2 ">
-          <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
-          <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
-                  </div>
-  </div>
-                </div>         
+              <div className="flex gap-4 mt-3 absolute bottom-2 ">
+              <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
+              </div>
+              </div>
+            </div>         
                  <div className="space-y-2 flex items-center justify-center flex-col">
                   <div className="h-10 w-10 bg-gray-700 animate-pulse rounded-full"></div>
-                      <div className="h-4 w-28 bg-gray-700 rounded animate-pulse"></div>
+                  <div className="h-4 w-28 bg-gray-700 rounded animate-pulse"></div>
                 </div>    
-            </React.Fragment>
+              </React.Fragment>
             ))}
-                    </div>
+       </div>
         ) :(
         seriesOrMovie?.map(serie => (
           <div key={serie.id} className={`grid grid-cols-[30%_70%] mt-0 items-center justify-center bg-gray-200/5 overflow-hidden ${(serie.backdrop_path || serie.poster_path) ? 'border-b-2 border-gray-800/50 p': 'border-b-0 p-0'}`}>

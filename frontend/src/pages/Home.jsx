@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import SeriesGrid from '../components/home/series/SeriesGrid';
-  import { useDetailsSerie } from '../hooks/useDetailsSerie';
-  import { useGetAiringTodaySerie } from '../hooks/useGetAiringTodaySerie';
-
+import { useDetailsSerie } from '../hooks/useDetailsSerie';
+import { useGetAiringTodaySerie } from '../hooks/useGetAiringTodaySerie';
 import { TrailerModalSerie } from '../components/trailer/trailerModalSerie';
 import { useNavigate } from 'react-router-dom';
 import { MoviesGrid } from '../components/home/movies/MoviesGrid';
@@ -86,18 +85,18 @@ export const Home = () => {
             {serieOne?.name}</h3>
           <div className='flex flex-wrap items-center gap-3 text-sm'>
             <span className='font-semibold text-black bg-yellow-500 text-[1rem]  p-0 m-0 pt-0 pb-0 rounded-sm'>{serieOne?.vote_average?.toFixed(1) ? <span className='border-1 border-gray-300 bg-yellow-500  p-[0.2rem] m-0 pt-0 pb-0 rounded-sm'>{serieOne?.vote_average?.toFixed(1) }</span> :  (
-      <span className='bg-yellow-300/70 rounded w-[36px] h-[1rem] inline-block animate-pulse'></span>
-    )}</span>
+             <span className='bg-yellow-300/70 rounded w-[36px] h-[1rem] inline-block animate-pulse'></span>
+            )}</span>
             <span className='font-semibold text-[var(--textSecondary)]/95 text-[1rem]  p-0 m-0 pt-0 pb-0 rounded-sm'>{serieOne?.first_air_date ? <span className='border-1 border-gray-300  p-[0.2rem] m-0 pt-0 pb-0 rounded-sm'>{new Date(serieOne?.first_air_date).getFullYear()}</span> :  (
-      <span className='bg-gray-500/20 rounded w-[30px] h-[1rem] inline-block animate-pulse'></span>
-    )}</span>
+              <span className='bg-gray-500/20 rounded w-[30px] h-[1rem] inline-block animate-pulse'></span>
+            )}</span>
             <span className='font-semibold text-[var(--textSecondary)]/95 text-[1rem] p-0 m-0 pt-0 pb-0 rounded-sm'>{serieOne?.origin_country?.[0] ? <span className='border-1 border-gray-300   p-[0.2rem] m-0 pt-0 pb-0 rounded-sm'>{serieOne?.origin_country?.[0]}</span>:  (
-      <span className='bg-gray-500/20 rounded w-[30px] h-[1rem] inline-block animate-pulse'></span>
-    )}</span>
+              <span className='bg-gray-500/20 rounded w-[30px] h-[1rem] inline-block animate-pulse'></span>
+            )}</span>
             <span className='font-semibold text-[var(--textSecondary)]/95 text-[1rem] p-0 m-0 pt-0 pb-0 rounded-sm'>{currentSerieDetails?.number_of_seasons ? <span className=' border-1 border-gray-300   p-[0.2rem] m-0 pt-0 pb-0 rounded-sm'>{currentSerieDetails?.number_of_seasons + ' Seasons'}</span> :  (
-      <span className='bg-gray-500/20 rounded w-[30px] h-[1rem] inline-block animate-pulse'></span>
-    )}
-            </span>
+               <span className='bg-gray-500/20 rounded w-[30px] h-[1rem] inline-block animate-pulse'></span>
+              )}
+              </span>
             </div>
           <p className=' text-[1rem] text-[var(--textSecondary)]  line-clamp-7 max-w-[360px]'>{serieOne?.overview ? serieOne?.overview  :
             <span className='bg-gray-500/20 rounded p-1 inline-block animate-pulse'>Loading...</span>}</p>
