@@ -1,19 +1,82 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDetailsMovie } from '../../hooks/movies/useDetailsMovie';
+import { useSimilarMovie } from '../../hooks/movies/useSimilarMovie';
+import { useCreditsMovie } from '../../hooks/movies/useCreditsMovie';
+import { Skeleton } from '../../components/helpers/skeleton';
+import { ButtonsScrollRef } from '../../components/helpers/buttonsScrollRef';
 
 export const MoviesDetails = () => {
-    // const navigate = useNavigate();
-    // const [isVisible, setIsVisible] = useState(false)
+    const navigate = useNavigate();
     const { id } = useParams();
-    // const [isLoading, setIsLoading] = useState(true)
-    
+    const [isVisible, setIsVisible] = useState(false)
     const { currentMovieDetails } = useDetailsMovie(id);
-    // const similarSerie = useSimilarSerie(id);
-    // const creditsSerie = useCreditsSerie(id);
-    // const visible = isVisible ? similarSerie?.similarSerie?.results : 
-    //   similarSerie?.similarSerie?.results?.slice(0, 8);
-    // const movieRef = useRef(null);
+    const { similarMovie } = useSimilarMovie(id);
+    const movieRef = useRef(null);
+    const visible = isVisible ? similarMovie?.results : 
+      similarMovie?.results?.slice(0, 8);
+  const { creditsMovie } = useCreditsMovie(id);
+
+  const [isLoading, setIsLoading] = useState(true)
+ useEffect(() => {
+    if (currentMovieDetails) { 
+      setIsLoading(false);
+    }
+  }, [currentMovieDetails])
+
+  
+    useEffect(() => {
+    const timeout = setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 1000);
+      setIsVisible(false);
+    
+    return () => clearTimeout(timeout);
+    }, [id]);
+  
+    if (isLoading) {
+      return (
+      <>
+          <div className="flex flex-col 2xl:max-w-[96vw] xl:max-w-[1200px] lg:max-w-[1000px]
+        md:max-w-[700px] sm:max-w-[600px] max-w-[400px] mb-4 h-full min-h-100vh w-full overflow-hidden ">
+              <div className='mt-24 w-full h-[40px] justify-around items-center bg-gray-700/50 animate-pulse  p-1'>
+            
+                </div>
+              <div className='max-w-full w-full h-[400px] min-h-[400px] max-h-full flex overflow-hidden mt-4 items-center justify-center gap-6 relative'>
+               <div className="h-full w-full bg-gray-700/50 rounded animate-pulse mb-2"></div>
+              </div>
+              <div className='flex gap-2 mt-2'>
+                <div className="h-8 w-30 bg-gray-700/50 rounded animate-pulse"></div>
+                <div className="h-8 w-30 bg-gray-700/50 rounded animate-pulse"></div>
+                <div className="h-8 w-26 bg-gray-700/50 rounded animate-pulse"></div>
+              </div>
+              <div className="mt-6 h-4 p-1 w-240 bg-gray-700/50 rounded animate-pulse"></div>
+              <div className='flex mt-4 gap-4'>
+              <div className="h-12 w-52 bg-gray-700/50 rounded animate-pulse"></div>
+              <div className="h-12 w-52 bg-gray-700/50 rounded animate-pulse"></div>
+              </div>
+          <div className='flex flex-wrap items-start justify-start gap-4 mt-4'>
+                <div className="w-[150px] h-[200px] bg-gray-700/50 rounded animate-pulse"></div>
+                <div className="w-[150px] h-[200px] bg-gray-700/50 rounded animate-pulse"></div>
+              </div>
+                    <div className='flex flex-wrap items-start justify-start gap-4 mt-4'>
+                <div className="w-[150px] h-[200px] bg-gray-700/50 rounded animate-pulse"></div>
+                <div className="w-[150px] h-[200px] bg-gray-700/50 rounded animate-pulse"></div>
+                <div className="w-[150px] h-[200px] bg-gray-700/50 rounded animate-pulse"></div>
+                <div className="w-[150px] h-[200px] bg-gray-700/50 rounded animate-pulse"></div>
+                <div className="w-[150px] h-[200px] bg-gray-700/50 rounded animate-pulse"></div>
+                <div className="w-[150px] h-[200px] bg-gray-700/50 rounded animate-pulse"></div>
+              </div>
+          </div>
+                  
+      </>
+      );
+    }
+  
+  
   return (
     <div className='flex flex-col 2xl:max-w-[96vw] xl:max-w-[1200px] lg:max-w-[1000px]
     md:max-w-[700px] sm:max-w-[600px] max-w-[400px] mb-4 h-full min-h-100vh w-full overflow-hidden'>
@@ -42,14 +105,52 @@ export const MoviesDetails = () => {
                   <span className='border-1 border-gray-200/40 bg-gray-600/20 p-1 rounded-md' key={gen.id}>{gen.name}</span>
                     ))}
               </div>
-        <p className='text-start text-md'>{currentMovieDetails?.overview}</p>
-                <div className='w-full h-full flex items-center justify-center flex-col'>
-          <span className='uppercase font-bold text-gray-400 text-xl mb-2'>{currentMovieDetails?.belongs_to_collection?.name}</span>
-          <div className='w-[40%] h-[65%] border-1 border-gray-200/40 bg-gray-600/20 p-1 rounded-md shadow-md'>
-          <img className="overflow-hidden p-0 m-0 w-full h-full  object-cover object-center rounded-md" src={`https://image.tmdb.org/t/p/original/${currentMovieDetails?.belongs_to_collection?.backdrop_path}`} alt={currentMovieDetails?.belongs_to_collection?.name} />
-          </div>
+              <p className='text-start text-md'>{currentMovieDetails?.overview}</p>
+                      <div className='w-full h-full flex items-center justify-center flex-col'>
+                <span className='uppercase font-bold text-gray-400 text-xl mb-2'>{currentMovieDetails?.belongs_to_collection?.name}</span>
+                <div className='w-[40%] h-[65%] border-1 border-gray-200/40 bg-gray-600/20 p-1 rounded-md shadow-md'>
+                  {currentMovieDetails?.belongs_to_collection?.backdrop_path ?
+                    <img className="overflow-hidden p-0 m-0 w-full h-full  object-cover object-center rounded-md" src={`https://image.tmdb.org/t/p/original/${currentMovieDetails?.belongs_to_collection?.backdrop_path}`} alt={currentMovieDetails?.belongs_to_collection?.name} /> : 
+                    <span className='font-semibold text-gray-400'>ERROR TO SEARCH COLLECTION</span>
+                    }
+                </div>
         </div>
-        {console.log(currentMovieDetails)}
+                    <div className=' flex flex-col items-start justify-start gap-1 mt-4'>
+
+                      <span className='border-l-3 border-[var(--colorAccent)] pl-2 uppercase font-bold text-xl'>Reparto</span>
+          <div className='flex items-start justify-start gap-4 overflow-hidden scroll-smooth xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] relative'>
+                <ButtonsScrollRef serieRef={movieRef} reload={creditsMovie?.cast} />
+                <div ref={movieRef}  className="overflow-hidden scroll-smooth py-4">
+                  <div className='flex gap-4'>              
+              {creditsMovie?.cast?.length > 0 ? creditsMovie?.cast?.map(casting => (
+                <div key={casting.id} className='flex flex-col items-center justify-center'>
+                  <img src={`https://image.tmdb.org/t/p/original${casting?.profile_path}`} alt={casting.name} className='w-[150px] h-[200px] rounded-md object-center'  />
+                  <span className="w-[150px] truncate block text-center">{casting.original_name}</span>
+                  <span className="w-[150px] truncate block text-[0.8rem] text-gray-300 text-center">Character: {casting.name}</span>
+                </div>
+              )) :
+              <>
+                    <Skeleton w={150} h={200} error={true} />
+                    <Skeleton w={150} h={200} error={true} />
+                  </>
+                }
+                </div>
+                
+                </div>
+              </div></div>
+           <div className=' flex flex-col w-full  items-center justify-center gap-1  mt-4'>
+                <span className='text-start w-full border-l-3 border-[var(--colorAccent)] pl-2 uppercase font-bold text-xl'>Similars</span>
+                <div className={`grid ${isVisible ? `grid-rows-${similarMovie.length/8}` : 'grid-rows-1'} grid-cols-8 gap-4 items-center justify-center w-full mt-2`}>
+                  {visible?.length > 0 ? visible?.map(movie => (
+                    <img key={movie.id} src={`https://image.tmdb.org/t/p/original${movie?.poster_path}`} alt={movie?.name} onClick={() => navigate(`/movies/details/${movie.id}`)} className='w-[150px] h-[200px] rounded-md object-center cursor-pointer' />
+                  )): <>
+                    <Skeleton w={150} h={200} error={true} />
+                    <Skeleton w={150} h={200} error={true} />
+                    </>
+            }
+            </div>  
+            <button className={`cursor-pointer mt-2 text-md border-1 border-gray-200/40 bg-gray-700/20 p-1 rounded-md hover:bg-gray-800/60 ${isVisible ? 'hidden' : 'flex'} ${visible?.length > 0 ? 'flex' : 'hidden'}`} onClick={() => setIsVisible(true)}>Ver Más</button>
+          </div>
         </div>
       </div>
   )

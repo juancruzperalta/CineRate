@@ -1,8 +1,9 @@
 
+import { useDetailsMovie } from '../../hooks/movies/useDetailsMovie';
 import { useDetailsSerie } from '../../hooks/useDetailsSerie'
 export const SeriesOrMovieDetails = ({serieId, serie}) => {
   const serieDetails = useDetailsSerie(serie ? serieId : null);
-  const { movieDetails } =useDetailsSerie(111);
+  const movieDetails =useDetailsMovie(!serie ? serieId : null);
   const currentDetails = serie ? serieDetails?.currentSerieDetails : movieDetails;
 // Lo que hacemos acá es que : los detalles de la serie los pide según verdadero o true (si es serie o pelicula), entonces pide, hay que hacer el llamado a movies. (En backend)
   return (

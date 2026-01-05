@@ -28,10 +28,26 @@ public class TMDBMovieController {
       @GetMapping("/details/{id}")
       public ResponseEntity<String> getDetailsMovie(@PathVariable("id") int id) {
         ResponseEntity<String> data = service.getDetailsId(id);
-        if(data != null){
+        if (data != null) {
           return data;
         }
         throw new Error("ERROR: Dind't get details");
       }
 
+      @GetMapping("/credits/{id}")
+      public ResponseEntity<String> getCreditsMovie(@PathVariable("id") int id) {
+        ResponseEntity<String> data = service.getCreditsId(id);
+        if(data != null){
+          return data;
+        }
+        throw new Error("ERROR: Dind't get credits");
+      }
+     @GetMapping("/similar/{id}")
+      public ResponseEntity<String> getSimilarsMovie(@PathVariable("id") int id) {
+        ResponseEntity<String> data = service.getSimilarsId(id);
+        if(data != null){
+          return data;
+        }
+        throw new Error("ERROR: Dind't get similars");
+      }
 }
