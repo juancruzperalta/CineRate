@@ -126,6 +126,15 @@ export const Home = () => {
     </div>
        <main className="xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] ">
         <SeriesGrid />
+
+      {/* Título de sección MOVIES con decoración */}
+      <div className="text-center my-4">
+        <div className="w-full h-1 bg-gray-600/15 mx-auto mb-3"></div>
+        <h2 className="text-4xl font-bold tracking-[0.5em] text-[#0ed395]">
+          MOVIES
+        </h2>
+        <div className="w-full h-1 bg-gray-600/15 mx-auto mt-3"></div>
+      </div>
         <MoviesGrid/>
         </main> 
 
