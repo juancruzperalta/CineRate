@@ -25,3 +25,9 @@ export async function getSimilarOfMovie(movieId) {
   const data = await response.json();
   return data;
 }
+export async function getPremiereMovie() {
+    const response = await fetch(`${import.meta.env.VITE_MOVIE_URL}/premiere`)
+
+  const data = await response.json();
+  return data;
+}

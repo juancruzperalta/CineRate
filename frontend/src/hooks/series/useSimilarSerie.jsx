@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getSimilarSerie } from '../api/tmdbSerie';
+import { getSimilarSerie } from '../../api/tmdbSerie';
 
 export const useSimilarSerie = (serieId) => {
  const [similarSerie, setSimilarSerie] = useState();

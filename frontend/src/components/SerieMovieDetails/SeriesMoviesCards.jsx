@@ -52,7 +52,10 @@ export const SeriesMoviesCards = ({seriesOrMovie}) => {
 
             {
               (serie.backdrop_path || serie.poster_path) ? <div className='relative h-full overflow-hidden'>
-                {(serie?.media_type=="tv" ? isSerie = true : isSerie = false)}
+                {isSerie =
+                  serie?.media_type === "tv" ||
+                  (!serie?.media_type && !!serie?.name)}
+                
                 {/* Antes de pedir los detalles: mando si es tv o movie para que me mande los detalles correctos */}
                 {/* También si no viene con nada  como si no fuera serie(al estar reusando componentes) necesito comprobar que no es una película, si no, como a veces no vienen la media_type (como en el search) parece que es película y no la muestra.*/}
             <SeriesOrMovieDetails

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-  import { useDetailsSerie } from '../hooks/useDetailsSerie';
-import { ShowTrailerSerie } from '../components/trailer/ShowTrailerSerie';
-import { useCreditsSerie } from '../hooks/useCreditsSerie';
-import { useSimilarSerie } from '../hooks/useSimilarSerie';
-import { Skeleton } from '../components/helpers/skeleton';
-import { ButtonsScrollRef } from '../components/helpers/buttonsScrollRef';
+  import { useDetailsSerie } from '../../hooks/series/useDetailsSerie';
+import { ShowTrailerSerie } from '../../components/trailer/ShowTrailerSerie';
+import { useCreditsSerie } from '../../hooks/series/useCreditsSerie';
+import { Skeleton } from '../../components/helpers/skeleton';
+import { ButtonsScrollRef } from '../../components/helpers/buttonsScrollRef';
+import { useSimilarSerie } from '../../hooks/series/useSimilarSerie';
 
 export const SeriesDetails = () => {
   const navigate = useNavigate();

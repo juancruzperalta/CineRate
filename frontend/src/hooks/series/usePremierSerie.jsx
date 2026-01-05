@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getPremiereSer } from '../api/tmdbSerie';
+import { getPremiereSer } from '../../api/tmdbSerie';
 
 export const usePremierSerie = () => {
   const [premiereSeries, setPremiereSeries] = useState(null)

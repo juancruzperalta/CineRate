@@ -1,5 +1,5 @@
 
-import { useDetailsSerie } from '../../../hooks/useDetailsSerie'
+import { useDetailsSerie } from '../../../hooks/series/useDetailsSerie'
 export const SerieCardDetails = ({serieId}) => {
 
   const { currentSerieDetails } = useDetailsSerie(serieId);

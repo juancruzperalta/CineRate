@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { SeriesMoviesCards } from '../components/SerieMovieDetails/SeriesMoviesCards.jsx'
-import { usePremierSerie } from '../hooks/usePremierSerie.jsx';
 import {  useNavigate, useSearchParams } from 'react-router-dom';
+import { SeriesMoviesCards } from '../../components/SerieMovieDetails/SeriesMoviesCards.jsx';
+import { usePremierSerie } from '../../hooks/series/usePremierSerie';
 const IMAGES_PER_PAGE = 10;
 
-export const SeriesPremiere = () => {
+export const SeriesPremierePage = () => {
     const [pageAct, setPageAct] = useSearchParams();
     const pageFromUrl = Number(pageAct.get("pageAct")) || 1;
     const [page, setPage] = useState(pageFromUrl);

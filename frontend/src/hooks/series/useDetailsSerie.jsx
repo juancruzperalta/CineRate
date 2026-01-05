@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getDetailsOfSerie } from '../api/tmdbSerie';
+import { getDetailsOfSerie } from '../../api/tmdbSerie';
 
 export const useDetailsSerie = (serieId) => {
   const [currentSerieDetails, setCurrentSerieDetails] = useState();

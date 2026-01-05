@@ -50,4 +50,12 @@ public class TMDBMovieController {
         }
         throw new Error("ERROR: Dind't get similars");
       }
+       @GetMapping("/premiere")
+      public ResponseEntity<String> getPremiereMovie() {
+        ResponseEntity<String> data = service.getPremiereId();
+        if(data != null){
+          return data;
+        }
+        throw new Error("ERROR: Dind't get Premiere");
+      }
 }

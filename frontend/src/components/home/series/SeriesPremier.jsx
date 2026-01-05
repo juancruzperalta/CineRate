@@ -1,6 +1,6 @@
 
+import { usePremierSerie } from '../../../hooks/series/usePremierSerie';
 import { Link } from '../../common/Link'
-import { usePremierSerie } from '../../../hooks/usePremierSerie';
 import { useNavigate } from 'react-router-dom';
 
 export const SeriesPremier = () => {
