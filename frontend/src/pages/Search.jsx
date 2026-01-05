@@ -1,26 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useSearch } from '../hooks/useSearch'
 import { SeriesMoviesCards } from '../components/SerieMovieDetails/SeriesMoviesCards';
 import { useSearchParams } from 'react-router-dom';
 
 export const Search = () => {
-  const [pageAct, setPageAct] = useSearchParams();
-  const [querySearch, setQuerySearch] = useState(null)
-  let value = null;
-  function FuncQuerySearch(values) { 
-    if (!values) return;
-    value = values;
-    setPageAct({
-        query: value,
-      });
-    setQuerySearch(value);
-  }
-  const page = pageAct.get("query");
-  const query = useSearch(querySearch);
-    useEffect(() => {
-      if(value != null)
-        setPageAct({ pageAct: value });
-    }, [page])
+const [searchParams, setSearchParams] = useSearchParams();
+const query = searchParams.get("query");
+  function FuncQuerySearch(value) {
+  if (!value) return;
+
+  setSearchParams({ query: value });
+}
+
+// 👉 usás directamente la query de la URL
+const results = useSearch(query);
   
   return (
     <div className='flex flex-col 2xl:max-w-[96vw] xl:max-w-[1200px] lg:max-w-[1000px]
@@ -40,7 +33,7 @@ export const Search = () => {
           </button>
           </div>
         </div>
-          <SeriesMoviesCards seriesOrMovie={query?.QuerySearch?.results} />
+          <SeriesMoviesCards seriesOrMovie={results?.QuerySearch?.results} />
     </div>
   )
 }

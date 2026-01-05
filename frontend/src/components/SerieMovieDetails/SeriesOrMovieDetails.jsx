@@ -3,16 +3,17 @@ import { useDetailsMovie } from '../../hooks/movies/useDetailsMovie';
 import { useDetailsSerie } from '../../hooks/useDetailsSerie'
 export const SeriesOrMovieDetails = ({serieId, serie}) => {
   const serieDetails = useDetailsSerie(serie ? serieId : null);
-  const movieDetails =useDetailsMovie(!serie ? serieId : null);
-  const currentDetails = serie ? serieDetails?.currentSerieDetails : movieDetails;
+  const currentMovieDetails = useDetailsMovie(!serie ? serieId : null);
+  const currentDetails = serie ? serieDetails?.currentSerieDetails : currentMovieDetails?.currentMovieDetails;
+  // console.log(currentDetails);
 // Lo que hacemos acá es que : los detalles de la serie los pide según verdadero o true (si es serie o pelicula), entonces pide, hay que hacer el llamado a movies. (En backend)
   return (
     <> 
       <div className='grid grid-cols-2 justify-center h-full items-center overflow-hidden'>
       <div className='max-h-full h-full z-10 relative items-start justify-center flex flex-col overflow-hidden'>
         <div className="pt-1 flex flex-col w-full text-[0.9rem] text-gray-300 max-w-full">
-          <h2 className='items-start text-start flex text-2xl font-semibold text-gray-100'>{currentDetails?.name}</h2>
-          <span className='items-start flex text-md'>{currentDetails?.first_air_date}</span>
+          <h2 className='items-start text-start flex text-2xl font-semibold text-gray-100'>{serie ? currentDetails?.name : currentDetails?.title}</h2>
+            <span className='items-start flex text-md'>{serie ? currentDetails?.first_air_date : currentDetails?.release_date}</span>
         </div>
         <p className='w-[300px] line-clamp-4 items-start text-start'>{currentDetails?.overview}</p>
        <div className="flex flex-wrap items-center  gap-2 text-sm text-gray-300">
@@ -30,11 +31,19 @@ export const SeriesOrMovieDetails = ({serieId, serie}) => {
           </ul>
         </div>
           <div className='flex flex-col'>
-        <div className='flex items-center gap-2 text-sm text-gray-300'>
-        <p className='flex gap-2'>Seasons:<span className='font-semibold  max-w-14'>{currentDetails?.number_of_seasons ? currentDetails?.number_of_seasons : 'Loading...'}</span></p>
-        <p className='flex gap-2'>Episodes:<span className='font-semibold  max-w-14'>{currentDetails?.number_of_episodes ? currentDetails?.number_of_episodes : 'Loading...'}</span></p>
-          <p className='flex gap-2'>Status:<span className="font-semibold">{currentDetails?.status ? currentDetails?.status : 'Loading...'}</span></p>
-            </div>
+          {serie ? 
+              <div className='flex items-center gap-2 text-sm text-gray-300'>
+              <p className='flex gap-2'>Seasons:<span className='font-semibold  max-w-14'>{currentDetails?.number_of_seasons ? currentDetails?.number_of_seasons : 'Loading...'}</span></p>
+              <p className='flex gap-2'>Episodes:<span className='font-semibold  max-w-14'>{currentDetails?.number_of_episodes ? currentDetails?.number_of_episodes : 'Loading...'}</span></p>
+                <p className='flex gap-2'>Status:<span className="font-semibold">{currentDetails?.status ? currentDetails?.status : 'Loading...'}</span></p>
+              </div>
+              :
+              <div className='flex items-center gap-2 text-sm text-gray-300'>
+              <p className='flex gap-2'>Duration:<span className="font-semibold">{currentDetails?.runtime
+                      ? `${Math.floor(currentDetails.runtime / 60)}h ${currentDetails.runtime % 60}m`
+                      : 'Loading...'}</span></p>
+              </div>
+          }
             <div className='flex items-center gap-2 text-sm text-gray-300'>
               
               {currentDetails?.genres?.map((gen, index) => (
