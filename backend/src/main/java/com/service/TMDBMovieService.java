@@ -41,7 +41,7 @@ public class TMDBMovieService {
       throw new UnsupportedOperationException("Unimplemented method 'getSimilarsId");
   }
   public ResponseEntity<String> getPremiereId() {
-    String url = "https://api.themoviedb.org/3/movie/now_playing";
+    String url = "https://api.themoviedb.org/3/movie/upcoming";
       ResponseEntity<String> response = this.serviceCall.getSerieInfo(url);
       if (response != null) {
         return response;

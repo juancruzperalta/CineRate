@@ -13,6 +13,25 @@ export const Home = () => {
   const { currentSerieDetails } = useDetailsSerie(serieOne?.id);
   const [isLoading, setIsLoading] = useState(true);
   
+  const [heroImage, setHeroImage] = useState(null);
+  
+useEffect(() => {
+  const update = () => {
+    const isPortrait = window.innerWidth < window.innerHeight;
+
+    setHeroImage(
+      isPortrait
+        ? serieOne?.poster_path
+        : serieOne?.backdrop_path
+    );
+  };
+
+  update();
+  window.addEventListener("resize", update);
+
+  return () => window.removeEventListener("resize", update);
+}, [serieOne]); 
+  
   const navigate = useNavigate();
   useEffect(() => {
     if (currentSerie)
@@ -74,10 +93,11 @@ export const Home = () => {
     setShowTrailer(serieOne.id)
     //paso al usestate, la id con el trailer para buscar sobre esa id.
   }
+
   return (
     <>
-          <div className='relative heroRight heroLeft  flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0  backdrop-brightness-[30%] mb-6'>
-        <img className="object-cover opacity-80 absolute top-0 left-0 w-full h-full overflow-hidden" src={`https://image.tmdb.org/t/p/original/${serieOne?.backdrop_path}`} alt={serieOne?.name} />
+          <div className='relative heroRight heroLeft  flex items-center justify-center w-full  h-svh overflow-hidden p-0 m-0  backdrop-brightness-[30%] mb-6 '>
+        <img className="object-cover object-center opacity-55 absolute top-0 left-0 w-full h-full overflow-hidden object-top" src={`https://image.tmdb.org/t/p/original/${heroImage}`} alt={serieOne?.name} />
         
         <div className="text-left text-[0.9rem]  z-20 text-gray-200  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 ">
           <h2 className='text-md font-semibold uppercase text-[#0ed395]'>On Air Today</h2>
@@ -127,14 +147,6 @@ export const Home = () => {
        <main className="xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] ">
         <SeriesGrid />
 
-      {/* Título de sección MOVIES con decoración */}
-      <div className="text-center my-4">
-        <div className="w-full h-1 bg-gray-600/15 mx-auto mb-3"></div>
-        <h2 className="text-4xl font-bold tracking-[0.5em] text-[#0ed395]">
-          MOVIES
-        </h2>
-        <div className="w-full h-1 bg-gray-600/15 mx-auto mt-3"></div>
-      </div>
         <MoviesGrid/>
         </main> 
 

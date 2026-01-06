@@ -5,8 +5,6 @@ export const SeriesOrMovieDetails = ({serieId, serie}) => {
   const serieDetails = useDetailsSerie(serie ? serieId : null);
   const currentMovieDetails = useDetailsMovie(!serie ? serieId : null);
   const currentDetails = serie ? serieDetails?.currentSerieDetails : currentMovieDetails?.currentMovieDetails;
-  
-  console.log(currentDetails);
 // Lo que hacemos acá es que : los detalles de la serie los pide según verdadero o true (si es serie o pelicula), entonces pide, hay que hacer el llamado a movies. (En backend)
   return (
     <> 

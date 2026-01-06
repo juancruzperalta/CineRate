@@ -13,7 +13,7 @@ import { MoviesPremierePage } from "./pages/movies/MoviesPremierePage"
 function App() {
   return (
     <>
-      <div className="flex flex-col min-h-screen items-center w-dvw m-auto">
+      <div className="flex flex-col min-h-screen items-center w-dvw m-auto xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]">
         <Header className={`${<Route path="/"/> ? 'bg-transparent' : 'bg-[#06080a] backdrop-blur-md'} `} />
       <div className="text-white text-center flex items-center justify-center flex-col absolute top-0 m-auto left-0 right-0  w-full ">
         <Routes>
