@@ -24,7 +24,7 @@ export const SeriesTopTen = () => {
   return (
     <>
       <div className="flex overflow-hidden mt-4 mb-4 h-[580px]">
-    <div className="w-[30%] flex flex-col max-h-full">
+    <div className="md:w-[30%] flex-col max-h-full hidden md:flex">
           {topSerie.slice(0, 10).map((serie, i) => (
     <div key={serie.id} className='flex flex-col justify-center relative mr-4 max-h-[580px]'>
     <div key={i} className='flex items-center mb-1 h-[54px] bg-[var(--bgSecondary)]/90 border border-gray-700 rounded-lg p-[2.2px] shadow-md hover:bg-[var(--bgSecondary)] transition-all duration-300 '  style={{
@@ -41,7 +41,7 @@ backgroundPosition: "center",
     </div>
   ))}
         </div>
-        <div className='w-[70%] relative h-full max-h-[580px]'>
+        <div className='md:w-[70%] w-[100%] relative h-full max-h-[580px]'>
       <div className='flex gap-4 overflow-hidden scroll-smooth h-full w-full' ref={serieRef}>
     <button
               className="absolute left-0.5 top-1/2 -translate-y-1/2 z-10 bg-black/90 text-white rounded-sm p-2 hover:bg-black" 

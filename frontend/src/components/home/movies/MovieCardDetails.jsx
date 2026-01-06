@@ -6,8 +6,8 @@ export const MovieCardDetails = ({movieId}) => {
   if (!currentMovieDetails) { <span>Loading...</span> }
   return (
     <>
-    <div className='max-h-full z-10 relative'>
-        <div className="pt-1 flex flex-col w-full justify-between text-[0.9rem] text-gray-300   ">
+    <div className='max-h-full z-10 relative md:text-[0.8rem] lg:text-[0.9rem] text-[0.7rem]'>
+        <div className="pt-1 flex flex-col w-full justify-between text-gray-300   ">
           <span className='font-semibold p-0 m-0' >(
             {currentMovieDetails?.release_date ? new Date(currentMovieDetails?.release_date).getFullYear() : 'Loading...'})
                     </span>
@@ -19,8 +19,8 @@ export const MovieCardDetails = ({movieId}) => {
           ))}
         </ul>
        </div>
-       <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-gray-300">
-          <ul className='flex items-center justify-center gap-1 font-semibold'>Languages{(currentMovieDetails?.languages?.length > 0 ? currentMovieDetails.languages : currentMovieDetails?.origin_country || ['Loading...']).map((lang) => (
+       <div className="hidden md:flex flex-wrap items-center justify-center gap-2 text-gray-300">
+          <ul className='flex  items-center justify-center gap-1 font-semibold'>Languages{(currentMovieDetails?.languages?.length > 0 ? currentMovieDetails.languages : currentMovieDetails?.origin_country || ['Loading...']).map((lang) => (
                   <span className='uppercase font-semibold text-[var(--colorAccent)]' key={lang}>
               [{lang}]
             </span>
@@ -33,7 +33,7 @@ export const MovieCardDetails = ({movieId}) => {
         }</span>
           </ul>
         </div>
-        <div className='flex items-center justify-center  gap-2 text-sm text-gray-300'>
+        <div className='flex items-center justify-center  gap-2 text-gray-300'>
           <p className='flex flex-col'>Duration<span className="font-semibold text-[var(--colorAccent)] max-w-14 overflow-hidden">          {currentMovieDetails?.runtime
                       ? `${Math.floor(currentMovieDetails.runtime / 60)}h ${currentMovieDetails.runtime % 60}m`
                       : 'Loading...'}</span></p>

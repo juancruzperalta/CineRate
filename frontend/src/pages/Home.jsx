@@ -99,9 +99,9 @@ useEffect(() => {
           <div className='relative heroRight heroLeft  flex items-center justify-center w-full  h-svh overflow-hidden p-0 m-0  backdrop-brightness-[30%] mb-6 '>
         <img className="object-cover object-center opacity-55 absolute top-0 left-0 w-full h-full overflow-hidden object-top" src={`https://image.tmdb.org/t/p/original/${heroImage}`} alt={serieOne?.name} />
         
-        <div className="text-left text-[0.9rem]  z-20 text-gray-200  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col  h-full justify-end bottom-3 xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]  mx-auto pb-3  inset-0 ">
+        <div className="text-left text-[0.9rem]  z-20 text-gray-200  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col  h-full justify-end bottom-3 w-full px-6  mx-auto pb-3  inset-0 ">
           <h2 className='text-md font-semibold uppercase text-[#0ed395]'>On Air Today</h2>
-          <h3 className='text-4xl font-bold uppercase text-white leading-tight'>
+          <h3 className='text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-white leading-tight'>
             {serieOne?.name}</h3>
           <div className='flex flex-wrap items-center gap-3 text-sm'>
             <span className='font-semibold text-black bg-yellow-500 text-[1rem]  p-0 m-0 pt-0 pb-0 rounded-sm'>{serieOne?.vote_average?.toFixed(1) ? <span className='border-1 border-gray-300 bg-yellow-500  p-[0.2rem] m-0 pt-0 pb-0 rounded-sm'>{serieOne?.vote_average?.toFixed(1) }</span> :  (
@@ -144,7 +144,7 @@ useEffect(() => {
         {/* le pido al componente trailer modal, que me busque por esa trailer id. */}
        </div>
     </div>
-       <main className="xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] ">
+       <main className=" w-full px-6  ">
         <SeriesGrid />
 
         <MoviesGrid/>

@@ -14,7 +14,10 @@ html, body {
   padding: 0;
   color: var(--textPrimary);
 }
-
+main{
+  width: 100%;
+  padding-inline: 24px;
+}
 body {
   display: flex;
   flex-direction: column;

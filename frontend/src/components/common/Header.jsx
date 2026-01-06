@@ -4,10 +4,10 @@ import { Link } from "./Link"
 export const Header = ({ className = "" }) => {
   const [isActive, setIsActive] = useState(false);
   return (
-    <header className={`relative  top-0 w-screen xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] z-10 transition-all pt-4 lg:pt-0 duration-300 ${className}`}>
+    <header className={`relative  top-0 w-screen xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] z-10 transition-all pt-4 lg:pt-0 duration-300 flex items-center justify-between ${className}`}>
       <div
-        className="mx-auto flex items-start justify-start lg:items-center lg:justify-between h-18
-         flex-col lg:flex-row
+        className="w-full flex items-center justify-between lg:items-center lg:justify-between h-18
+         flex-row relative
         "
       >
         <Link to="/" className="cursor-pointer">
@@ -16,21 +16,21 @@ export const Header = ({ className = "" }) => {
           <span className="text-white">Rate</span>
           </span>
         </Link>
-        <div className="lg:hidden flex">
-          <nav className={`lg:hidden flex flex-col items-start text-[1rem] font-medium
-  bg-gray-900 mt-2 overflow-hidden
+        <div className="lg:hidden flex relative">
+          <button className={`flex lg:hidden p-2 items-center  hover:bg-white/10 transition`} onClick={() => {
+            isActive ? setIsActive(false) : setIsActive(true);
+          }}>
+           <svg
+          className={`w-6 h-6 fill-white transition-transform duration-300 ${
+            isActive ? "rotate-90" : ""
+          }`}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 640 640"><path d="M96 160C96 142.3 110.3 128 128 128L512 128C529.7 128 544 142.3 544 160C544 177.7 529.7 192 512 192L128 192C110.3 192 96 177.7 96 160zM96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320zM544 480C544 497.7 529.7 512 512 512L128 512C110.3 512 96 497.7 96 480C96 462.3 110.3 448 128 448L512 448C529.7 448 544 462.3 544 480z"/></svg>
+          </button>
+          <nav className={`lg:hidden flex flex-col items-end text-[1rem] font-medium
+  bg-gray-900 mt-2 overflow-hidden absolute top-full right-1
   transition-all duration-300 mb-2  border border-white/10 shadow-xl"
   }`}>
-    <button className={`flex lg:hidden p-2  hover:bg-white/10 transition`} onClick={() => {
-      isActive ? setIsActive(false) : setIsActive(true);
-    }}>
-     <svg
-    className={`w-8 h-8 fill-white transition-transform duration-300 ${
-      isActive ? "rotate-90" : ""
-    }`}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 640 640"><path d="M96 160C96 142.3 110.3 128 128 128L512 128C529.7 128 544 142.3 544 160C544 177.7 529.7 192 512 192L128 192C110.3 192 96 177.7 96 160zM96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320zM544 480C544 497.7 529.7 512 512 512L128 512C110.3 512 96 497.7 96 480C96 462.3 110.3 448 128 448L512 448C529.7 448 544 462.3 544 480z"/></svg>
-    </button>
             <div className={`h-full w-full flex-col items-start justify-start ${isActive ? 'flex' : 'hidden'}`}>
               
             <Link to="/"  className="w-full px-4 py-3 hover:bg-white/10 rounded-md transition">  Home</Link>
