@@ -33,7 +33,7 @@ export const SeriesPremierePage = () => {
     }, [isPage, ultPage, navigate]);
   return (
     <>
-      <div className='mt-24 flex flex-col  w-full px-6 overflow-hidden'>
+      <div className='mt-24 flex flex-col  w-full px-10 overflow-hidden'>
         <div className='max-w-full w-full overflow-hidden'>
           <h1 className=' text-white text-4xl font-semibold tracking-tight mb-3'>Premiere Series</h1>
           <div className="  pt-4  mb-10">

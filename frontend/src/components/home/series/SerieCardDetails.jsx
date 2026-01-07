@@ -9,7 +9,7 @@ export const SerieCardDetails = ({serieId}) => {
   return (
     <> 
       
-      <div className='max-h-full z-10 relative md:text-[0.8rem] lg:text-[0.9rem] text-[0.7rem]'>
+      <div className='max-h-full z-10 relative 2xl:text-[1rem] md:text-[0.8rem] lg:text-[0.9rem] text-[0.7rem]'>
         <div className="pt-1 flex flex-col w-full justify-between  text-gray-300   ">
           <span className='font-semibold p-0 m-0' >(
             {currentSerieDetails.first_air_date ? new Date(currentSerieDetails.first_air_date).getFullYear() : 'Loading...'})

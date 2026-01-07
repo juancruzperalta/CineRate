@@ -78,7 +78,7 @@ export const MoviesDetails = () => {
   
   
   return (
-    <div className='flex flex-col  mb-4 h-full min-h-100vh  w-full px-6  overflow-hidden'>
+    <div className='flex flex-col  mb-4 h-full min-h-100vh  w-full px-10  overflow-hidden'>
           <div className='mt-24 w-full grid grid-cols-3 justify-around items-center border-1 border-gray-200/40 bg-gray-600/20 p-1'>
             <span className='text-start text-3xl text-gray-200 font-bold uppercase'>{currentMovieDetails?.title}</span>
               <div className='flex flex-row items-center justify-center '>

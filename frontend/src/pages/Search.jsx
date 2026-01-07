@@ -16,7 +16,7 @@ const query = searchParams.get("query");
 const results = useSearch(query);
   
   return (
-    <div className='flex flex-col 2xl:max-w-[96vw]  w-full px-6  mb-4 h-full min-h-100vh overflow-hidden'>
+    <div className='flex flex-col  w-full px-10  mb-4 h-full min-h-100vh overflow-hidden'>
       <div className='flex items-center justify-center mt-24 w-full h-full mb-4'>
           <div className='w-[600px] h-full flex items-center justify-center bg-gray-800/40  border border-gray-300 rounded-sm overflow-hidden '>
             

@@ -4,7 +4,7 @@ import { Link } from "./Link"
 export const Header = ({ className = "" }) => {
   const [isActive, setIsActive] = useState(false);
   return (
-    <header className={`relative  top-0 w-screen xl:max-w-[1200px]  2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px] z-10 transition-all pt-4 lg:pt-0 duration-300 flex items-center justify-between ${className}`}>
+    <header className={`relative  top-0 w-screen px-10 w-full z-10 transition-all pt-4 lg:pt-0 duration-300 flex items-center justify-between ${className}`}>
       <div
         className="w-full flex items-center justify-between lg:items-center lg:justify-between h-18
          flex-row relative

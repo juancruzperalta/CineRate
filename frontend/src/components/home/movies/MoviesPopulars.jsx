@@ -22,7 +22,7 @@ export const MoviesPopulars = () => {
      <>
     <div className='flex flex-row relative '>
         <ButtonsScrollRef serieRef={movieRef} reload={movies} />
-        <div className='flex items-start justify-start gap-4 overflow-hidden scroll-smooth py-4 xl:max-w-[1200px] 2xl:max-w-[96vw] lg:max-w-[1000px] md:max-w-[700px] sm:max-w-[600px] max-w-[400px]' ref={movieRef}>
+        <div className='flex items-start justify-start gap-4 overflow-hidden scroll-smooth py-4 w-full' ref={movieRef}>
 
         {movies.map((movie) => (
             <div key={movie.id} className={`relative min-w-[120px] md:min-w-[160px] lg:min-w-[200px] transition-all duration-500 overflow-hidden ${  DetailsID === null  ? 'opacity-100' : movie.id === DetailsID ? 'opacity-100' : 'opacity-35'}`} onMouseEnter={() => { clearTimeout(leaveTimer), viewDetails(movie.id) }}  onMouseLeave={() => {leaveTimer = setTimeout(() => viewDetails(null), 200);}}>
