@@ -41,7 +41,7 @@ useEffect(() => {
   if (isLoading) {
     return (
     <>
-<div className="relative flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0   mb-6 bg-[#090c0f]">
+<div className="relative flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0   mb-6 bg-[#090c0f] overflow-y-hidden">
         <div className="text-left text-[0.9rem]  z-20 text-gray-200  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col px-10  h-full justify-end bottom-3  mx-auto pb-3  inset-0 ">
           
         <div className="flex flex-col gap-3 text-gray-300 ">
@@ -54,7 +54,7 @@ useEffect(() => {
       <div className="h-6 w-10 bg-gray-700 rounded animate-pulse"></div>
       <div className="h-6 w-10 bg-gray-700 rounded animate-pulse"></div>
       </div>
-      <div className="h-40 w-[400px] bg-gray-700/50 rounded animate-pulse mb-2"></div>
+      <div className="h-40 md:w-[400px] bg-gray-700/50 rounded animate-pulse mb-2"></div>
       <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
             <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
             <div className="flex gap-2">
@@ -65,26 +65,6 @@ useEffect(() => {
     </div>
         </div>
       </div>
-    <main>
-      <div className='justify-center items-center flex flex-col'>
-      <section className='w-full mb-8'>
-        <div className='text-start relative'>
-          <span className='h-4 w-30 bg-gray-700 rounded animate-pulse'></span>
-          <span className='h-4 w-30 bg-gray-700 rounded animate-pulse'></span>
-              </div>
-          <div className='relative flex gap-6 min-w-[200px] transition-all duration-500 overflow-hidden'>
-              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-54 w-44 bg-gray-700 rounded animate-pulse"></div>
-
-          </div>
-            </section>
-            </div>
-            </main>
     </>
   );
 }

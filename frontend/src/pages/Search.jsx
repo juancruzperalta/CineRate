@@ -12,7 +12,6 @@ const query = searchParams.get("query");
   setSearchParams({ query: value });
 }
 
-// 👉 usás directamente la query de la URL
 const results = useSearch(query);
   
   return (
