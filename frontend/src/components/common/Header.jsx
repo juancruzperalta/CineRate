@@ -42,12 +42,10 @@ export const Header = ({ className = "" }) => {
             <Link  to="/movies/premiere"  className="w-full px-4 py-3 hover:bg-white/10 rounded-md transition">
               Premiere Movies
             </Link>
-            <Link to="/comparate" className="w-full px-4 py-3 hover:bg-white/10 rounded-md transition"
-              >Comparate</Link>
-                      <button
-          className="w-full px-4 py-3 hover:bg-white/10 rounded-md transition" >
+                      <Link to="/accounts/register"
+          className="w-full px-4 py-3 cursor-pointer hover:bg-white/10 rounded-md transition" >
           <svg className="w-8 h-8 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M320 312C386.3 312 440 258.3 440 192C440 125.7 386.3 72 320 72C253.7 72 200 125.7 200 192C200 258.3 253.7 312 320 312zM290.3 368C191.8 368 112 447.8 112 546.3C112 562.7 125.3 576 141.7 576L498.3 576C514.7 576 528 562.7 528 546.3C528 447.8 448.2 368 349.7 368L290.3 368z" /></svg>
-        </button>
+        </Link>
     </div>
           </nav>
         </div>
@@ -64,10 +62,10 @@ export const Header = ({ className = "" }) => {
             <Link to="/comparate" className="hover:bg-gray-400/20   rounded-lg px-3 py-2 transition-colors "
             >Comparate</Link>
           </nav>
-          <button
-          className="hidden lg:flex px-4 py-3 hover:bg-white/10 rounded-md transition" >
-          <svg className="w-8 h-8 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M320 312C386.3 312 440 258.3 440 192C440 125.7 386.3 72 320 72C253.7 72 200 125.7 200 192C200 258.3 253.7 312 320 312zM290.3 368C191.8 368 112 447.8 112 546.3C112 562.7 125.3 576 141.7 576L498.3 576C514.7 576 528 562.7 528 546.3C528 447.8 448.2 368 349.7 368L290.3 368z" /></svg>
-        </button>
+                      <Link to="/accounts/register"
+          className="hidden lg:flex cursor-pointer px-4 py-3 hover:bg-white/10 rounded-md transition" >
+          <svg className="w-7 h-7 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M320 312C386.3 312 440 258.3 440 192C440 125.7 386.3 72 320 72C253.7 72 200 125.7 200 192C200 258.3 253.7 312 320 312zM290.3 368C191.8 368 112 447.8 112 546.3C112 562.7 125.3 576 141.7 576L498.3 576C514.7 576 528 562.7 528 546.3C528 447.8 448.2 368 349.7 368L290.3 368z" /></svg>
+        </Link>
       </div>
     </header>
 

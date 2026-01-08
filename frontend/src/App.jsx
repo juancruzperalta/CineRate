@@ -9,6 +9,7 @@ import { SeriesDetails } from "./pages/series/SeriesDetails"
 import { MoviesDetails } from "./pages/movies/MoviesDetails"
 import { SeriesPremierePage } from "./pages/series/SeriesPremierePage"
 import { MoviesPremierePage } from "./pages/movies/MoviesPremierePage"
+import { Login } from "./pages/Login"
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/movies/details/:id" element={<MoviesDetails key={location.key} />}/>
             <Route path="/movies/premiere" element={<MoviesPremierePage />} />
+            <Route path="/accounts/register" element={<Login/>} />
         </Routes>
         <Footer className="mt-auto" />
         </div>
