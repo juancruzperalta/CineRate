@@ -1,0 +1,28 @@
+package com.service.auth;
+
+import java.sql.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.model.user.UserEntity;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+@Service
+public class JWTService {
+      @Value("${jwt.secret}")
+      private String secret;
+    private final long EXPIRATION = 1000 * 60 * 60 * 24; // 24h
+
+    public String generateToken(UserEntity user) {
+        return Jwts.builder()
+                .setSubject(user.getEmail())
+                .claim("role", user.getRole())
+                .setIssuedAt(new java.util.Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
+                .compact();
+    }
+}
