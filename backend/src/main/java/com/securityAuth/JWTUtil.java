@@ -1,5 +1,6 @@
 package com.securityAuth;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 
 public class JWTUtil {
@@ -16,7 +18,9 @@ public class JWTUtil {
   // Es un token de prueba
       @Value("${jwt.secret}")
       private String secret;
-    
+      private Key getKey() {
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
+      }
     public String extractUsername(String token) {
         return extractClaims(token).getSubject();
     }
@@ -35,7 +39,7 @@ public class JWTUtil {
 
     private Claims extractClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(Decoders.BASE64.decode(secret))
+                .setSigningKey(getKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -44,7 +48,7 @@ public class JWTUtil {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                .setSigningKey(Decoders.BASE64.decode(secret))
+                .setSigningKey(getKey())
                 .build()
                 .parseClaimsJws(token);
             return true;

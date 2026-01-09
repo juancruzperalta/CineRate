@@ -26,7 +26,7 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/movies/details/:id" element={<MoviesDetails key={location.key} />}/>
             <Route path="/movies/premiere" element={<MoviesPremierePage />} />
-            <Route path="/accounts/register" element={<Login/>} />
+            <Route path="/auth" element={<Login/>} />
         </Routes>
         <Footer className="mt-auto" />
         </div>

@@ -35,10 +35,15 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             token = bearerToken.substring(7);
         }
         // si en el auth viene el token nullo, lo ignoro (para logearnos como minimo)
-        if (path.startsWith("/auth/login")) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+        if (path.startsWith("/auth/login") || path.startsWith("/auth/register")) {
+          filterChain.doFilter(request, response);
+          return;
+        }
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         boolean valido = false;
         try {
             valido = jwtUtil.validateToken(token);

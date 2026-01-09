@@ -32,17 +32,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-            		.requestMatchers("/v3/api-docs/**", 
-                            "/swagger-ui/**", 
-                            "/swagger-ui.html", "/auth/**").permitAll()
-                .anyRequest().authenticated()
-            );
-            
-        http.addFilterBefore(JWTAuthFilter(jwtUtil()), UsernamePasswordAuthenticationFilter.class);
+    http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/auth/login", "/auth/register").permitAll()
+            .anyRequest().authenticated()
+        )
+        .sessionManagement(sess ->
+            sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        ).addFilterBefore(JWTAuthFilter(jwtUtil()), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

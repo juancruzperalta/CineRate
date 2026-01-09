@@ -1,7 +1,9 @@
 package com.controller.auth;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,12 @@ public class AuthController {
     }
     @PostMapping("/register")
     public void register(@RequestBody UserEntity request) {
-        service.register(request.getEmail(), request.getPassword());
+      service.register(request.getEmail(), request.getPassword());
     }
+    @GetMapping("/validateToken")
+      public ResponseEntity<Object> validateToken(Authentication auth) {
+      return ResponseEntity.ok(
+          AuthService.findByEmail(auth.getUsername())
+      );
+}
 }
