@@ -4,7 +4,7 @@ import { Header } from "./components/common/Header"
 import { Home } from "./pages/Home"
 import { Search } from "./pages/Search"
 import { NotFoundPage } from "./pages/NotFoundPage"
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import { SeriesDetails } from "./pages/series/SeriesDetails"
 import { MoviesDetails } from "./pages/movies/MoviesDetails"
 import { SeriesPremierePage } from "./pages/series/SeriesPremierePage"
@@ -12,6 +12,7 @@ import { MoviesPremierePage } from "./pages/movies/MoviesPremierePage"
 import { Login } from "./pages/Login"
 
 function App() {
+  const location = useLocation();
   return (
     <>
       <div className="flex flex-col min-h-screen items-center w-dvw m-auto px-10 relative overflow-x-hidden">
