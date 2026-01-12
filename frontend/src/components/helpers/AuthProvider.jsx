@@ -5,6 +5,7 @@ export const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(!!localStorage.getItem("token"));
     const logout = () => {
       localStorage.removeItem("token");
+      setIsLogged(false);
     }
     const LoginRegister = async ({ type, email, password }) => {
       const res = await fetch(`http://localhost:8085/auth/${type}`, {
@@ -45,10 +46,10 @@ export const AuthProvider = ({ children }) => {
   };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext); // ✅ SE USA EL CONTEXTO
+  const context = useContext(AuthContext); 
 
   if (!context) {
-    throw new Error("useAuth must be used inside AuthProvider");
+    throw new Error("useAuth error");
   }
 
   return context;

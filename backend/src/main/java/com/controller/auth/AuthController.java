@@ -15,7 +15,7 @@ import com.service.auth.AuthService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
     private final AuthService service;
@@ -38,5 +38,7 @@ public class AuthController {
       return ResponseEntity.ok(
           AuthService.findByEmail(auth.getUsername())
       );
+
+    
 }
 }
