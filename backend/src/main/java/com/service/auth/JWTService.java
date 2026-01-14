@@ -24,11 +24,19 @@ public class JWTService {
 
     public String generateToken(UserEntity user) {
         return Jwts.builder()
-                .setSubject(user.getEmail())
+                .setSubject(user.getId().toString()) 
                 .claim("role", user.getRole())
                 .setIssuedAt(new java.util.Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+		public String extractUserId(String token) {
+      return Jwts.parserBuilder()
+                .setSigningKey(getKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+      }
 }

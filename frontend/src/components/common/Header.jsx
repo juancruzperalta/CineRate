@@ -61,8 +61,6 @@ export const Header = ({ className = "" }) => {
             <Link  to="/movies/premiere"  className="hover:bg-gray-400/20    rounded-lg px-3 py-2 transition-colors ">
               Premiere Movies
             </Link>
-            <Link to="/comparate" className="hover:bg-gray-400/20   rounded-lg px-3 py-2 transition-colors "
-            >Comparate</Link>
         </nav>
         <div className="flex items-center justify-center">
 

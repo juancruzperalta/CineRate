@@ -1,9 +1,6 @@
 package com.model.user;
+import java.sql.Date;
 import java.util.UUID;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +22,7 @@ public class UserEntity {
     private String password;
 
     private String role = "USER";
-
+    private Date created_at;
     
 
     public String getEmail() {
@@ -58,6 +55,14 @@ public class UserEntity {
 
     public void setId(UUID id) {
       this.id = id;
+    }
+
+    public Date getCreated_at() {
+      return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+      this.created_at = created_at;
     }
     
 }

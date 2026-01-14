@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../components/helpers/AuthProvider';
+import { useAuth } from '../../components/helpers/AuthProvider';
 
 
 
@@ -10,7 +10,7 @@ export const Login = () => {
 
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const { isLogged, buttonLogin } = useAuth();
+  const { isLogged, buttonLogin, errorLogged } = useAuth();
   
   useEffect(() => {
     if (isLogged)
@@ -28,8 +28,9 @@ export const Login = () => {
         <input type="email" placeholder='email' className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} disabled={isLogged}  id="email" onChange={e => (setEmail(e.target.value))} required/>
         <input type="password" placeholder='password' className='w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50' disabled={isLogged}  id="password"  onChange={p => (setPassword(p.target.value))} required/>
         <input type="button" value="login" placeholder='Login' className='bg-white w-full rounded-sm p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80' onClick={() => {buttonLogin("login", email, password) }} disabled={isLogged} />
-        <span>¿You don't a account? <Link to="/accounts/register" className='text-[#0ed395] font-semibold cursor-pointer'>Register</Link></span>
-        <span>{isLogged  ? 'You already logged it' : ''}</span>
+        <span>¿You don't a account? <Link to="/auth/register" className='text-[#0ed395] font-semibold cursor-pointer'>Register</Link></span>
+        <span>{isLogged ? 'You already logged it' : ''}</span>
+        <span className='text-red-400 font-semibold ' >{errorLogged ? 'Incorrect credentials' : ''}</span>
         
       </form>
       </div>

@@ -30,8 +30,9 @@ public class AuthController {
         return ResponseEntity.ok(new UserTokenDTO(token));
     }
     @PostMapping("/register")
-    public void register(@RequestBody UserEntity request) {
-      service.register(request.getEmail(), request.getPassword());
+    public String register(@RequestBody UserEntity request) {
+      String resp = service.register(request.getEmail(), request.getPassword(), request.getCreated_at());
+      return resp;
     }
     @GetMapping("/validateToken")
       public ResponseEntity<Object> validateToken(Authentication auth) {

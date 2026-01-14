@@ -1,13 +1,17 @@
-import React, { createContext,  useContext,  useState } from 'react'
+import React, { createContext,  useContext,  useEffect,  useState } from 'react'
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState();
+  const [errorLogged, setErrorLogged] = useState(false);
   const [isLogged, setIsLogged] = useState(!!localStorage.getItem("token"));
+  const [registerSuccess, setRegisterSuccess] = useState(false);
     const logout = () => {
       localStorage.removeItem("token");
       setIsLogged(false);
+      setUser(null);
     }
-    const LoginRegister = async ({ type, email, password }) => {
+  const LoginRegister = async ({ type, email, password }) => {
       const res = await fetch(`http://localhost:8085/auth/${type}`, {
         method: "POST",
         headers: {
@@ -15,15 +19,26 @@ export const AuthProvider = ({ children }) => {
         },
         body: JSON.stringify({ email, password })
       });
-      
-      if (!res.ok) {
-        throw new Error("Incorrect Credentials");
+    console.log(res);
+    if (!res.ok) {
+        setErrorLogged(true);
+        setTimeout(() => {
+          setErrorLogged(false);
+        }, 3000);
+        return;
       }
-      
+    if (type === 'login') {   
       const data = await res.json();
       localStorage.setItem("token", data.token);
       setIsLogged(true);
-    };
+    }
+    if (type === 'register') {
+      setTimeout(() => {
+        setRegisterSuccess(true);
+      }, 3000);
+      setRegisterSuccess(false);
+    }
+  };
   const buttonLogin = async (type, email, password) => {
     if (!isLogged) {
       if (type) {
@@ -37,9 +52,28 @@ export const AuthProvider = ({ children }) => {
       console.log("You already logged it");
     }
   }
-      
+  const fetchUser = async () => { 
+    const token = localStorage.getItem("token");
+    if(!token){return}
+    const res = await fetch("http://localhost:8085/user/data", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    if (!res.ok) {
+      logout(); return;
+    }
+    const data = await res.json();
+    console.log(data);
+    setUser(data);
+  };
+  useEffect(() => {
+    if(isLogged)
+    fetchUser();
+  
+  }, [isLogged])
     return (
-      <AuthContext.Provider value={{ isLogged, buttonLogin, logout }}>
+      <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess}}>
         {children}
       </AuthContext.Provider>
     );

@@ -9,8 +9,9 @@ import { SeriesDetails } from "./pages/series/SeriesDetails"
 import { MoviesDetails } from "./pages/movies/MoviesDetails"
 import { SeriesPremierePage } from "./pages/series/SeriesPremierePage"
 import { MoviesPremierePage } from "./pages/movies/MoviesPremierePage"
-import { Login } from "./pages/Login"
 import { AccountLogged } from "./pages/auth/accountLogged"
+import { Login } from "./pages/auth/Login"
+import { Register } from "./pages/auth/Register"
 function App() {
   const location = useLocation();
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/movies/details/:id" element={<MoviesDetails key={location.key} />}/>
             <Route path="/movies/premiere" element={<MoviesPremierePage />} />
             <Route path="/auth" element={<Login />} />
+            <Route path="/auth/register" element={<Register />}/>
             <Route path="/user/account" element={<AccountLogged />}/>
         </Routes>
         <Footer className="mt-auto" />

@@ -1,4 +1,6 @@
 package com.service.auth;
+import java.sql.Date;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,17 +33,20 @@ public class AuthService {
         }
         //registro un usuario. hasheo la password.
         //Verifico que no haya un email igual o existente.
-        public void register(String email, String password) {
+        public String register(String email, String password, Date created_at) {
           if (email == null || password == null) {
-            throw new Error("fail to register");
+            return "fail to register";
           }
           if (repo.existsByEmail(email)) {
-            throw new Error("Email already exists");
+            return "Email already exists";
           }
           UserEntity nuevoUser = new UserEntity();
           nuevoUser.setEmail(email);
           nuevoUser.setPassword(encoder.encode(password));
+          nuevoUser.setCreated_at(created_at);
           repo.save(nuevoUser);
+          
+          return "Register";
         }
 
         //busco por el email del username, para validar el token una vez el usuario
