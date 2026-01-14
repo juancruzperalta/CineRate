@@ -13,9 +13,9 @@ export const AccountLogged = () => {
         <section className='flex flex-col justify-center gap-2 h-full w-full'>
           <div className='flex flex-col h-full w-full items-center justify-center gap-3'>
             <img src="avatarUser" alt="avatar" className='rounded-full bg-gray-200 w-40 h-40 text-start'/>
-          <span>{user?.email}</span>
+            <span className='text-gray-300 text-[0.8rem] md:text-[0.9rem]'>Register {user?.created_at}</span>
+          <span>Email {user?.email}</span>
           <span>your votes</span>
-          <span>Registrado desde el :</span>
           <span>Change the password</span>
           </div>
         </section>

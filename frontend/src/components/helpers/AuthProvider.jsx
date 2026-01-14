@@ -6,6 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [errorLogged, setErrorLogged] = useState(false);
   const [isLogged, setIsLogged] = useState(!!localStorage.getItem("token"));
   const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [errorRegister, setErrorRegister] = useState(false)
     const logout = () => {
       localStorage.removeItem("token");
       setIsLogged(false);
@@ -19,10 +20,12 @@ export const AuthProvider = ({ children }) => {
         },
         body: JSON.stringify({ email, password })
       });
-    console.log(res);
     if (!res.ok) {
-        setErrorLogged(true);
-        setTimeout(() => {
+      setErrorLogged(true);
+      setRegisterSuccess(false);
+      setErrorRegister(true);
+      setTimeout(() => {
+            setErrorRegister(false);
           setErrorLogged(false);
         }, 3000);
         return;
@@ -32,11 +35,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", data.token);
       setIsLogged(true);
     }
-    if (type === 'register') {
-      setTimeout(() => {
-        setRegisterSuccess(true);
-      }, 3000);
-      setRegisterSuccess(false);
+    if(type==='register'){
+       setRegisterSuccess(true);
     }
   };
   const buttonLogin = async (type, email, password) => {
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
   
   }, [isLogged])
     return (
-      <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess}}>
+      <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess, setRegisterSuccess, errorRegister}}>
         {children}
       </AuthContext.Provider>
     );

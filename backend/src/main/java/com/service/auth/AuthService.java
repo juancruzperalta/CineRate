@@ -33,20 +33,19 @@ public class AuthService {
         }
         //registro un usuario. hasheo la password.
         //Verifico que no haya un email igual o existente.
-        public String register(String email, String password, Date created_at) {
+        public boolean register(String email, String password) {
           if (email == null || password == null) {
-            return "fail to register";
+            return false;
           }
           if (repo.existsByEmail(email)) {
-            return "Email already exists";
+            return false;
           }
           UserEntity nuevoUser = new UserEntity();
           nuevoUser.setEmail(email);
           nuevoUser.setPassword(encoder.encode(password));
-          nuevoUser.setCreated_at(created_at);
           repo.save(nuevoUser);
           
-          return "Register";
+          return true;
         }
 
         //busco por el email del username, para validar el token una vez el usuario

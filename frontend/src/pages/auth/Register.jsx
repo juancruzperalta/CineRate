@@ -4,15 +4,14 @@ import { useAuth } from '../../components/helpers/AuthProvider';
 import { Link } from '../../components/common/Link';
 
 export const Register = () => {
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState(null);
   const [emailConfirm, setEmailConfirm] = useState(null);
   const [password, setPassword] = useState(null);
   const [passwordConfirm, setPasswordConfirm] = useState(null);
-  const { buttonLogin, registerSuccess } = useAuth();
+  const { buttonLogin, registerSuccess, errorRegister } = useAuth();
   const [errorEquals, setErrorEquals] = useState(false);
-  
   function confirmEquals(type, email, password) {
       if (emailConfirm && passwordConfirm != null && emailConfirm != email || password != passwordConfirm) {
         setTimeout(() => {
@@ -24,10 +23,11 @@ export const Register = () => {
     buttonLogin(type, email, password);
   }
   useEffect(() => {
-    if (registerSuccess)
+    if (registerSuccess){
       setTimeout(() => {
-      navigate("/auth");
-  }, 3000);
+        navigate("/auth");
+      }, 3000);
+    }
   
   }, [registerSuccess])
   
@@ -44,7 +44,8 @@ export const Register = () => {
         <input type="password" placeholder='confirm password' className='w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50' disabled={registerSuccess}  id="passwordConfirm"  onChange={p => (setPasswordConfirm(p.target.value))} required/>
         <input type="button" value="register" placeholder='Register' className='bg-white w-full rounded-sm p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80' onClick={() => {confirmEquals("register", email, password) }} disabled={registerSuccess} />
         <span>¿You have a account? <Link to="/auth" className='text-[#0ed395] font-semibold cursor-pointer'>Login</Link></span>
-        <span>{registerSuccess ? 'Register ready' : ''}</span>
+        <span>{registerSuccess ? 'Registred' : ''}</span>
+        <span>{errorRegister ? 'Email already exists' : ''}</span>
         <span>{errorEquals ? "Don't equals email or password" : ''}</span>
         
       </form>

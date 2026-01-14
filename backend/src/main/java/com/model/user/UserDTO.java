@@ -1,12 +1,13 @@
 package com.model.user;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class UserDTO {
   private String email;
   private UUID id;
-  private Date created_at;
+  private String created_at;
   public String getEmail() {
     return email;
   }
@@ -19,11 +20,11 @@ public class UserDTO {
   public void setId(UUID id) {
     this.id = id;
   }
-  public Date getCreated_at() {
+  public String getCreated_at() {
     return created_at;
   }
-  public void setCreated_at(Date created_at) {
-    this.created_at = created_at;
+  public void setCreated_at(LocalDateTime created_at) {
+    this.created_at = created_at.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
   }
 
 }

@@ -1,5 +1,6 @@
 package com.controller.auth;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,9 +31,15 @@ public class AuthController {
         return ResponseEntity.ok(new UserTokenDTO(token));
     }
     @PostMapping("/register")
-    public String register(@RequestBody UserEntity request) {
-      String resp = service.register(request.getEmail(), request.getPassword(), request.getCreated_at());
-      return resp;
+    public ResponseEntity<String> register(@RequestBody UserEntity request) {
+      boolean resp = service.register(request.getEmail(), request.getPassword());
+      if(resp){
+        return ResponseEntity.status(HttpStatus.CREATED)
+        .body("Registred");
+      }else{
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body("Email already exists");
+      }
     }
     @GetMapping("/validateToken")
       public ResponseEntity<Object> validateToken(Authentication auth) {
