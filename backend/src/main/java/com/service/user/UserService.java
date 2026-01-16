@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.model.user.UserDTO;
 import com.model.user.UserEntity;
+import com.model.vote.VoteEntity;
 import com.repository.user.UserRepository;
 
 @Service

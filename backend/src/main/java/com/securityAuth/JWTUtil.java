@@ -11,7 +11,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-
+@Component
 public class JWTUtil {
 	
   /*Acá vamos a validar el token*/

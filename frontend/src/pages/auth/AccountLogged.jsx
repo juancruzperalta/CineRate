@@ -6,15 +6,14 @@ export const AccountLogged = () => {
   if (!isLogged) {
    return <Navigate to="/auth" replace />;
   }
-    console.log(user);
   return (
     <div className='px-10  w-full h-full mb-8 gap-4'>
       <div className='w-full h-screen  grid grid-cols-2'>
         <section className='flex flex-col justify-center gap-2 h-full w-full'>
           <div className='flex flex-col h-full w-full items-center justify-center gap-3'>
             <img src="avatarUser" alt="avatar" className='rounded-full bg-gray-200 w-40 h-40 text-start'/>
-            <span className='text-gray-300 text-[0.8rem] md:text-[0.9rem]'>Register {user?.created_at}</span>
-          <span>Email {user?.email}</span>
+            <span className='text-gray-300 text-[0.8rem] md:text-[0.9rem]'>Account Created {user?.created_at}</span>
+          <span>{user?.email}</span>
           <span>your votes</span>
           <span>Change the password</span>
           </div>

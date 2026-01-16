@@ -20,18 +20,14 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+  private final JWTAuthFilter jwtAuthFilter;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    public JWTAuthFilter JWTAuthFilter(JWTUtil jwtUtil) {
-        return new JWTAuthFilter(jwtUtil);
-    }
 
-    @Bean
-    public JWTUtil jwtUtil() {
-        return new JWTUtil();
+    public SecurityConfig(JWTAuthFilter jwtAuthFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
     }
 
     @Bean
@@ -39,7 +35,8 @@ public class SecurityConfig {
       http
         .cors(Customizer.withDefaults()) 
         .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
+          .authorizeHttpRequests(auth -> auth
+          .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
           .requestMatchers(
               "/auth/**",
               "/api/movie/**",
@@ -49,7 +46,7 @@ public class SecurityConfig {
         )
         .sessionManagement(sess ->
             sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        ).addFilterBefore(JWTAuthFilter(jwtUtil()), UsernamePasswordAuthenticationFilter.class);
+        ).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
