@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.model.user.UserEntity;
 import com.model.vote.VoteDTO;
+import com.model.vote.VoteEntity;
 import com.model.vote.VoteRequestDTO;
 import com.service.VoteService;
 
@@ -35,7 +36,7 @@ public class VoteController {
     public ResponseEntity<VoteDTO> GetVoteIDMovSer(@PathVariable("id") int media_id,
         @AuthenticationPrincipal UserEntity user) {
       VoteDTO vot = service.findById(media_id, user.getId());
-     return ResponseEntity.ok(vot);
+        return ResponseEntity.ok(vot);
     }
 
     @PostMapping("/{id}/{mediaType}")
@@ -44,5 +45,12 @@ public class VoteController {
         @PathVariable("mediaType") String mediaType, @AuthenticationPrincipal UserEntity user) {
       service.createVote(media_id, vote.getValue(), mediaType, user.getEmail());
       return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/getAll")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Integer> GetVoteIDMovSer(@AuthenticationPrincipal UserEntity user) {
+      int vot = service.findByIdUser(user.getId());
+        return ResponseEntity.ok(vot);
     }
 }

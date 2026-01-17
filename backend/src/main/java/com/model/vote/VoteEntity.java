@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,6 +29,10 @@ public class VoteEntity {
     String media_type;
     int rating;
     LocalDateTime created_at;
+    @PrePersist
+    public void onCreate() {
+        this.created_at = LocalDateTime.now();;
+    }
     public int getId() {
       return id;
     }

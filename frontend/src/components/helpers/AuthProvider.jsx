@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }) => {
       logout(); return;
     }
     const data = await res.json();
-    console.log(data);
     setUser(data);
   };
   useEffect(() => {

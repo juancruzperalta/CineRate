@@ -9,17 +9,33 @@ export const UserButtons = ({serieId}) => {
   if(token){
     
     const infoVote = async () => {
-      const res = await fetch(`http://localhost:8085/api/vote/1368166?userId=${token}`, {
+      const res = await fetch(`http://localhost:8085/api/vote/${serieId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-      }).then(
-        res => res.json()
-      ).then(
-        data => setRatingBDLoad(data.rating)
-      )
+      })
+      if (!res.ok) {
+        console.log("error http");
+        return;
+      }
+      if (res.status === 204) {
+        setRatingBDLoad(0);
+        return;
+      }
+        const text = await res.text();
+        if (!text) {
+          setRatingBDLoad(0);
+          return;
+        }
+        const data = JSON.parse(text);
+          if (data.rating > 0) {
+            setRatingBDLoad(data.rating)
+          } else {
+            
+            setRatingBDLoad(0);
+          }
     };
   useEffect(() => {
     
@@ -37,9 +53,6 @@ export const UserButtons = ({serieId}) => {
       body: JSON.stringify({ value })
     });
 
-    if (res) {
-      console.log(res);
-    }
   }
 
   return (
@@ -52,15 +65,18 @@ export const UserButtons = ({serieId}) => {
         <svg className={`w-6 h-6 cursor-pointer ${watchLater ? 'fill-gray-300' : 'fill-gray-700'}`}  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z" /></svg>
         Watch later
       </span>
+      <span className='flex items-center justify-start  w-[140px] cursor-pointer'>
+
           <div className="star-rating text-2xl">
           <div className="flex flex-row-reverse justify-center gap-1 text-3xl">
                 {[5, 4, 3, 2, 1].map((stars) => (
-                 <button key={stars} type="button" className={`transition-colors ${(hover >= stars || rating >= stars || ratingBDLoad >= stars) ? "text-yellow-400" : "text-gray-400"}`} onMouseEnter={() => setHover(stars)} onMouseLeave={() => setHover(0)} onClick={() => {setRating(stars); buttonVote(serieId, rating, "movie")}}>
+                 <button key={stars} type="button" className={`transition-colors ${(hover >= stars || rating >= stars || ratingBDLoad >= stars) ? "text-yellow-400" : "text-gray-400"}`} onMouseEnter={() => setHover(stars)} onMouseLeave={() => setHover(0)} onClick={() => {setRating(stars); buttonVote(serieId, stars, "movie")}} disabled={!token}>
                     ★
                   </button>
                 ))}
               </div>
           </div>
+      </span>
     
     </div>
   )

@@ -1,5 +1,6 @@
 package com.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,10 +40,24 @@ public class VoteService {
 
   public VoteDTO findById(int mediaId, UUID userId) {
     Optional<VoteEntity> vote = repo.findByUser_IdAndMediaId(userId, mediaId);
+    if (vote.isEmpty()) {
+      return null;
+    }
+    if (vote.get().getRating() <= 0) {
+      return null;
+    }
+    if(vote.get().getRating()> 5){
+      return null;
+    }
     VoteDTO vot = new VoteDTO();
     vot.setUserID(userId);
     vot.setRating(vote.get().getRating());
     vot.setmediaId(mediaId);
     return vot;
+  }
+
+  public int findByIdUser(UUID id) {
+    List<VoteEntity> vote = repo.findByUser_Id(id);
+    return vote.size();
   }
 }
