@@ -12,6 +12,7 @@ import { MoviesPremierePage } from "./pages/movies/MoviesPremierePage"
 import { AccountLogged } from "./pages/auth/accountLogged"
 import { Login } from "./pages/auth/Login"
 import { Register } from "./pages/auth/Register"
+import { ChangePassword } from "./pages/auth/ChangePassword"
 function App() {
   const location = useLocation();
   return (
@@ -30,7 +31,8 @@ function App() {
             <Route path="/movies/premiere" element={<MoviesPremierePage />} />
             <Route path="/auth" element={<Login />} />
             <Route path="/auth/register" element={<Register />}/>
-            <Route path="/user/account" element={<AccountLogged />}/>
+            <Route path="/user/account" element={<AccountLogged />} />
+            <Route path="/user/changepassword" element={<ChangePassword/>}/>
         </Routes>
         <Footer className="mt-auto" />
         </div>

@@ -1,5 +1,6 @@
 package com.service.auth;
 import java.sql.Date;
+import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,12 +54,22 @@ public class AuthService {
         public static Object findByEmail(String username) {
           try {
             if (repo.existsByEmail(username)) {
-          return username;
+              return username;
             }
           } catch (Exception e) {
             e.printStackTrace();
           }
           return null;
-      
-    }
+        }
+        public boolean changePass(String email, String passwordAct, String newPassword) {
+            UserEntity user = repo.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+          if (encoder.matches(passwordAct, user.getPassword())) {
+            user.setPassword(encoder.encode(newPassword));
+            repo.save(user);
+            return true;
+          }
+          return false;
+        }
+    
 }

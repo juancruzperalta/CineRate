@@ -25,6 +25,8 @@ public class UserEntity {
 
     private String role = "USER";
     private LocalDateTime created_at;
+    @Column(name = "tokenTemp")
+    private String tokenTemp;
     @PrePersist
     public void onCreate() {
         this.created_at = LocalDateTime.now();;
@@ -68,6 +70,14 @@ public class UserEntity {
 
     public void setCreated_at(LocalDateTime created_at) {
       this.created_at = created_at;
+    }
+
+    public String getTokenTemp() {
+      return tokenTemp;
+    }
+
+    public void setTokenTemp(String tokenTemp) {
+      this.tokenTemp = tokenTemp;
     }
     
 }

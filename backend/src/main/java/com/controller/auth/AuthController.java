@@ -3,6 +3,7 @@ import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authenticati
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,16 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model.auth.UserTokenDTO;
 import com.model.user.UserEntity;
 import com.service.auth.AuthService;
-
+import com.service.auth.EmailService;
+import com.service.auth.JWTService;
+import com.model.auth.ChangePasswordDTO;
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
-    private final AuthService service;
-
-    public AuthController(AuthService service) {
+  private final AuthService service;
+  private final EmailService emailService;
+    private final JWTService jwt;
+    public AuthController(AuthService service, EmailService emailService, JWTService jwt) {
         this.service = service;
+        this.emailService = emailService;
+        this.jwt = jwt;
     }
 
     @PostMapping("/login")
@@ -46,7 +52,13 @@ public class AuthController {
       return ResponseEntity.ok(
           AuthService.findByEmail(auth.getUsername())
       );
+    }
 
-    
-}
+    @PostMapping("/change-password")
+    public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO dto,
+        @AuthenticationPrincipal UserEntity user) {
+      Object us = service.findByEmail(dto.getEmail());
+      String email = (String) us;
+      return ResponseEntity.ok(service.changePass(email, dto.getPasswordAct(), dto.getNewPassword()));
+    }
 }
