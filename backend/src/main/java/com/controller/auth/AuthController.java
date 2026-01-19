@@ -55,10 +55,16 @@ public class AuthController {
     }
 
     @PostMapping("/change-password")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO dto,
         @AuthenticationPrincipal UserEntity us) {
       Object user = service.findByEmail(dto.getEmail());
       String email = (String) user;
       return ResponseEntity.ok(service.changePass(email, dto.getPasswordAct(), dto.getNewPassword()));
+    }
+        @PostMapping("/forgot-password")
+    public ResponseEntity<Boolean> forgotPassword(@RequestBody String email) {
+      String tokenTemp = jwt.generateTokenTemp(email);
+      return ResponseEntity.ok(emailService.forgotPass(email, tokenTemp));
     }
 }

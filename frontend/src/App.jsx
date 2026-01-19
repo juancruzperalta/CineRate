@@ -13,6 +13,7 @@ import { AccountLogged } from "./pages/auth/accountLogged"
 import { Login } from "./pages/auth/Login"
 import { Register } from "./pages/auth/Register"
 import { ChangePassword } from "./pages/auth/ChangePassword"
+import { ForgotPassword } from "./pages/auth/ForgotPassword"
 function App() {
   const location = useLocation();
   return (
@@ -32,7 +33,8 @@ function App() {
             <Route path="/auth" element={<Login />} />
             <Route path="/auth/register" element={<Register />}/>
             <Route path="/user/account" element={<AccountLogged />} />
-            <Route path="/user/changepassword" element={<ChangePassword/>}/>
+            <Route path="/user/changepassword" element={<ChangePassword />} />
+            <Route path="/user/forgot-password" element={<ForgotPassword/>}/>
         </Routes>
         <Footer className="mt-auto" />
         </div>

@@ -21,4 +21,9 @@ public class EmailService {
     );
     mailSender.send(message);
   }
+
+  public boolean forgotPass(String email, String tokenTemp) {
+      this.sendResetPassword(email, tokenTemp);
+            return true;
+		}
 }

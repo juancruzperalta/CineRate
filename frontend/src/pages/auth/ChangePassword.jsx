@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../components/helpers/AuthProvider';
 
 export const ChangePassword = () => {
   const token = localStorage.getItem("token");
-    
+  const navigate = useNavigate();
+  const { isLogged } = useAuth();
+  const [failToChange, setFailToChange] = useState(false)
+  console.log(isLogged);
+  useEffect(() => {
+    if (!token) { navigate("/", { replace: true }) };
+  }, [isLogged])
   const changePass = async (email, passwordAct, newPassword) => {
       const res = await fetch(`http://localhost:8085/auth/change-password`, {
         method: "POST",
@@ -12,8 +20,8 @@ export const ChangePassword = () => {
         },
         body: JSON.stringify({ email, passwordAct, newPassword })
       })
-      if (!res.ok) {
-        console.log("error");
+    if (!res.ok) {
+      setFailToChange(true);
         return;
     }
   }
@@ -42,7 +50,7 @@ export const ChangePassword = () => {
         <input type="password" className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='new Password' id="newPassword" required />
         <input type="password" className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='confirm password' id="confirmPassword" required/>
         <input type="button" value="Change Password" className='bg-white w-full rounded-sm p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80'  placeholder='Renew Password' onClick={() => confirmPassword(document.querySelector("#newPassword"), document.querySelector("#confirmPassword"))}/>
-        
+        <span className={`${failToChange ? 'flex' : 'hidden'}`}>Error to change password</span>
       </form>
       </div>
   )
