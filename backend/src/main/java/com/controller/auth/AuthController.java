@@ -56,9 +56,9 @@ public class AuthController {
 
     @PostMapping("/change-password")
     public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO dto,
-        @AuthenticationPrincipal UserEntity user) {
-      Object us = service.findByEmail(dto.getEmail());
-      String email = (String) us;
+        @AuthenticationPrincipal UserEntity us) {
+      Object user = service.findByEmail(dto.getEmail());
+      String email = (String) user;
       return ResponseEntity.ok(service.changePass(email, dto.getPasswordAct(), dto.getNewPassword()));
     }
 }
