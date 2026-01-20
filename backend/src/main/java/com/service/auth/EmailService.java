@@ -25,6 +25,5 @@ public class EmailService {
   public boolean forgotPass(String email, String tokenTemp) {
       this.sendResetPassword(email, tokenTemp);
             return true;
-//...
 		}
 }
