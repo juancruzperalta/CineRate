@@ -62,7 +62,7 @@ public class AuthController {
       String email = (String) user;
       return ResponseEntity.ok(service.changePass(email, dto.getPasswordAct(), dto.getNewPassword()));
     }
-        @PostMapping("/forgot-password")
+    @PostMapping("/forgot-password")
     public ResponseEntity<Boolean> forgotPassword(@RequestBody String email) {
       String tokenTemp = jwt.generateTokenTemp(email);
       return ResponseEntity.ok(emailService.forgotPass(email, tokenTemp));
