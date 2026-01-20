@@ -25,7 +25,7 @@ public class UserEntity {
 
     private String role = "USER";
     private LocalDateTime created_at;
-    @Column(name = "tokenTemp")
+    @Column(name = "token_temp", unique=true)
     private String tokenTemp;
     @PrePersist
     public void onCreate() {

@@ -9,10 +9,13 @@ export const ForgotPassword = () => {
     navigate("/", { replace: true })
   }, [isLogged])
   
-  const forgotPassword = async ({email}) => {
+  const forgotPassword = async (email) => {
       const res = await fetch(`http://localhost:8085/auth/forgot-password`, {
         method: "POST",
-        body: JSON.stringify({ email})
+        headers: {
+      "Content-Type": "application/json"
+        },
+        body: JSON.stringify({email})
       })
     if (!res.ok) {
         return;

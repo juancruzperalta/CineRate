@@ -2,6 +2,7 @@ package com.service.auth;
 import java.sql.Date;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +68,20 @@ public class AuthService {
           if (encoder.matches(passwordAct, user.getPassword())) {
             user.setPassword(encoder.encode(newPassword));
             repo.save(user);
+            return true;
+          }
+          return false;
+        }
+
+        public boolean resetForgotPassowrd(String tokenTemp, String password, String confirmPassword) {
+          if (tokenTemp == null || tokenTemp.isBlank()) {
+          throw new IllegalArgumentException("Token inválido");
+            }
+          UserEntity us = repo.findBytokenTemp(tokenTemp).orElseThrow(() -> new RuntimeException("User not found"));
+          if (password == confirmPassword) {
+            us.setPassword(password);
+            us.setTokenTemp(null);
+            repo.save(us);
             return true;
           }
           return false;

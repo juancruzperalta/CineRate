@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.model.auth.UserTokenDTO;
+import com.model.user.UserEmailDTO;
 import com.model.user.UserEntity;
 import com.service.auth.AuthService;
 import com.service.auth.EmailService;
 import com.service.auth.JWTService;
 import com.model.auth.ChangePasswordDTO;
+import com.model.auth.ForgotPasswordDTO;
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -24,6 +26,7 @@ public class AuthController {
 
   private final AuthService service;
   private final EmailService emailService;
+  
     private final JWTService jwt;
     public AuthController(AuthService service, EmailService emailService, JWTService jwt) {
         this.service = service;
@@ -53,7 +56,7 @@ public class AuthController {
           AuthService.findByEmail(auth.getUsername())
       );
     }
-
+    // Cuándo un usuario olvida su contraseña; logueado, y con el rol, permitimos cambiarla.
     @PostMapping("/change-password")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO dto,
@@ -62,9 +65,16 @@ public class AuthController {
       String email = (String) user;
       return ResponseEntity.ok(service.changePass(email, dto.getPasswordAct(), dto.getNewPassword()));
     }
+    // Aquí lo que hacemos es que el usuario olvidó su contraseña, entonces enviamos un token (generado por 15 minutos) y un email para verificar su email. (De ahi entrará a un link, que luego se redirigirá a reset-forgot-password con un token + su nueva contraseña para postear en la BD)
     @PostMapping("/forgot-password")
-    public ResponseEntity<Boolean> forgotPassword(@RequestBody String email) {
-      String tokenTemp = jwt.generateTokenTemp(email);
-      return ResponseEntity.ok(emailService.forgotPass(email, tokenTemp));
+    public ResponseEntity<Boolean> forgotPassword(@RequestBody UserEmailDTO email) {
+      String tokenTemp = jwt.generateTokenTemp(email.getEmail());
+      return ResponseEntity.ok(emailService.forgotPass(email.getEmail(), tokenTemp));
     }
+    // Postearemos segun el usuario nos envie confirmado por el email + el token + el new password.
+    @PostMapping("/reset-forgot-password")
+    public ResponseEntity<Boolean> resetForgotPassword(@RequestBody ForgotPasswordDTO forgotPassword) {
+      return ResponseEntity.ok(service.resetForgotPassowrd(forgotPassword.getTokenTemp(), forgotPassword.getPassword(),forgotPassword.getConfirmPassword()));
+    }
+
 }
