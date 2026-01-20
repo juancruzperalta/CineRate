@@ -20,7 +20,7 @@ public class EmailService {
     message.setTo(email);
     message.setSubject("CineRate | Change Password");
     message.setText(
-      "Goint to change password:\n" +
+      "Going to change password:\n" +
       "http://localhost:5173/user/reset-forgot-password?token=" + token
     );
     mailSender.send(message);
@@ -28,7 +28,7 @@ public class EmailService {
 
   public boolean forgotPass(String email, String tokenTemp) {
     if (tokenTemp == null || tokenTemp.isBlank()) {
-    throw new IllegalArgumentException("Token inválido");
+      throw new IllegalArgumentException("Invalid token");
 }
     this.sendResetPassword(email, tokenTemp);
     UserEntity us = repo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));

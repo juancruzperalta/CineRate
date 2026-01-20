@@ -7,7 +7,6 @@ export const ChangePassword = () => {
   const navigate = useNavigate();
   const { isLogged } = useAuth();
   const [failToChange, setFailToChange] = useState(false)
-  console.log(isLogged);
   useEffect(() => {
     if (!token) { navigate("/", { replace: true }) };
   }, [isLogged])

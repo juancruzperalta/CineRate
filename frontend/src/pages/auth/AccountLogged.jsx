@@ -5,12 +5,10 @@ import { Link, Navigate } from 'react-router-dom';
 export const AccountLogged = () => {
   const { isLogged, user } = useAuth();
   const [countVotes, setCountVotes] = useState(0)
-  if (!isLogged) {
-   return <Navigate to="/auth" replace />;
-  }
   const token = localStorage.getItem("token");
-  if (token) { 
+  useEffect(() => {
     const getInfoVotes = async () => {
+    if (!token) return;
       const res = await fetch(`http://localhost:8085/api/vote/getAll`, {
         method: "GET",
         headers: {
@@ -25,9 +23,10 @@ export const AccountLogged = () => {
       const data = await res.json();
       setCountVotes(data);
     }
-    useEffect(() => {
-      getInfoVotes();
-    }, [])
+    getInfoVotes();
+  }, [token])
+  if (!isLogged) {
+   return <Navigate to="/auth" replace />;
   }
   
   return (

@@ -74,17 +74,21 @@ public class AuthService {
         }
 
         public boolean resetForgotPassowrd(String tokenTemp, String password, String confirmPassword) {
+          
           if (tokenTemp == null || tokenTemp.isBlank()) {
           throw new IllegalArgumentException("Token inválido");
             }
           UserEntity us = repo.findBytokenTemp(tokenTemp).orElseThrow(() -> new RuntimeException("User not found"));
-          if (password == confirmPassword) {
-            us.setPassword(password);
+          if (!password.equals(confirmPassword)){
+          throw new IllegalArgumentException("Passwords does't matchs");
+          }
+          if (encoder.matches(password, us.getPassword())) {
+          throw new IllegalArgumentException("You already own this password");
+          }
+            us.setPassword(encoder.encode(password));
             us.setTokenTemp(null);
             repo.save(us);
             return true;
-          }
-          return false;
         }
     
 }

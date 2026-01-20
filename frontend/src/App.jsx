@@ -9,12 +9,12 @@ import { SeriesDetails } from "./pages/series/SeriesDetails"
 import { MoviesDetails } from "./pages/movies/MoviesDetails"
 import { SeriesPremierePage } from "./pages/series/SeriesPremierePage"
 import { MoviesPremierePage } from "./pages/movies/MoviesPremierePage"
-import { AccountLogged } from "./pages/auth/accountLogged"
 import { Login } from "./pages/auth/Login"
 import { Register } from "./pages/auth/Register"
 import { ChangePassword } from "./pages/auth/ChangePassword"
 import { ForgotPassword } from "./pages/auth/ForgotPassword"
 import { ResetForgotPassword } from "./pages/auth/ResetForgotPassword"
+import { AccountLogged } from "./pages/auth/AccountLogged"
 function App() {
   const location = useLocation();
   return (
