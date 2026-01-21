@@ -36,4 +36,28 @@ public class EmailService {
     repo.save(us);
     return true;
 		}
+  public boolean registerSendEmail(String email, String tokenTemp) {
+    if (tokenTemp == null || tokenTemp.isBlank()) {
+      throw new IllegalArgumentException("Invalid token");
+    }
+    if (repo.existsByEmail(email) || repo.findBytokenTemp(tokenTemp).isPresent()) {
+      throw new IllegalArgumentException("You already registred");
+    }
+    
+    SimpleMailMessage message = new SimpleMailMessage();
+    message.setTo(email);
+    message.setFrom("juanpera3000@gmail.com");
+
+    message.setSubject("CineRate | Register Account");
+    message.setText(
+      "To register account click here:\n" +
+      "http://localhost:5173/auth/register/confirm?token=" + tokenTemp
+    );
+    mailSender.send(message);
+    UserEntity nuevoUser = new UserEntity();
+    nuevoUser.setTokenTemp(tokenTemp);
+    nuevoUser.setEmail(email);
+    repo.save(nuevoUser);
+    return true;
+  }
 }

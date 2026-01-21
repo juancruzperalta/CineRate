@@ -15,6 +15,7 @@ import { ChangePassword } from "./pages/auth/ChangePassword"
 import { ForgotPassword } from "./pages/auth/ForgotPassword"
 import { ResetForgotPassword } from "./pages/auth/ResetForgotPassword"
 import { AccountLogged } from "./pages/auth/AccountLogged"
+import { RegisterPassword } from "./pages/auth/RegisterPassword"
 function App() {
   const location = useLocation();
   return (
@@ -32,7 +33,9 @@ function App() {
             <Route path="/movies/details/:id" element={<MoviesDetails key={location.key} />}/>
             <Route path="/movies/premiere" element={<MoviesPremierePage />} />
             <Route path="/auth" element={<Login />} />
-            <Route path="/auth/register" element={<Register />}/>
+            <Route path="/auth/register" element={<Register />} />
+                        <Route path="/auth/register/confirm" element={<RegisterPassword />}/>
+
             <Route path="/user/account" element={<AccountLogged />} />
             <Route path="/user/changepassword" element={<ChangePassword />} />
             <Route path="/user/forgot-password" element={<ForgotPassword />} />

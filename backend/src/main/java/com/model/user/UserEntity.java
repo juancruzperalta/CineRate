@@ -27,6 +27,8 @@ public class UserEntity {
     private LocalDateTime created_at;
     @Column(name = "token_temp", unique=true)
     private String tokenTemp;
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
     @PrePersist
     public void onCreate() {
         this.created_at = LocalDateTime.now();;
@@ -78,6 +80,14 @@ public class UserEntity {
 
     public void setTokenTemp(String tokenTemp) {
       this.tokenTemp = tokenTemp;
+    }
+
+    public boolean isActive() {
+      return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+      this.isActive = isActive;
     }
     
 }

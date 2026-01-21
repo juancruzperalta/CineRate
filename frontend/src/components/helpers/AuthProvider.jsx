@@ -1,4 +1,5 @@
 import React, { createContext,  useContext,  useEffect,  useState } from 'react'
+import { useSearchParams } from 'react-router-dom';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -6,40 +7,83 @@ export const AuthProvider = ({ children }) => {
   const [errorLogged, setErrorLogged] = useState(false);
   const [isLogged, setIsLogged] = useState(!!localStorage.getItem("token"));
   const [registerSuccess, setRegisterSuccess] = useState(false);
-  const [errorRegister, setErrorRegister] = useState(false)
+  const [errorRegister, setErrorRegister] = useState(false);
+  const [tokenTemp, setTokenTemp] = useState(null);
+  const [emailSend, setEmailSend] = useState(false);
+  const [searchParams] = useSearchParams();
     const logout = () => {
       localStorage.removeItem("token");
       setIsLogged(false);
       setUser(null);
-    }
-  const LoginRegister = async ({ type, email, password }) => {
-      const res = await fetch(`http://localhost:8085/auth/${type}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-      });
-    if (!res.ok) {
-      setErrorLogged(true);
-      setRegisterSuccess(false);
-      setErrorRegister(true);
+  }
+
+  useEffect(() => {
+    setTokenTemp(searchParams.get("token"));
+  }, [searchParams]);
+  const sendEmailRegister = async ({ email }) => {
+    const respEmail = await fetch(`http://localhost:8085/auth/register-sendEmail`, {
+          method: "POST",
+          headers: {
+        "Content-Type": "application/json"
+          },
+          body: JSON.stringify({email})
+    })
+    if (respEmail.ok) { 
+      setEmailSend(true);
       setTimeout(() => {
-            setErrorRegister(false);
-          setErrorLogged(false);
-        }, 3000);
-        return;
+        setEmailSend(false);
+      }, 3000);
+    }
+    if (!respEmail.ok) {
+      setEmailSend(false);
+    }
+    
+  }
+    const LoginRegister = async ({ type, email, password }) => {
+      if (type == "login") {
+        const resLogin = await fetch(`http://localhost:8085/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+        if (!resLogin.ok) {
+          setErrorLogged(true);
+          setTimeout(() => {
+            setErrorLogged(false);
+          }, 3000);
+          return;
+        }
+        const data = await resLogin.json();
+        localStorage.setItem("token", data.token);
+        setIsLogged(true);
       }
-    if (type === 'login') {   
-      const data = await res.json();
-      localStorage.setItem("token", data.token);
-      setIsLogged(true);
+      if(type=="register"){
+         if (tokenTemp) {
+          const res = await fetch(`http://localhost:8085/auth/register`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ tokenTemp, email, password })
+          });
+          if (!res.ok) {
+            setRegisterSuccess(false);
+            setErrorRegister(true);
+            setTimeout(() => {
+              setErrorRegister(false);
+            }, 3000);
+            return;
+          }
+          setRegisterSuccess(true);
+        }
+      }
     }
-    if(type==='register'){
-       setRegisterSuccess(true);
-    }
-  };
   const buttonLogin = async (type, email, password) => {
+    if (!password) {
+      await sendEmailRegister({email:email})
+    }
     if (!isLogged) {
       if (type) {
         await LoginRegister({
@@ -72,7 +116,7 @@ export const AuthProvider = ({ children }) => {
   
   }, [isLogged])
     return (
-      <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess, setRegisterSuccess, errorRegister}}>
+      <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess, setRegisterSuccess, errorRegister, emailSend}}>
         {children}
       </AuthContext.Provider>
     );

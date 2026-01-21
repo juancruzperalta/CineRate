@@ -41,15 +41,22 @@ public class AuthController {
     }
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserEntity request) {
-      boolean resp = service.register(request.getEmail(), request.getPassword());
-      if(resp){
+      boolean resp = service.register(request.getTokenTemp(), request.getEmail(), request.getPassword());
+      if (resp) {
         return ResponseEntity.status(HttpStatus.CREATED)
-        .body("Registred");
-      }else{
+            .body("Registred");
+      } else {
         return ResponseEntity.status(HttpStatus.CONFLICT)
             .body("Email already exists");
       }
     }
+    
+    @PostMapping("/register-sendEmail")
+    public ResponseEntity<Boolean> registerSendEmail(@RequestBody UserEmailDTO email) {
+      String tokenTemp = jwt.generateTokenTemp(email.getEmail());
+      return ResponseEntity.ok(emailService.registerSendEmail(email.getEmail(), tokenTemp));
+    }
+
     @GetMapping("/validateToken")
       public ResponseEntity<Object> validateToken(Authentication auth) {
       return ResponseEntity.ok(
@@ -65,6 +72,7 @@ public class AuthController {
       String email = (String) user;
       return ResponseEntity.ok(service.changePass(email, dto.getPasswordAct(), dto.getNewPassword()));
     }
+
     // Aquí lo que hacemos es que el usuario olvidó su contraseña, entonces enviamos un token (generado por 15 minutos) y un email para verificar su email. (De ahi entrará a un link, que luego se redirigirá a reset-forgot-password con un token + su nueva contraseña para postear en la BD)
     @PostMapping("/forgot-password")
     public ResponseEntity<Boolean> forgotPassword(@RequestBody UserEmailDTO email) {
