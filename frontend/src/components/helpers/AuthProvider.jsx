@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const [errorRegister, setErrorRegister] = useState(false);
   const [tokenTemp, setTokenTemp] = useState(null);
-  const [emailSend, setEmailSend] = useState(false);
+  const [emailSend, setEmailSend] = useState('');
   const [searchParams] = useSearchParams();
     const logout = () => {
       localStorage.removeItem("token");
@@ -28,16 +28,16 @@ export const AuthProvider = ({ children }) => {
           },
           body: JSON.stringify({email})
     })
+    const msg = await respEmail.text();
     if (respEmail.ok) { 
-      setEmailSend(true);
+      setEmailSend(msg);
       setTimeout(() => {
-        setEmailSend(false);
+        setEmailSend('');
       }, 3000);
     }
     if (!respEmail.ok) {
-      setEmailSend(false);
+      setEmailSend(msg);
     }
-    
   }
     const LoginRegister = async ({ type, email, password }) => {
       if (type == "login") {
@@ -68,11 +68,12 @@ export const AuthProvider = ({ children }) => {
             },
             body: JSON.stringify({ tokenTemp, email, password })
           });
+               const msg = await res.text();
           if (!res.ok) {
             setRegisterSuccess(false);
-            setErrorRegister(true);
+            setErrorRegister(msg);
             setTimeout(() => {
-              setErrorRegister(false);
+              setErrorRegister('');
             }, 3000);
             return;
           }

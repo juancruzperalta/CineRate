@@ -3,14 +3,16 @@ import { useAuth } from '../../components/helpers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 export const ForgotPassword = () => {
   const { isLogged } = useAuth();
-  const [isCall, setIsCall] = useState(false);
+  const [isCall, setIsCall] = useState('');
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     if(isLogged)
     navigate("/", { replace: true })
   }, [isLogged])
+  
   const forgotPassword = async () => {
+    if (email == "") return;
 
       const res = await fetch(`http://localhost:8085/auth/forgot-password`, {
         method: "POST",
@@ -19,9 +21,10 @@ export const ForgotPassword = () => {
         },
         body: JSON.stringify({email})
       })
-    setIsCall(true);
+    const msg = await res.text();
+    setIsCall(msg);
     setTimeout(() => {
-      setIsCall(false)
+      setIsCall('')
     }, 2000);
     if (!res.ok) {
         return;
@@ -34,9 +37,9 @@ export const ForgotPassword = () => {
           <span className="text-[var(--colorAccent)]">Cine</span>
           <span className="text-white">Rate</span>
           </span>
-        <input type="email" className={`w-full px-2 py-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='Email' id="email" onChange={(e) => setEmail(e.target.value)} required/>
+        <input type="email"  className={`w-full px-2 py-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='Email' id="email" onChange={(e) => setEmail(e.target.value)} required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"/>
         <input type="button" value="Forgot password" className='bg-white w-full rounded-sm p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80' placeholder='Forgot Password' onClick={() => forgotPassword()} />
-        <span className={`${!isCall ? "hidden" : "flex"} absolute bottom-0`}>The confirmation has send to email</span>
+        <span className='absolute bottom-0'>{isCall}</span>
       </form>
       </div>
   )

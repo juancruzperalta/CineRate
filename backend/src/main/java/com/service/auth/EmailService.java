@@ -1,4 +1,6 @@
 package com.service.auth;
+import java.time.LocalDateTime;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,10 @@ public class EmailService {
   public boolean forgotPass(String email, String tokenTemp) {
     if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Invalid token");
-}
+    }
+    if (repo.findByEmail(email).isEmpty()) {
+      throw new IllegalArgumentException("Email is not registred");
+    }
     this.sendResetPassword(email, tokenTemp);
     UserEntity us = repo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
     us.setTokenTemp(tokenTemp);
@@ -39,6 +44,9 @@ public class EmailService {
   public boolean registerSendEmail(String email, String tokenTemp) {
     if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Invalid token");
+    }
+    if (email.isBlank()) {
+            throw new IllegalArgumentException("Email null");
     }
     if (repo.existsByEmail(email) || repo.findBytokenTemp(tokenTemp).isPresent()) {
       throw new IllegalArgumentException("You already registred");
@@ -57,6 +65,7 @@ public class EmailService {
     UserEntity nuevoUser = new UserEntity();
     nuevoUser.setTokenTemp(tokenTemp);
     nuevoUser.setEmail(email);
+    nuevoUser.setcreatedAt(LocalDateTime.now());
     repo.save(nuevoUser);
     return true;
   }

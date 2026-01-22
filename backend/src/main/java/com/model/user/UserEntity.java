@@ -24,14 +24,15 @@ public class UserEntity {
     private String password;
 
     private String role = "USER";
-    private LocalDateTime created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
     @Column(name = "token_temp", unique=true)
     private String tokenTemp;
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
     @PrePersist
     public void onCreate() {
-        this.created_at = LocalDateTime.now();;
+        this.createdAt = LocalDateTime.now();;
     }
 
     public String getEmail() {
@@ -66,12 +67,12 @@ public class UserEntity {
       this.id = id;
     }
 
-    public LocalDateTime getCreated_at() {
-      return created_at;
+    public LocalDateTime getCreatedAt() {
+      return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-      this.created_at = created_at;
+    public void setcreatedAt(LocalDateTime createdAt) {
+      this.createdAt = createdAt;
     }
 
     public String getTokenTemp() {

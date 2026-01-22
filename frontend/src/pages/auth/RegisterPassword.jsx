@@ -39,12 +39,12 @@ export const RegisterPassword = () => {
           </span>
         <input type="email" placeholder='email' className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} disabled={registerSuccess} id="email" onChange={e => (setEmail(e.target.value))} required />
                 <input type="email" placeholder='confirm email' className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} disabled={registerSuccess}  id="emailConfirm" onChange={e => (setEmailConfirm(e.target.value))} required/>
-        <input type="password" placeholder='password' className='w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50' disabled={registerSuccess} id="password" onChange={p => (setPassword(p.target.value))} required />
-        <input type="password" placeholder='confirm password' className='w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50' disabled={registerSuccess}  id="passwordConfirm"  onChange={p => (setPasswordConfirm(p.target.value))} required/>
+        <input type="password" placeholder='password' pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&._#-])[A-Za-z\d@$!%*?&._#-]{8,}$" className='w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50' disabled={registerSuccess} id="password" onChange={p => (setPassword(p.target.value))} required />
+        <input type="password" placeholder='confirm password' pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&._#-])[A-Za-z\d@$!%*?&._#-]{8,}$" className='w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50' disabled={registerSuccess}  id="passwordConfirm"  onChange={p => (setPasswordConfirm(p.target.value))} required/>
         <input type="button" value="register" placeholder='Register' className='bg-white w-full rounded-sm p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80' onClick={() => {confirmEquals("register", email, password) }} disabled={registerSuccess} />
         <span>¿You have a account? <Link to="/auth" className='text-[#0ed395] font-semibold cursor-pointer'>Login</Link></span>
         <span>{registerSuccess ? 'Registred' : ''}</span>
-        <span>{errorRegister ? 'Email already exists' : ''}</span>
+        <span className='absolute bottom-0'>{errorRegister}</span>
         <span>{errorEquals ? "Don't equals email or password" : ''}</span>
         
       </form>

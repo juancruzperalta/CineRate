@@ -17,7 +17,7 @@ public class UserController {
       UserDTO dto = new UserDTO();
       dto.setId(user.getId());
       dto.setEmail(user.getEmail());
-      dto.setCreated_at(user.getCreated_at());
+      dto.setCreated_at(user.getCreatedAt());
       return ResponseEntity.ok(dto);
     }
 }
