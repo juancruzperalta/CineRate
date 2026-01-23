@@ -26,7 +26,8 @@ public class VoteEntity {
     private UserEntity user;
     @Column(name = "media_id")
     int mediaId;
-    String media_type;
+    @Column(name = "is_serie")
+    boolean isSerie;
     int rating;
     LocalDateTime created_at;
     @PrePersist
@@ -45,8 +46,8 @@ public class VoteEntity {
     public int getMediaId() {
       return mediaId;
     }
-    public String getMedia_type() {
-      return media_type;
+    public boolean getisSerie() {
+      return isSerie;
     }
     public int getRating() {
       return rating;
@@ -57,8 +58,8 @@ public class VoteEntity {
     public void setMediaId(int mediaId) {
       this.mediaId = mediaId;
     }
-    public void setMedia_type(String media_type) {
-      this.media_type = media_type;
+    public void setisSerie(boolean isSerie) {
+      this.isSerie = isSerie;
     }
     public void setRating(int rating) {
       this.rating = rating;

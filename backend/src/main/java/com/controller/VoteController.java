@@ -42,7 +42,7 @@ public class VoteController {
     @PostMapping("/{id}/{mediaType}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> voteMovSer(@PathVariable("id") int media_id, @RequestBody VoteRequestDTO vote,
-        @PathVariable("mediaType") String mediaType, @AuthenticationPrincipal UserEntity user) {
+        @PathVariable("mediaType") boolean mediaType, @AuthenticationPrincipal UserEntity user) {
       service.createVote(media_id, vote.getValue(), mediaType, user.getEmail());
       return ResponseEntity.ok().build();
     }

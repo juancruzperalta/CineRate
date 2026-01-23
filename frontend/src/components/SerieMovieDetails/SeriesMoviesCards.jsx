@@ -68,7 +68,7 @@ export const SeriesMoviesCards = ({seriesOrMovie}) => {
               serie={isSerie}
               />
                 <div className='relative w-full'>
-                  <UserButtons serieId={serie.id} />
+                  <UserButtons serieId={serie.id} mediaType={isSerie} />
                 </div>
               </div> : <div className='hidden'></div>
             }

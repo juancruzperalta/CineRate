@@ -18,10 +18,9 @@ public class VoteService {
   VoteRepository repo;
   @Autowired
   UserRepository userRepo;
-  public void createVote(int media_id, int value, String mediaType, String email) {
+  public void createVote(int media_id, int value, boolean mediaType, String email) {
       UserEntity user = userRepo.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("User not found"));
-
     Optional<VoteEntity> existVote = repo.findByUser_IdAndMediaId(user.getId(), media_id);
 
     if (existVote.isPresent()) {
@@ -32,7 +31,7 @@ public class VoteService {
       VoteEntity vote = new VoteEntity();
       vote.setUser(user);
       vote.setMediaId(media_id);
-      vote.setMedia_type(mediaType);
+      vote.setisSerie(mediaType);
       vote.setRating(value);
       repo.save(vote);
     }
