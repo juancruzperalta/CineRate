@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 export const UserButtons = ({serieId, mediaType}) => {
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(true);
   const [watchLater, setWatchLater] = useState(false);
   const [ratingBDLoad, setRatingBDLoad] = useState(0);
   const token = localStorage.getItem("token");
@@ -38,10 +38,26 @@ export const UserButtons = ({serieId, mediaType}) => {
           }
     };
   useEffect(() => {
-    
+    infoFavorite();
     infoVote();
   }, [])
-}
+  } 
+  const infoFavorite = async () => {
+          const res = await fetch(`http://localhost:8085/api/favorite/${serieId}`,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+          });
+    const data = await res.json();
+          if(!data){
+            setFavorite(false);
+            return;
+          } else { 
+            setFavorite(true);
+          }
+    }
   const favoriteButton = async (idSerMov, mediaType) => {
     const res = await fetch(`http://localhost:8085/api/favorite/${idSerMov}/${mediaType}`,{
     method: "POST",
@@ -50,7 +66,9 @@ export const UserButtons = ({serieId, mediaType}) => {
       "Authorization": `Bearer ${token}`
     },
     });
-    console.log(res);
+if (res.ok) {
+    setFavorite(prev => !prev);
+  }
   }
   const buttonVote = async (idSerMov, value, mediaType) => {
     const res = await fetch(`http://localhost:8085/api/vote/${idSerMov}/${mediaType}`, {
@@ -65,7 +83,7 @@ export const UserButtons = ({serieId, mediaType}) => {
   }
   return (
     <div className='flex lg:absolute mt-4 mb-2 lg:mt-0 bottom-1 z-10 items-center justify-center lg:justify-start gap-4 w-full'>
-      <button onClick={() => favoriteButton(serieId, mediaType)}  onMouseEnter={() => setFavorite(true)} onMouseLeave={() => setFavorite(false)} className={`flex items-center justify-start w-[140px] cursor-pointer`}>
+      <button onClick={() => favoriteButton(serieId, mediaType)} className={`flex items-center justify-start w-[140px] cursor-pointer`}>
         <svg className={`w-6 h-6 cursor-pointer ${favorite ? 'fill-red-400' : 'fill-gray-700'}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M305 151.1L320 171.8L335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1L576 231.7C576 343.9 436.1 474.2 363.1 529.9C350.7 539.3 335.5 544 320 544C304.5 544 289.2 539.4 276.9 529.9C203.9 474.2 64 343.9 64 231.7L64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1z"/></svg>
         Add to favorite
       </button>
