@@ -2,13 +2,16 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../components/helpers/AuthProvider';
 import { Link, Navigate } from 'react-router-dom';
+import { WatchLaterSerieItem } from '../../components/helpers/WatchLaterItem';
 export const AccountLogged = () => {
   const { isLogged, user } = useAuth();
   const [countVotes, setCountVotes] = useState(0)
+  const [watchLaterMovies, setWatchLaterMovies] = useState([]);
+  const [watchLaterSeries, setWatchLaterSeries] = useState([]);
   const token = localStorage.getItem("token");
   useEffect(() => {
     const getInfoVotes = async () => {
-    if (!token) return;
+      if (!token) return;
       const res = await fetch(`http://localhost:8085/api/vote/getAll`, {
         method: "GET",
         headers: {
@@ -23,12 +26,45 @@ export const AccountLogged = () => {
       const data = await res.json();
       setCountVotes(data);
     }
+    const getWatchLaterMovies = async () => {
+      if (!token) return;
+      const res = await fetch(`http://localhost:8085/api/watchLater/getAll?isSerie=false`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      if (!res.ok) {
+        console.log("fail to load watch later");
+        return;
+      }
+      const data = await res.json();
+      setWatchLaterMovies(data);
+    }
+    const getWatchLaterSeries = async () => {
+      if (!token) return;
+      const res = await fetch(`http://localhost:8085/api/watchLater/getAll?isSerie=true`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      if (!res.ok) {
+        console.log("fail to load watch later");
+        return;
+      }
+      const data = await res.json();
+      setWatchLaterSeries(data);
+    }
+    getWatchLaterSeries();
+    getWatchLaterMovies();
     getInfoVotes();
   }, [token])
   if (!isLogged) {
-   return <Navigate to="/auth" replace />;
+    return <Navigate to="/auth" replace />;
   }
-  
   return (
     <div className='px-10  w-full h-full mb-8 gap-4'>
       <div className='w-full h-screen  grid '>
@@ -43,28 +79,26 @@ export const AccountLogged = () => {
         </section>
 
       </div>
-      <section className='flex justify-start gap-2 h-full w-full'>
+      <section className=' flex-col justify-start gap-4 h-full w-full'>
         <article className='flex gap-2'>
           <div className='gap-2 flex flex-col'>
-            <h2>SERIES FAVS</h2>
+            <h2 className='font-semibold uppercase text-[#0ed395]'>SERIES VIEW LATER</h2>
             <div className='flex'>
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
+              {
+                watchLaterSeries.map(({ mediaId, serie }) => (
+                serie ? <WatchLaterSerieItem key={mediaId} mediaId={mediaId} value={serie} /> : null))
+            }
             </div>
           </div>
          </article>
-        <article className='flex gap-2'>
+        <article className='flex gap-2 mt-4'>
           <div className='gap-2 flex flex-col'>
-            <h2>MOVIES FAVS</h2>
+            <h2  className='font-semibold uppercase text-[#0ed395]'>MOVIES VIEW LATER</h2>
             <div className='flex'>
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
-              {/* <img src="" className='w-[140px] h-[200px]' alt="" /> */}
+                       {
+                watchLaterMovies.map(({ mediaId, serie }) => (
+                !serie ? <WatchLaterSerieItem key={mediaId} mediaId={mediaId} value={serie} /> : null))
+            }
             </div>
           </div>
          </article>

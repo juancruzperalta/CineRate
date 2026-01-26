@@ -24,13 +24,14 @@ public class FavoriteController {
   @Autowired
   FavoriteService service;
 
+  // Veo las que si puse en "favoritas" (también para ver cuáles no son favoritas)
   @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Boolean> getFavoritesMovSer(@PathVariable("id") int media_id, @AuthenticationPrincipal UserEntity user) {
       Boolean favs = service.findByUser_IdAndMediaId(user.getId(), media_id);
         return ResponseEntity.ok(favs);
     }
-
+// Agrego una favorita nueva (o quito la "ya favorita")
   @PostMapping("/{id}/{mediaType}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> addFavoriteMovSer(@PathVariable("id") int media_id,@PathVariable("mediaType") boolean mediaType, @AuthenticationPrincipal UserEntity user) {
