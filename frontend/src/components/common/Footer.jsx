@@ -1,8 +1,8 @@
 import React from 'react'
 export const Footer = () => {
   return (
-    <footer className="text-center text-gray-300 bg-[var(--bgSecondary)]  w-full max-w-[100vw] overflow-hidden h-[200px] pt-4 flex flex-col items-center justify-end  relative">
-      <div className='grid grid-cols-1 gap-2 items-center justify-center  w-full z-10'>
+    <footer className="text-center text-gray-300 bg-[var(--bgSecondary)]  w-full max-w-[100vw] overflow-hidden h-full md:h-[200px] pt-4 flex flex-col items-center justify-end  relative">
+      <div className='text-sm md:text-md grid grid-cols-1 gap-2 items-center justify-center  w-full z-10'>
         <div className='flex gap-2 justify-center  items-center'>
           <span  className='pr-2 border-r-2 border-gray-500 hover:text-gray-400'>Instagram</span>
           <span  className='pr-2 border-r-2 border-gray-500 hover:text-gray-400'>TikTok</span>
