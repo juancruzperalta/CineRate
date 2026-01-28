@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import SeriesGrid from '../components/home/series/SeriesGrid';
 import { useDetailsSerie } from '../hooks/series/useDetailsSerie';
 import { useGetAiringTodaySerie } from '../hooks/series/useGetAiringTodaySerie';
-import { TrailerModalSerie } from '../components/trailer/TrailerModalSerie';
+
 import { useNavigate } from 'react-router-dom';
 import { MoviesGrid } from '../components/home/movies/MoviesGrid';
+import { TrailerModalSerie } from '../components/trailer/trailerModalSerie';
 
 export const Home = () => {
   const {currentSerie} = useGetAiringTodaySerie();
