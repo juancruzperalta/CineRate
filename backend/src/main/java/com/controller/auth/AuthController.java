@@ -21,7 +21,6 @@ import com.model.auth.ChangePasswordDTO;
 import com.model.auth.ForgotPasswordDTO;
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
   private final AuthService service;
