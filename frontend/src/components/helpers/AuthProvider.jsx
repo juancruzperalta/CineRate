@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     setTokenTemp(searchParams.get("token"));
   }, [searchParams]);
   const sendEmailRegister = async ({ email }) => {
-    const respEmail = await fetch(`http://localhost:8085/auth/register-sendEmail`, {
+    const respEmail = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/register-sendEmail`, {
           method: "POST",
           headers: {
         "Content-Type": "application/json"
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
   }
     const LoginRegister = async ({ type, email, password }) => {
       if (type == "login") {
-        const resLogin = await fetch(`http://localhost:8085/auth/login`, {
+        const resLogin = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       }
       if(type=="register"){
          if (tokenTemp) {
-          const res = await fetch(`http://localhost:8085/auth/register`, {
+          const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/register`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
