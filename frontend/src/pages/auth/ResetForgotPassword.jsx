@@ -6,7 +6,7 @@ export const ResetForgotPassword = () => {
   const tokenTemp = new URLSearchParams(window.location.search).get("token");
   const [passwordChange, setPasswordChange] = useState(false);
   const resetForgotPassword = async (password, confirmPassword) => {
-      const res = await fetch(`http://localhost:8085/auth/reset-forgot-password`, {
+      const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/reset-forgot-password`, {
         method: "POST",
         headers: {
       "Content-Type": "application/json"

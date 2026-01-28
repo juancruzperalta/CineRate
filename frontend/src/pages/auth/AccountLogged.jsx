@@ -12,7 +12,7 @@ export const AccountLogged = () => {
   useEffect(() => {
     const getInfoVotes = async () => {
       if (!token) return;
-      const res = await fetch(`http://localhost:8085/api/vote/getAll`, {
+      const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/vote/getAll`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

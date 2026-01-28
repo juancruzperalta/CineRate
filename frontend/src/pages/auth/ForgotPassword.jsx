@@ -14,7 +14,7 @@ export const ForgotPassword = () => {
   const forgotPassword = async () => {
     if (email == "") return;
 
-      const res = await fetch(`http://localhost:8085/auth/forgot-password`, {
+      const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/forgot-password`, {
         method: "POST",
         headers: {
       "Content-Type": "application/json"
