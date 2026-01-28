@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getTrailerSerie } from '../../api/tmdbSerie';
-import { Skeleton } from '../helpers/skeleton';
+import { Skeleton } from '../helpers/Skeleton';
 
 export const ShowTrailerSerie = ({ serieId }) => {
 

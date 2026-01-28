@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getPopularsMovies } from '../../../api/tmdbMovie';
-import { ButtonsScrollRef } from '../../helpers/buttonsScrollRef';
+import { ButtonsScrollRef } from '../../helpers/ButtonsScrollRef';
 import { useNavigate } from 'react-router-dom';
 import { MovieCardDetails } from './MovieCardDetails';
 
