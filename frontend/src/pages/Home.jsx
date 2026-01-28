@@ -5,7 +5,7 @@ import { useGetAiringTodaySerie } from '../hooks/series/useGetAiringTodaySerie';
 
 import { useNavigate } from 'react-router-dom';
 import { MoviesGrid } from '../components/home/movies/MoviesGrid';
-import { TrailerModalSerie } from '../components/trailer/trailerModalSerie';
+import { TrailerModalSerie } from '../components/trailer/TrailerModalSerie';
 
 export const Home = () => {
   const {currentSerie} = useGetAiringTodaySerie();
