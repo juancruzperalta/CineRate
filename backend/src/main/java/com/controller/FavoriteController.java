@@ -19,7 +19,6 @@ import com.service.FavoriteService;
 
 @RestController
 @RequestMapping("/api/favorite")
-@CrossOrigin(origins = "http://localhost:5173")
 public class FavoriteController {
   @Autowired
   FavoriteService service;

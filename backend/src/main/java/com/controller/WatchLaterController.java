@@ -20,7 +20,6 @@ import com.service.WatchLaterService;
 
 @RestController
 @RequestMapping("/api/watchLater")
-@CrossOrigin(origins = "http://localhost:5173")
 public class WatchLaterController {
   
   @Autowired

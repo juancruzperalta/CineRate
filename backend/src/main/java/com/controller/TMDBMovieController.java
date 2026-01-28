@@ -12,7 +12,6 @@ import com.service.TMDBMovieService;
 
 @RestController
 @RequestMapping("/api/movie")
-@CrossOrigin(origins = "http://localhost:5173")
 public class TMDBMovieController {
       @Autowired
       private TMDBMovieService service;

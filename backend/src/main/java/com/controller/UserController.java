@@ -10,7 +10,6 @@ import com.model.user.UserDTO;
 import com.model.user.UserEntity;
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
   @GetMapping("/data")
     public ResponseEntity<UserDTO> getDataUser(@AuthenticationPrincipal UserEntity user) {

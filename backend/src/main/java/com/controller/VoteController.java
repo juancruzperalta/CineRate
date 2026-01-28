@@ -26,7 +26,6 @@ import com.service.VoteService;
 
 @RestController
 @RequestMapping("/api/vote")
-@CrossOrigin(origins = "http://localhost:5173")
 public class VoteController {
     @Autowired
     VoteService service;

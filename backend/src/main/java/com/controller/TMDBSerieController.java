@@ -14,7 +14,6 @@ import com.service.TMDBSerieService;
 
 @RestController
 @RequestMapping("/api/serie")
-@CrossOrigin(origins = "http://localhost:5173")
 public class TMDBSerieController{
 
       @Autowired
