@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { SerieCardDetails } from './SerieCardDetails'
-import { TrailerModalSerie } from '../../trailer/trailerModalSerie';
+import { TrailerModalSerie } from '../../trailer/TrailerModalSerie';
 import { getPopularSeries } from '../../../api/tmdbSerie';
 import { ButtonsScrollRef } from '../../helpers/ButtonsScrollRef';
 import { useNavigate } from 'react-router-dom';

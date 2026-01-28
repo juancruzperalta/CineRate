@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { topTenSeries } from '../../../api/tmdbSerie';
-import { TrailerModalSerie } from '../../trailer/trailerModalSerie';
+import { TrailerModalSerie } from '../../trailer/TrailerModalSerie';
 
 export const SeriesTopTen = () => {
   const [topSerie, setTopSerie] = useState([])
