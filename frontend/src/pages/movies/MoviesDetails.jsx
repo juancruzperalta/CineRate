@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDetailsMovie } from '../../hooks/movies/useDetailsMovie';
 import { useSimilarMovie } from '../../hooks/movies/useSimilarMovie';
 import { useCreditsMovie } from '../../hooks/movies/useCreditsMovie';
-import { Skeleton } from '../../components/helpers/skeleton';
-import { ButtonsScrollRef } from '../../components/helpers/buttonsScrollRef';
+import { Skeleton } from '../../components/helpers/Skeleton';
+import { ButtonsScrollRef } from '../../components/helpers/ButtonsScrollRef';
 
 export const MoviesDetails = () => {
     const navigate = useNavigate();
