@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
   import { useDetailsSerie } from '../../hooks/series/useDetailsSerie';
 import { ShowTrailerSerie } from '../../components/trailer/ShowTrailerSerie';
 import { useCreditsSerie } from '../../hooks/series/useCreditsSerie';
-import { Skeleton } from '../../components/helpers/skeleton';
-import { ButtonsScrollRef } from '../../components/helpers/buttonsScrollRef';
+import { Skeleton } from '../../components/helpers/Skeleton';
+import { ButtonsScrollRef } from '../../components/helpers/ButtonsScrollRef';
 import { useSimilarSerie } from '../../hooks/series/useSimilarSerie';
 
 export const SeriesDetails = () => {
