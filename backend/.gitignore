@@ -33,8 +33,5 @@ build/
 .vscode/
 # Ignorar archivos de configuración de Spring Boot
 src/main/resources/application.properties
-src/main/resources/application.yml
 src/main/resources/*.properties
-src/main/resources/*.yml
-src/main/resources/*
 src\main\java\com\SecurityConfig.java
