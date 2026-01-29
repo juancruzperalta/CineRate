@@ -54,7 +54,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-          response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+          filterChain.doFilter(request, response);
           return;
         }
         token = authHeader.substring(7);
