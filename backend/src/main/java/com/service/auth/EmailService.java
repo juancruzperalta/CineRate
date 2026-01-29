@@ -1,6 +1,7 @@
 package com.service.auth;
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -12,18 +13,20 @@ import com.repository.user.UserRepository;
 public class EmailService {
   private final UserRepository repo;
   private final JavaMailSender mailSender;
-
+    @Value("${FRONTEND_URL}")
+    private String frontendUrl;
   public EmailService(JavaMailSender mailSender, UserRepository repo){
     this.mailSender = mailSender;
     this.repo = repo;
   }
-    public void sendResetPassword(String email, String token) {
+
+  public void sendResetPassword(String email, String token) {
     SimpleMailMessage message = new SimpleMailMessage();
     message.setTo(email);
     message.setSubject("CineRate | Change Password");
     message.setText(
       "Going to change password:\n" +
-      "http://localhost:5173/user/reset-forgot-password?token=" + token
+      frontendUrl+"/user/reset-forgot-password?token="+ token
     );
     mailSender.send(message);
   }
@@ -59,7 +62,7 @@ public class EmailService {
     message.setSubject("CineRate | Register Account");
     message.setText(
       "To register account click here:\n" +
-      "http://localhost:5173/auth/register/confirm?token=" + tokenTemp
+      frontendUrl+"/auth/register/confirm?token=" + tokenTemp
     );
     mailSender.send(message);
     UserEntity nuevoUser = new UserEntity();
