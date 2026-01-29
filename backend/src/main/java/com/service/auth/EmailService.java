@@ -9,15 +9,22 @@ import com.repository.user.UserRepository;
 import com.resend.Resend;
 import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
+
+import jakarta.annotation.PostConstruct;
 @Service
 public class EmailService {
   private final UserRepository repo;
+  @Value("RESEND_API_KEY")
+  private String apiKey;
+  private Resend resend;
 
-  private final Resend resend;
-
-    public EmailService(@Value("RESEND_API_KEY") String apiKey, UserRepository repo){
-    this.resend = new Resend(apiKey);
+  public EmailService(UserRepository repo) {
     this.repo = repo;
+  }
+
+    @PostConstruct
+  public void init() {
+      this.resend = new Resend(apiKey);
   }
 
   public void sendResetPassword(String email, String token) throws ResendException {
