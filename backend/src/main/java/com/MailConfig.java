@@ -18,7 +18,6 @@ public class MailConfig {
 
   @Value("${MAIL_PASS}")
   private String mailPass;
-//mail
   @Bean
   public JavaMailSender javaMailSender() {
     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -35,18 +34,4 @@ public class MailConfig {
 
     return mailSender;
   }
-  @Autowired
-private JavaMailSender mailSender;
-
-@Bean
-CommandLineRunner testMail() {
-    return args -> {
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("juanpera3000@gmail.com");
-        msg.setSubject("Test Mail");
-        msg.setText("Funciona en Railway!");
-        mailSender.send(msg);
-        System.out.println("Mail enviado!");
-    };
-}
 }
