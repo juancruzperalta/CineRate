@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Component
+// @Component
 public class JWTAuthFilter extends OncePerRequestFilter {
   private final JWTUtil jwtUtil;
     private final UserRepository repo;
