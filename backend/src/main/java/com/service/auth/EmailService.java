@@ -14,16 +14,15 @@ public class EmailService {
   private final UserRepository repo;
 
   private final Resend resend;
-    @Value("")
-    private String frontendUrl;
-    public EmailService(@Value("") String apiKey, UserRepository repo){
+
+    public EmailService(@Value("RESEND_API_KEY") String apiKey, UserRepository repo){
     this.resend = new Resend(apiKey);
     this.repo = repo;
   }
 
   public void sendResetPassword(String email, String token) throws ResendException {
     CreateEmailOptions sendEm = CreateEmailOptions.builder()
-       .from("juanpera3000@gmail.com")
+       .from("CineRate <onboarding@resend.dev>")
                 .to(email)
                 .subject("Change password")
                 .html("""
@@ -62,7 +61,7 @@ public class EmailService {
       throw new IllegalArgumentException("You already registred");
     }
     CreateEmailOptions sendEm = CreateEmailOptions.builder()
-       .from("juanpera3000@gmail.com")
+       .from("CineRate <onboarding@resend.dev>")
                 .to(email)
                 .subject("Confirm your account")
                 .html("""
