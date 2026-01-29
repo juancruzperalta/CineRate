@@ -42,7 +42,8 @@ public class SecurityConfig {
           //     "/api/movie/**",
           //     "/api/serie/**"
           // ).permitAll()
-            .anyRequest().authenticated()
+              .anyRequest().permitAll()
+            // .authenticated()
         )
         .sessionManagement(sess ->
             sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
