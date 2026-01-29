@@ -26,12 +26,17 @@ public class AuthService {
         public String login(String email, String password) {
             UserEntity user = repo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+            if (user==null) {
+                  throw new RuntimeException("User not found");
+                }
             if (password.isBlank() || email.isBlank()) {
-                                      throw new RuntimeException("Invalid credentials");
+                                      throw new RuntimeException("Credentials is blank");
                     }
-        if (!user.isActive()) {
-            throw new RuntimeException("User doesn't finish registration");
-        }
+                    if (!user.isActive()) {
+                      throw new RuntimeException("User doesn't finish registration");
+                    }
+        System.out.println("RAW: [" + password + "]");
+System.out.println("HASH: [" + user.getPassword() + "]");
             if (!encoder.matches(password, user.getPassword())) {
                 throw new RuntimeException("Invalid credentials");
             }

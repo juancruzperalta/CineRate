@@ -10,7 +10,6 @@ import com.resend.Resend;
 import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
 
-import jakarta.annotation.PostConstruct;
 @Service
 public class EmailService {
   private final UserRepository repo;
