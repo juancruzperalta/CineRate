@@ -2,36 +2,43 @@ package com.service.auth;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.model.user.UserEntity;
 import com.repository.user.UserRepository;
-
+import com.resend.Resend;
+import com.resend.core.exception.ResendException;
+import com.resend.services.emails.model.CreateEmailOptions;
 @Service
 public class EmailService {
   private final UserRepository repo;
-  private final JavaMailSender mailSender;
-    @Value("${FRONTEND_URL}")
+
+  private final Resend resend;
+    @Value("")
     private String frontendUrl;
-  public EmailService(JavaMailSender mailSender, UserRepository repo){
-    this.mailSender = mailSender;
+    public EmailService(@Value("") String apiKey, UserRepository repo){
+    this.resend = new Resend(apiKey);
     this.repo = repo;
   }
 
-  public void sendResetPassword(String email, String token) {
-    SimpleMailMessage message = new SimpleMailMessage();
-    message.setTo(email);
-    message.setSubject("CineRate | Change Password");
-    message.setText(
-      "Going to change password:\n" +
-      frontendUrl+"/user/reset-forgot-password?token="+ token
-    );
-    mailSender.send(message);
+  public void sendResetPassword(String email, String token) throws ResendException {
+    CreateEmailOptions sendEm = CreateEmailOptions.builder()
+       .from("CineRate <onboarding@resend.dev>")
+                .to(email)
+                .subject("Change password")
+                .html("""
+                    <h2>CineRate 🎬</h2>
+                    <p>click to change password:</p>
+                    <a href="https://cine-rate.netlify.app/user/reset-forgot-password?token=">
+                        change password
+                    </a>
+                """.formatted(token))
+                .build();
+
+        resend.emails().send(sendEm);
   }
 
-  public boolean forgotPass(String email, String tokenTemp) {
+  public boolean forgotPass(String email, String tokenTemp) throws ResendException {
     if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Invalid token");
     }
@@ -44,7 +51,7 @@ public class EmailService {
     repo.save(us);
     return true;
 		}
-  public boolean registerSendEmail(String email, String tokenTemp) {
+  public boolean registerSendEmail(String email, String tokenTemp) throws ResendException {
     if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Invalid token");
     }
@@ -54,17 +61,20 @@ public class EmailService {
     if (repo.existsByEmail(email) || repo.findBytokenTemp(tokenTemp).isPresent()) {
       throw new IllegalArgumentException("You already registred");
     }
-    
-    SimpleMailMessage message = new SimpleMailMessage();
-    message.setTo(email);
-    message.setFrom("juanpera3000@gmail.com");
+    CreateEmailOptions sendEm = CreateEmailOptions.builder()
+       .from("CineRate <juanpera3000@gmail.com>")
+                .to(email)
+                .subject("Confirm your account")
+                .html("""
+                    <h2>CineRate 🎬</h2>
+                    <p>Click for confirm your account:</p>
+                    <a href="https://cine-rate.netlify.app/register?token=%s">
+                        Confirm account
+                    </a>
+                """.formatted(tokenTemp))
+                .build();
 
-    message.setSubject("CineRate | Register Account");
-    message.setText(
-      "To register account click here:\n" +
-      frontendUrl+"/auth/register/confirm?token=" + tokenTemp
-    );
-    mailSender.send(message);
+        resend.emails().send(sendEm);
     UserEntity nuevoUser = new UserEntity();
     nuevoUser.setTokenTemp(tokenTemp);
     nuevoUser.setEmail(email);

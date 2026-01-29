@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model.auth.UserTokenDTO;
 import com.model.user.UserEmailDTO;
 import com.model.user.UserEntity;
+import com.resend.core.exception.ResendException;
 import com.service.auth.AuthService;
 import com.service.auth.EmailService;
 import com.service.auth.JWTService;
@@ -50,7 +51,7 @@ public class AuthController {
     }
     
     @PostMapping("/register-sendEmail")
-    public ResponseEntity<String> registerSendEmail(@RequestBody UserEmailDTO email) {
+    public ResponseEntity<String> registerSendEmail(@RequestBody UserEmailDTO email) throws ResendException {
       try{
         String tokenTemp = jwt.generateTokenTemp(email.getEmail());
         emailService.registerSendEmail(email.getEmail(), tokenTemp);
@@ -80,7 +81,7 @@ public class AuthController {
 
     // Aquí lo que hacemos es que el usuario olvidó su contraseña, entonces enviamos un token (generado por 15 minutos) y un email para verificar su email. (De ahi entrará a un link, que luego se redirigirá a reset-forgot-password con un token + su nueva contraseña para postear en la BD)
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestBody UserEmailDTO email) {
+    public ResponseEntity<String> forgotPassword(@RequestBody UserEmailDTO email) throws ResendException {
       try{
         String tokenTemp = jwt.generateTokenTemp(email.getEmail());
         emailService.forgotPass(email.getEmail(), tokenTemp);
