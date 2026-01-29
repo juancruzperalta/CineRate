@@ -14,19 +14,11 @@ import jakarta.annotation.PostConstruct;
 @Service
 public class EmailService {
   private final UserRepository repo;
-  @Value("RESEND_API_KEY")
-  private String apiKey;
-  private Resend resend;
-
-  public EmailService(UserRepository repo) {
-    this.repo = repo;
-  }
-
-    @PostConstruct
-  public void init() {
-      this.resend = new Resend(apiKey);
-  }
-
+  private final Resend resend;
+ public EmailService(@Value("${RESEND_API_KEY}") String apiKey,UserRepository repo) {
+        this.repo = repo;
+        this.resend = new Resend(apiKey);
+    }
   public void sendResetPassword(String email, String token) throws ResendException {
     CreateEmailOptions sendEm = CreateEmailOptions.builder()
        .from("CineRate <onboarding@resend.dev>")
