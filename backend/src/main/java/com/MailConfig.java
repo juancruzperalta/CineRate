@@ -23,13 +23,13 @@ public class MailConfig {
     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
     mailSender.setHost("smtp.gmail.com");
     mailSender.setUsername(mailUser);
-    mailSender.setPort(587);
+    mailSender.setPort(465);
     mailSender.setPassword(mailPass);
     Properties props = mailSender.getJavaMailProperties();
     props.put("mail.transport.protocol", "smtp");
     props.put("mail.smtp.auth", "true");
-    props.put("mail.smtp.starttls.enable", "true");
-    props.put("mail.smtp.ssl.enable", "false");
+    props.put("mail.smtp.starttls.enable", "false");
+    props.put("mail.smtp.ssl.enable", "true");
     props.put("mail.debug", "true");
 
     return mailSender;
