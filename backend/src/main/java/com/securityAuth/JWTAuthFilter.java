@@ -39,7 +39,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         throws ServletException, IOException {
           
         String token = null;
-        String path = request.getServletPath();
+        String path = request.getRequestURI();
         // si en el auth viene el token nullo, lo ignoro (para logearnos como minimo)
         if (
           path.startsWith("/auth/")
@@ -54,7 +54,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-          filterChain.doFilter(request, response);
+          response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
           return;
         }
         token = authHeader.substring(7);
