@@ -39,7 +39,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         throws ServletException, IOException {
           
         String token = null;
-        String path = request.getRequestURI();
+        String path = request.getServletPath();
         // si en el auth viene el token nullo, lo ignoro (para logearnos como minimo)
         if (
           path.startsWith("/auth/")
