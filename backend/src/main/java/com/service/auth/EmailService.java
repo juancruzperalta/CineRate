@@ -23,7 +23,7 @@ public class EmailService {
 
   public void sendResetPassword(String email, String token) throws ResendException {
     CreateEmailOptions sendEm = CreateEmailOptions.builder()
-       .from("CineRate <onboarding@resend.dev>")
+       .from("juanpera3000@gmail.com")
                 .to(email)
                 .subject("Change password")
                 .html("""
@@ -62,7 +62,7 @@ public class EmailService {
       throw new IllegalArgumentException("You already registred");
     }
     CreateEmailOptions sendEm = CreateEmailOptions.builder()
-       .from("CineRate <juanpera3000@gmail.com>")
+       .from("juanpera3000@gmail.com")
                 .to(email)
                 .subject("Confirm your account")
                 .html("""
