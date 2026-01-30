@@ -20,7 +20,7 @@ public class EmailService {
     }
   public void sendResetPassword(String email, String token) throws ResendException {
     CreateEmailOptions sendEm = CreateEmailOptions.builder()
-       .from("CineRate <onboarding@resend.dev>")
+       .from("CineRate <no-reply@cine-rate.site>")
                 .to(email)
                 .subject("Change password")
                 .html("""
@@ -58,8 +58,13 @@ public class EmailService {
     if (repo.existsByEmail(email) || repo.findBytokenTemp(tokenTemp).isPresent()) {
       throw new IllegalArgumentException("You already registred");
     }
+    UserEntity nuevoUser = new UserEntity();
+    nuevoUser.setTokenTemp(tokenTemp);
+    nuevoUser.setEmail(email);
+    nuevoUser.setcreatedAt(LocalDateTime.now());
+    repo.save(nuevoUser);
     CreateEmailOptions sendEm = CreateEmailOptions.builder()
-       .from("CineRate <onboarding@resend.dev>")
+       .from("CineRate <no-reply@cine-rate.site>")
                 .to(email)
                 .subject("Confirm your account")
                 .html("""
@@ -72,11 +77,6 @@ public class EmailService {
                 .build();
 
         resend.emails().send(sendEm);
-    UserEntity nuevoUser = new UserEntity();
-    nuevoUser.setTokenTemp(tokenTemp);
-    nuevoUser.setEmail(email);
-    nuevoUser.setcreatedAt(LocalDateTime.now());
-    repo.save(nuevoUser);
     return true;
   }
 }
