@@ -33,22 +33,23 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
         this.repo = repo;
     }
-
+    private static final List<String> PRIVATE_PATHS = List.of(
+        "/api/watchLater",
+        "/api/favorite",
+        "/api/vote",
+        "/api/user"
+    );
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         String token = null;
         String path = request.getServletPath();
-        // si en el auth viene el token nullo, lo ignoro (para logearnos como minimo)
-        if (
-          path.startsWith("/auth/")
-          || path.startsWith("/api/movie/")
-          || path.startsWith("/api/serie/")
-          || request.getMethod().equals("OPTIONS")
-          ) {
-            filterChain.doFilter(request, response);
-            return;
-          }
+        boolean isPrivate = PRIVATE_PATHS.stream().anyMatch(path::startsWith);
+
+      if (!isPrivate) {
+          filterChain.doFilter(request, response);
+          return;
+      }
 
         String authHeader = request.getHeader("Authorization");
 
