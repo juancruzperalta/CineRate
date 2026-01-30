@@ -22,7 +22,7 @@ public class UserEntity {
     private String email;
 
     private String password;
-
+    @Column(name = "role")
     private String role = "USER";
     @Column(name = "created_at")
     private LocalDateTime createdAt;

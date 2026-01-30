@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }) => {
   const fetchUser = async () => { 
     const token = localStorage.getItem("token");
     if(!token){return}
-    const res = await fetch("http://localhost:8085/user/data", {
+    const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/user/data`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
