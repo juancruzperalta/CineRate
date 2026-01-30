@@ -20,7 +20,7 @@ public class CorsConfig {
       CorsConfiguration config = new CorsConfiguration();
 
     config.setAllowedOrigins(List.of(
-        "https://cine-rate.netlify.app"
+        frontendUrl
     ));
 
     config.setAllowedMethods(List.of(
