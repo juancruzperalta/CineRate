@@ -20,7 +20,7 @@ public class CorsConfig {
       CorsConfiguration config = new CorsConfiguration();
 
     config.setAllowedOrigins(List.of(
-        frontendUrl
+        "https://cine-rate.site"
     ));
 
     config.setAllowedMethods(List.of(
