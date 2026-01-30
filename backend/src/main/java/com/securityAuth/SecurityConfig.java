@@ -41,7 +41,8 @@ public class SecurityConfig {
               "/auth/**",
               "/api/movie/**",
               "/api/serie/**"
-          ).permitAll()
+              ).permitAll()
+          .requestMatchers(HttpMethod.GET, "/auth/**").permitAll()
               .anyRequest().authenticated()
         )
         .sessionManagement(sess ->
