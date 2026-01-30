@@ -30,21 +30,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-http
+    http
         .cors(cors -> cors.configurationSource(corsConfigurationSource))
         .csrf(csrf -> csrf.disable())
         .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers(
-                "/auth/**",
-                "/auth/register-sendEmail",
-                "/auth/login",
-                "/auth/register",
-                "/api/movie/**",
-                "/api/serie/**"
-            ).permitAll()
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
         )
+
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();

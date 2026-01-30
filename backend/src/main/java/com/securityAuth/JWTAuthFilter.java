@@ -33,24 +33,24 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
         this.repo = repo;
     }
-    private static final List<String> PRIVATE_PATHS = List.of(
-        "/api/watchLater",
-        "/api/favorite",
-        "/api/vote",
-        "/api/user"
-    );
+private static final List<String> PRIVATE_PATHS = List.of(
+    "/api/watchLater",
+    "/api/favorite",
+    "/api/vote",
+    "/user/data",
+    "/auth/change-password"
+);
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         String token = null;
         String path = request.getServletPath();
-        boolean isPrivate = PRIVATE_PATHS.stream().anyMatch(path::startsWith);
+      boolean isPrivate = PRIVATE_PATHS.stream().anyMatch(path::startsWith);
 
-      if (!isPrivate) {
-          filterChain.doFilter(request, response);
-          return;
-      }
-
+if (!isPrivate) {
+    filterChain.doFilter(request, response);
+    return;
+}
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
