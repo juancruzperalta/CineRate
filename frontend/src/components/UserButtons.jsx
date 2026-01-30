@@ -14,7 +14,7 @@ export const UserButtons = ({serieId, mediaType}) => {
       }, [])
     }
     const infoVote = async () => {
-      const res = await fetch(`http://localhost:8085/api/vote/${serieId}`, {
+      const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/vote/${serieId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const UserButtons = ({serieId, mediaType}) => {
         };
  
     const infoFavorite = async () => {
-     const res = await fetch(`http://localhost:8085/api/favorite/${serieId}`,{
+     const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/favorite/${serieId}`,{
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export const UserButtons = ({serieId, mediaType}) => {
           }
   }
   const infoWatchLater = async () => {
-  const res = await fetch(`http://localhost:8085/api/watchLater/${serieId}`,{
+  const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/watchLater/${serieId}`,{
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export const UserButtons = ({serieId, mediaType}) => {
           }
   }
   const favoriteButton = async (idSerMov, mediaType) => {
-    const res = await fetch(`http://localhost:8085/api/favorite/${idSerMov}/${mediaType}`,{
+    const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/favorite/${idSerMov}/${mediaType}`,{
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -88,7 +88,7 @@ if (res.ok) {
   }
   }
   const buttonVote = async (idSerMov, value, mediaType) => {
-    const res = await fetch(`http://localhost:8085/api/vote/${idSerMov}/${mediaType}`, {
+    const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/vote/${idSerMov}/${mediaType}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +98,7 @@ if (res.ok) {
     });
   }
   const buttonWatchLater = async (serieId, mediaType) => {
-    const res = await fetch(`http://localhost:8085/api/watchLater/${serieId}/${mediaType}`, {
+    const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/watchLater/${serieId}/${mediaType}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -18,12 +18,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-  // private final JWTAuthFilter jwtAuthFilter;
+  private final JWTAuthFilter jwtAuthFilter;
    private final CorsConfigurationSource corsConfigurationSource;
 
-    public SecurityConfig(CorsConfigurationSource corsConfigurationSource) {
+    public SecurityConfig(CorsConfigurationSource corsConfigurationSource, JWTAuthFilter jwtAuthFilter) {
         this.corsConfigurationSource = corsConfigurationSource;
-        // this.jwtAuthFilter = jwtAuthFilter;
+        this.jwtAuthFilter = jwtAuthFilter;
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -36,19 +36,18 @@ public class SecurityConfig {
           .cors(cors -> cors.configurationSource(corsConfigurationSource))
           .csrf(csrf -> csrf.disable())
           .authorizeHttpRequests(auth -> auth
-          // .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-          // .requestMatchers(
-          //     "/auth/**",
-          //     "/api/movie/**",
-          //     "/api/serie/**"
-          // ).permitAll()
-              .anyRequest().permitAll()
-            // .authenticated()
+          .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+          .requestMatchers(
+              "/auth/**",
+              "/api/movie/**",
+              "/api/serie/**"
+          ).permitAll()
+              .anyRequest().authenticated()
         )
         .sessionManagement(sess ->
             sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
-        // .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

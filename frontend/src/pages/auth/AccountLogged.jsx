@@ -28,7 +28,7 @@ export const AccountLogged = () => {
     }
     const getWatchLaterMovies = async () => {
       if (!token) return;
-      const res = await fetch(`http://localhost:8085/api/watchLater/getAll?isSerie=false`, {
+      const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/watchLater/getAll?isSerie=false`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const AccountLogged = () => {
     }
     const getWatchLaterSeries = async () => {
       if (!token) return;
-      const res = await fetch(`http://localhost:8085/api/watchLater/getAll?isSerie=true`, {
+      const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/watchLater/getAll?isSerie=true`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

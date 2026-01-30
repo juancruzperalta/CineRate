@@ -35,8 +35,6 @@ public class AuthService {
                     if (!user.isActive()) {
                       throw new RuntimeException("User doesn't finish registration");
                     }
-        System.out.println("RAW: [" + password + "]");
-System.out.println("HASH: [" + user.getPassword() + "]");
             if (!encoder.matches(password, user.getPassword())) {
                 throw new RuntimeException("Invalid credentials");
             }
