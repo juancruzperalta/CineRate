@@ -4,10 +4,11 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
-  const [errorLogged, setErrorLogged] = useState(false);
+  const [errorLogged, setErrorLogged] = useState('');
   const [isLogged, setIsLogged] = useState(!!localStorage.getItem("token"));
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const [errorRegister, setErrorRegister] = useState(false);
+  const [LoggedRateLimit, setLoggedRateLimit] = useState(false);
   const [tokenTemp, setTokenTemp] = useState(null);
   const [emailSend, setEmailSend] = useState('');
   const [searchParams] = useSearchParams();
@@ -48,10 +49,15 @@ export const AuthProvider = ({ children }) => {
           },
           body: JSON.stringify({ email, password })
         });
+        const msg = await resLogin.text();
+        if (msg.includes("wait a few minutes")) {
+          setLoggedRateLimit(true);
+        }
+        setErrorLogged(msg);
         if (!resLogin.ok) {
-          setErrorLogged(true);
+          setErrorLogged(msg);
           setTimeout(() => {
-            setErrorLogged(false);
+            setErrorLogged('');
           }, 3000);
           return;
         }
@@ -117,7 +123,7 @@ export const AuthProvider = ({ children }) => {
   
   }, [isLogged])
     return (
-      <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess, setRegisterSuccess, errorRegister, emailSend}}>
+      <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess, setRegisterSuccess, errorRegister, emailSend, LoggedRateLimit}}>
         {children}
       </AuthContext.Provider>
     );

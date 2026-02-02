@@ -15,29 +15,39 @@ import com.model.auth.UserTokenDTO;
 import com.model.user.UserEmailDTO;
 import com.model.user.UserEntity;
 import com.resend.core.exception.ResendException;
+import com.service.CallApiService;
 import com.service.auth.AuthService;
 import com.service.auth.EmailService;
 import com.service.auth.JWTService;
 import com.model.auth.ChangePasswordDTO;
 import com.model.auth.ForgotPasswordDTO;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
+    private final CallApiService callApiService;
 
   private final AuthService service;
   private final EmailService emailService;
   
     private final JWTService jwt;
-    public AuthController(AuthService service, EmailService emailService, JWTService jwt) {
+    public AuthController(AuthService service, EmailService emailService, JWTService jwt, CallApiService callApiService) {
         this.service = service;
         this.emailService = emailService;
         this.jwt = jwt;
+        this.callApiService = callApiService;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserTokenDTO> login(@RequestBody UserEntity request) {
-        String token = service.login(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(new UserTokenDTO(token));
+    public ResponseEntity<String> login(@RequestBody UserEntity request) {
+      try{
+        service.login(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok("Logged");
+      } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(e.getMessage());
+      }
     }
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserEntity request) {
@@ -66,7 +76,7 @@ public class AuthController {
     @GetMapping("/validateToken")
       public ResponseEntity<Object> validateToken(Authentication auth) {
       return ResponseEntity.ok(
-          AuthService.findByEmail(auth.getUsername())
+          service.findByEmail(auth.getUsername())
       );
     }
     // Cuándo un usuario olvida su contraseña; logueado, y con el rol, permitimos cambiarla.

@@ -3,42 +3,50 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.model.user.UserEntity;
 import com.repository.user.UserRepository;
+import com.service.security.RateLimitSecurity;
 
 @Service
 public class AuthService {
 
-    private static UserRepository repo;
+    private final UserRepository repo;
             private final PasswordEncoder encoder;
             private final JWTService jwt;
-        
-            public AuthService(UserRepository repo, PasswordEncoder encoder, JWTService jwt) {
-              AuthService.repo = repo;
+          private RateLimitSecurity rateLimit;
+            public AuthService(UserRepository repo, PasswordEncoder encoder, JWTService jwt, RateLimitSecurity rateLimit) {
+              this.repo = repo;
               this.encoder = encoder;
               this.jwt = jwt;
+              this.rateLimit = rateLimit;
             }
         //Logueo un usuario. Valido un email válido y macheo las password hasheadas
         public String login(String email, String password) {
-            UserEntity user = repo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+          if (!rateLimit.existsEmail(email)) { 
+            rateLimit.create(email);
+          }
+          if (!rateLimit.check(email,false)) {
+            throw new IllegalArgumentException("You should wait a few minutes to login renew");
+          }
+          UserEntity user = repo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
             if (user==null) {
-                  throw new RuntimeException("User not found");
-                }
-            if (password.isBlank() || email.isBlank()) {
-                                      throw new RuntimeException("Credentials is blank");
-                    }
-                    if (!user.isActive()) {
-                      throw new RuntimeException("User doesn't finish registration");
-                    }
-            if (!encoder.matches(password, user.getPassword())) {
-                throw new RuntimeException("Invalid credentials");
+              throw new IllegalArgumentException("User not found");
             }
-    
+            if (password.isBlank() || email.isBlank()) {
+              throw new IllegalArgumentException("Credentials is blank");
+            }
+            if (!user.isActive()) {
+              throw new IllegalArgumentException("User doesn't finish registration");
+            }
+            if (!encoder.matches(password, user.getPassword())) {
+              throw new IllegalArgumentException("Invalid credentials");
+            }
+            rateLimit.isLogged(email);
             return jwt.generateToken(user);
         }
         //registro un usuario. hasheo la password.
@@ -51,7 +59,7 @@ public class AuthService {
             throw new IllegalArgumentException("The password length must be > 8 characters");
           }
           UserEntity nuevoUser = repo.findBytokenTemp(tokenTemp)
-              .orElseThrow(() -> new RuntimeException("User not found"));
+          .orElseThrow(() -> new RuntimeException("User not found"));
           if (!email.equals(nuevoUser.getEmail()) || email.isBlank()) {
             throw new IllegalArgumentException("The email is distint for your registred");
           }
@@ -72,7 +80,7 @@ public class AuthService {
 
         //busco por el email del username, para validar el token una vez el usuario
         //este ya inicializado (por localstorage, me guarde el token para no tener que loguearse cada vez)
-        public static Object findByEmail(String username) {
+        public Object findByEmail(String username) {
           try {
             if (repo.existsByEmail(username)) {
               return username;

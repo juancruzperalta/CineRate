@@ -1,6 +1,7 @@
 package com.service.auth;
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -9,14 +10,17 @@ import com.repository.user.UserRepository;
 import com.resend.Resend;
 import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
-
+import com.service.security.RateLimitSecurity;
 @Service
 public class EmailService {
   private final UserRepository repo;
   private final Resend resend;
- public EmailService(@Value("${RESEND_API_KEY}") String apiKey,UserRepository repo) {
+  private RateLimitSecurity rateLimit;
+ public EmailService(@Value("${RESEND_API_KEY}") String apiKey,UserRepository repo, RateLimitSecurity rateLimit) {
         this.repo = repo;
         this.resend = new Resend(apiKey);
+        
+              this.rateLimit = rateLimit;
     }
   public void sendResetPassword(String email, String token) throws ResendException {
     CreateEmailOptions sendEm = CreateEmailOptions.builder()
@@ -39,6 +43,12 @@ public class EmailService {
     if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Invalid token");
     }
+    if (!rateLimit.existsEmail(email)) {
+      rateLimit.create(email);
+    }
+    if (!rateLimit.check(email,true)) {
+            throw new IllegalArgumentException("You should wait a few minutes to forgot renew");
+          }
     if (repo.findByEmail(email).isEmpty()) {
       throw new IllegalArgumentException("Email is not registred");
     }
@@ -48,15 +58,20 @@ public class EmailService {
     repo.save(us);
     return true;
 		}
+
   public boolean registerSendEmail(String email, String tokenTemp) throws ResendException {
+    
     if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Invalid token");
     }
     if (email.isBlank()) {
             throw new IllegalArgumentException("Email null");
-    }
-    if (repo.existsByEmail(email) || repo.findBytokenTemp(tokenTemp).isPresent()) {
+          }
+    if (repo.existsByEmail(email)) {
       throw new IllegalArgumentException("You already registred");
+    }
+    if (repo.findBytokenTemp(tokenTemp).isPresent()) {
+      throw new IllegalArgumentException("You should wait a few minutes to send another email");
     }
     UserEntity nuevoUser = new UserEntity();
     nuevoUser.setTokenTemp(tokenTemp);
@@ -75,7 +90,6 @@ public class EmailService {
                     </a>
                 """.formatted(tokenTemp))
                 .build();
-
         resend.emails().send(sendEm);
     return true;
   }
