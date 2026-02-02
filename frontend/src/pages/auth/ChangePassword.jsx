@@ -27,8 +27,11 @@ export const ChangePassword = () => {
               setFailToChange('');
             }, 3000);
         return;
+    } else { 
+                        setTimeout(() => {
+              navigate("/user/account", { replace: true })
+            }, 3000);
     }
-      navigate("/auth", { replace: true })
   }
   const confirmPassword = ({ newPassword, confirmPassword }) =>{
     if (newPassword == confirmPassword) {
