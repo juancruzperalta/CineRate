@@ -71,7 +71,7 @@ export const AccountLogged = () => {
         <section className='flex flex-col justify-center gap-2 h-full w-full'>
           <div className='flex flex-col h-full w-full items-center justify-center gap-3'>
           <img
-        src="/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+        src="/1fb4eb9d-c23b-4dcb-9818-c037389947c8.png"
         alt="avatar"
         className="rounded-full bg-gray-200 w-40 h-40"
       />
@@ -83,11 +83,11 @@ export const AccountLogged = () => {
         </section>
 
       </div>
-      <section className=' flex-col justify-start gap-4 h-full w-full'>
+      <section className=' flex-col justify-center items-center gap-4 h-full w-full'>
         <article className='flex gap-2'>
           <div className='gap-2 flex flex-col'>
             <h2 className='font-semibold uppercase text-[#0ed395]'>SERIES VIEW LATER</h2>
-            <div className='grid justify-center items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6'>
+            <div className='grid justify-center items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2'>
               {
                 watchLaterSeries.map(({ mediaId, serie }) => (
                 serie ? <WatchLaterSerieItem key={mediaId} mediaId={mediaId} value={serie} /> : null))
@@ -98,7 +98,7 @@ export const AccountLogged = () => {
         <article className='flex gap-2 mt-4'>
           <div className='gap-2 flex flex-col'>
             <h2  className='font-semibold uppercase text-[#0ed395]'>MOVIES VIEW LATER</h2>
-            <div className='grid justify-center items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6'>
+            <div className='grid justify-center items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2'>
                        {
                 watchLaterMovies.map(({ mediaId, serie }) => (
                 !serie ? <WatchLaterSerieItem key={mediaId} mediaId={mediaId} value={serie} /> : null))
