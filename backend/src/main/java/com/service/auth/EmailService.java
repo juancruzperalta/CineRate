@@ -26,7 +26,7 @@ public class EmailService {
                 .html("""
                     <h2>CineRate 🎬</h2>
                     <p>click to change password:</p>
-                    <a href="https://cine-rate.netlify.app/user/reset-forgot-password?token=%s">
+                    <a href="https://cine-rate.site/user/reset-forgot-password?token=%s">
                         change password
                     </a>
                 """.formatted(token))
@@ -70,7 +70,7 @@ public class EmailService {
                 .html("""
                     <h2>CineRate 🎬</h2>
                     <p>Click for confirm your account:</p>
-                    <a href="https://cine-rate.netlify.app/auth/register/confirm?token=%s">
+                    <a href="https://cine-rate.site/auth/register/confirm?token=%s">
                         Confirm account
                     </a>
                 """.formatted(tokenTemp))
