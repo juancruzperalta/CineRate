@@ -16,15 +16,16 @@ export const ResetForgotPassword = () => {
         body: JSON.stringify({tokenTemp,password,confirmPassword})
       })
           const msg = await res.text();
-    if (res.ok)
-    setPasswordChange(msg);
-      setTimeout(() => {
-      navigate("/auth", { replace: true })
-      setPasswordChange("")
-    }, 2000);
-    if (!res.ok) {
+          if (!res.ok) {
+            setPasswordChange(msg);
+              return;
+          }
+    if (res.ok) {
       setPasswordChange(msg);
-        return;
+      setTimeout(() => {
+        navigate("/auth", { replace: true })
+        setPasswordChange("")
+      }, 2000);
     }
   }
 

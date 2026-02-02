@@ -28,9 +28,7 @@ export const ChangePassword = () => {
             }, 3000);
         return;
     }
-    if (res.ok) {
       navigate("/auth", { replace: true })
-    }
   }
   const confirmPassword = ({ newPassword, confirmPassword }) =>{
     if (newPassword == confirmPassword) {
