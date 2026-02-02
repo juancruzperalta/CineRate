@@ -1,10 +1,12 @@
 import React from 'react'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const ResetForgotPassword = () => {
 //obtengo el token que envian por url el usuario. 
   const tokenTemp = new URLSearchParams(window.location.search).get("token");
   const [passwordChange, setPasswordChange] = useState("");
+  const navigate = useNavigate();
   const resetForgotPassword = async (password, confirmPassword) => {
       const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/reset-forgot-password`, {
         method: "POST",
@@ -17,6 +19,7 @@ export const ResetForgotPassword = () => {
     if (res.ok)
     setPasswordChange(msg);
       setTimeout(() => {
+      navigate("/auth", { replace: true })
       setPasswordChange("")
     }, 2000);
     if (!res.ok) {
