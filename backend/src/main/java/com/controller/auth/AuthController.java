@@ -74,10 +74,15 @@ public class AuthController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDTO dto,
         @AuthenticationPrincipal UserEntity us) {
-      Object user = service.findByEmail(dto.getEmail());
-      String email = (String) user;
-      service.changePass(email, dto.getPasswordAct(), dto.getNewPassword());
-      return ResponseEntity.ok("Password has been changed");
+           try {
+             Object user = service.findByEmail(dto.getEmail());
+             String email = (String) user;
+             service.changePass(email, dto.getPasswordAct(), dto.getNewPassword());
+             return ResponseEntity.ok("Password has been changed");
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+      }
     }
 
     // Aquí lo que hacemos es que el usuario olvidó su contraseña, entonces enviamos un token (generado por 15 minutos) y un email para verificar su email. (De ahi entrará a un link, que luego se redirigirá a reset-forgot-password con un token + su nueva contraseña para postear en la BD)
