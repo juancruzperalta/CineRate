@@ -6,7 +6,7 @@ export const ChangePassword = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const { isLogged } = useAuth();
-  const [failToChange, setFailToChange] = useState(false)
+  const [failToChange, setFailToChange] = useState("");
   useEffect(() => {
     if (!token) { navigate("/", { replace: true }) };
   }, [isLogged])
@@ -19,8 +19,13 @@ export const ChangePassword = () => {
         },
         body: JSON.stringify({ email, passwordAct, newPassword })
       })
+    const msg = await res.text();
+    setFailToChange(msg);
     if (!res.ok) {
-      setFailToChange(true);
+      setFailToChange(msg);
+                  setTimeout(() => {
+              setFailToChange('');
+            }, 3000);
         return;
     }
   }
@@ -49,7 +54,7 @@ export const ChangePassword = () => {
         <input type="password" className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='new Password' id="newPassword" required />
         <input type="password" className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='confirm password' id="confirmPassword" required/>
         <input type="button" value="Change Password" className='bg-white w-full rounded-sm p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80'  placeholder='Renew Password' onClick={() => confirmPassword(document.querySelector("#newPassword"), document.querySelector("#confirmPassword"))}/>
-        <span className={`${failToChange ? 'flex' : 'hidden'}`}>Error to change password</span>
+        <span>{failToChange}</span>
       </form>
       </div>
   )

@@ -83,6 +83,9 @@ public class AuthService {
           return null;
         }
         public boolean changePass(String email, String passwordAct, String newPassword) {
+                    if (newPassword.length() < 8 || newPassword.isBlank()) {
+            throw new IllegalArgumentException("The password length must be > 8 characters");
+          }
             UserEntity user = repo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
             if (email.isBlank()) {

@@ -72,11 +72,12 @@ public class AuthController {
     // Cuándo un usuario olvida su contraseña; logueado, y con el rol, permitimos cambiarla.
     @PostMapping("/change-password")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO dto,
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDTO dto,
         @AuthenticationPrincipal UserEntity us) {
       Object user = service.findByEmail(dto.getEmail());
       String email = (String) user;
-      return ResponseEntity.ok(service.changePass(email, dto.getPasswordAct(), dto.getNewPassword()));
+      service.changePass(email, dto.getPasswordAct(), dto.getNewPassword());
+      return ResponseEntity.ok("Password has been changed");
     }
 
     // Aquí lo que hacemos es que el usuario olvidó su contraseña, entonces enviamos un token (generado por 15 minutos) y un email para verificar su email. (De ahi entrará a un link, que luego se redirigirá a reset-forgot-password con un token + su nueva contraseña para postear en la BD)
