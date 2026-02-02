@@ -88,6 +88,9 @@ public class AuthService {
           }
             UserEntity user = repo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+            if (user == null) {
+              throw new IllegalArgumentException("User not found");
+                }
             if (email.isBlank()) {
               throw new IllegalArgumentException("The email is distint for your registred");
             }

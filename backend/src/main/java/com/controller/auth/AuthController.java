@@ -99,8 +99,15 @@ public class AuthController {
     }
     // Postearemos segun el usuario nos envie confirmado por el email + el token + el new password.
     @PostMapping("/reset-forgot-password")
-    public ResponseEntity<Boolean> resetForgotPassword(@RequestBody ForgotPasswordDTO forgotPassword) {
-      return ResponseEntity.ok(service.resetForgotPassowrd(forgotPassword.getTokenTemp(), forgotPassword.getPassword(),forgotPassword.getConfirmPassword()));
+    public ResponseEntity<String> resetForgotPassword(@RequestBody ForgotPasswordDTO forgotPassword) {
+      try{
+        service.resetForgotPassowrd(forgotPassword.getTokenTemp(), forgotPassword.getPassword(),
+          forgotPassword.getConfirmPassword());
+      return ResponseEntity.ok("Password has been changed");
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+      }
     }
 
 }

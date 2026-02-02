@@ -26,7 +26,7 @@ public class EmailService {
                 .html("""
                     <h2>CineRate 🎬</h2>
                     <p>click to change password:</p>
-                    <a href="https://cine-rate.netlify.app/user/reset-forgot-password?token=">
+                    <a href="https://cine-rate.netlify.app/user/reset-forgot-password?token=%s">
                         change password
                     </a>
                 """.formatted(token))
