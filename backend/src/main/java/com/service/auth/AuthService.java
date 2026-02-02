@@ -94,6 +94,9 @@ public class AuthService {
             if (passwordAct.isBlank() || newPassword.isBlank()) {
                         throw new IllegalArgumentException("Password is null");
           }
+          if (!encoder.matches(passwordAct, user.getPassword())) {
+            throw new IllegalArgumentException("Your current password is not correct");
+          }
           if (encoder.matches(passwordAct, user.getPassword())) {
             user.setPassword(encoder.encode(newPassword));
             repo.save(user);
