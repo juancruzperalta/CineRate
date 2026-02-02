@@ -30,7 +30,7 @@ export const ShowTrailerSerie = ({ serieId }) => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             id="iframeVideo"
             allowFullScreen
-            className='w-full h-full min-h-[400px] min-w-[500px]'
+            className='w-full h-full min-h-[200px] min-w-[300px] md:min-h-[400px] md:min-w-[500px]'
           ></iframe>
         </div >)}
       {trailerKey === null && (
