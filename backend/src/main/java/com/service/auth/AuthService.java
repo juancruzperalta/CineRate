@@ -114,8 +114,11 @@ public class AuthService {
             throw new IllegalArgumentException("Invalid token");
           }
           if (password.isBlank() || confirmPassword.isBlank()) {
-                          throw new IllegalArgumentException("Password null");
-            }
+            throw new IllegalArgumentException("Password null");
+          }
+                      if (password.length() < 8 || password.isBlank()) {
+            throw new IllegalArgumentException("The password length must be > 8 characters");
+          }
           UserEntity us = repo.findBytokenTemp(tokenTemp).orElseThrow(() -> new RuntimeException("User not found"));
           if (!password.equals(confirmPassword)){
           throw new IllegalArgumentException("Passwords does't matchs");
