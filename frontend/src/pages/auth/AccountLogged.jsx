@@ -70,7 +70,11 @@ export const AccountLogged = () => {
       <div className='w-full h-screen  grid '>
         <section className='flex flex-col justify-center gap-2 h-full w-full'>
           <div className='flex flex-col h-full w-full items-center justify-center gap-3'>
-            <img src="frontend\public\blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" alt="avatar" className='rounded-full bg-gray-200 w-40 h-40 text-start'/>
+          <img
+        src="/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+        alt="avatar"
+        className="rounded-full bg-gray-200 w-40 h-40"
+      />
             <span className='text-gray-300 text-[0.8rem] md:text-[0.9rem]'>Account Created {user?.created_at}</span>
             <span>{user?.email}</span>
             <span>Your Votes: {countVotes}</span>
@@ -83,7 +87,7 @@ export const AccountLogged = () => {
         <article className='flex gap-2'>
           <div className='gap-2 flex flex-col'>
             <h2 className='font-semibold uppercase text-[#0ed395]'>SERIES VIEW LATER</h2>
-            <div className='flex'>
+            <div className='grid justify-center items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6'>
               {
                 watchLaterSeries.map(({ mediaId, serie }) => (
                 serie ? <WatchLaterSerieItem key={mediaId} mediaId={mediaId} value={serie} /> : null))
@@ -94,7 +98,7 @@ export const AccountLogged = () => {
         <article className='flex gap-2 mt-4'>
           <div className='gap-2 flex flex-col'>
             <h2  className='font-semibold uppercase text-[#0ed395]'>MOVIES VIEW LATER</h2>
-            <div className='flex'>
+            <div className='grid justify-center items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6'>
                        {
                 watchLaterMovies.map(({ mediaId, serie }) => (
                 !serie ? <WatchLaterSerieItem key={mediaId} mediaId={mediaId} value={serie} /> : null))
