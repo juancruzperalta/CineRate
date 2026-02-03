@@ -27,10 +27,10 @@ public class AuthService {
             }
         //Logueo un usuario. Valido un email válido y macheo las password hasheadas
         public String login(String email, String password) {
-          if (!rateLimit.existsEmail(email)) { 
-            rateLimit.create(email);
+          if (!rateLimit.existsEmail(email,false)) { 
+            rateLimit.create(email,false);
           }
-          if (!rateLimit.check(email,false)) {
+          if (!rateLimit.checkEmail(email)) {
             throw new IllegalArgumentException("You should wait a few minutes to login renew");
           }
           UserEntity user = repo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
@@ -46,7 +46,7 @@ public class AuthService {
             if (!encoder.matches(password, user.getPassword())) {
               throw new IllegalArgumentException("Invalid credentials");
             }
-            rateLimit.isLogged(email);
+            rateLimit.isLogged(email,false);
             return jwt.generateToken(user);
         }
         //registro un usuario. hasheo la password.
@@ -132,8 +132,9 @@ public class AuthService {
           throw new IllegalArgumentException("Passwords does't matchs");
           }
           if (encoder.matches(password, us.getPassword())) {
-          throw new IllegalArgumentException("You already own this password");
+            throw new IllegalArgumentException("You already own this password");
           }
+          rateLimit.isLogged(us.getEmail(),true);
             us.setPassword(encoder.encode(password));
             us.setTokenTemp(null);
             repo.save(us);

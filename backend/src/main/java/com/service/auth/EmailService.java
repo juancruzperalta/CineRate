@@ -43,10 +43,10 @@ public class EmailService {
     if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Invalid token");
     }
-    if (!rateLimit.existsEmail(email)) {
-      rateLimit.create(email);
+    if (!rateLimit.existsEmail(email, true)) {
+      rateLimit.create(email,true);
     }
-    if (!rateLimit.check(email,true)) {
+    if (!rateLimit.checkForgot(email)) {
             throw new IllegalArgumentException("You should wait a few minutes to forgot renew");
           }
     if (repo.findByEmail(email).isEmpty()) {

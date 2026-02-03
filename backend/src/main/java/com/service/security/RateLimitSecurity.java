@@ -8,22 +8,27 @@ import org.springframework.stereotype.Service;
 public class RateLimitSecurity {
   private static final long BLOCK_TIME = 15 * 60 * 1000;
   Map<String, long[]> emailAndTimeAndCount = new HashMap<>();
+    Map<String, long[]> rateLimitForgotPassword = new HashMap<>();
   // long[0] = timeStart
   // long[1] = count
-  public void create(String email) {
-    emailAndTimeAndCount.put(email, new long[] { System.currentTimeMillis(), 0 });
-  }
-  public boolean existsEmail(String email) {
-   return emailAndTimeAndCount.containsKey(email);
+  public void create(String email, boolean isSendEmail) {
+    if (isSendEmail) {
+      rateLimitForgotPassword.put(email, new long[] { System.currentTimeMillis(), 0 });
+    }else{
+      emailAndTimeAndCount.put(email, new long[] { System.currentTimeMillis(), 0 });
+    }
   }
 
-  public boolean check(String email, boolean isSendEmail) {
-    int countMax = 0;
+  public boolean existsEmail(String email, boolean isSendEmail) {
     if (isSendEmail) {
-      countMax = 2;
-    } else {
-      countMax = 5;
+      return rateLimitForgotPassword.containsKey(email);
+    }else{
+      return emailAndTimeAndCount.containsKey(email);
     }
+  }
+
+  public boolean checkEmail(String email) {
+    int countMax = 5;
     long[] timeStart = emailAndTimeAndCount.get(email);
     if (timeStart == null) {
       return false;
@@ -39,7 +44,28 @@ public class RateLimitSecurity {
     }
     return true;
   }
-  public void isLogged(String email){
-    emailAndTimeAndCount.remove(email);
+  public boolean checkForgot(String email) {
+    int countMax = 2;
+    long[] timeStart = rateLimitForgotPassword.get(email);
+    if (timeStart == null) {
+      return false;
+    }
+    timeStart[1]++;
+    long now = System.currentTimeMillis();
+    if (now - timeStart[0] > BLOCK_TIME) {
+      rateLimitForgotPassword.remove(email);
+      return true;
+    }
+    if (now - timeStart[0] < BLOCK_TIME && timeStart[1] >= countMax) {
+      return false;
+    }
+    return true;
+  }
+  public void isLogged(String email, boolean isSendEmail){
+    if(isSendEmail){
+      rateLimitForgotPassword.remove(email);
+    }else{
+      emailAndTimeAndCount.remove(email);
+    }
   }
 }
