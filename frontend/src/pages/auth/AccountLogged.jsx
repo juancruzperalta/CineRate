@@ -66,7 +66,7 @@ export const AccountLogged = () => {
     return <Navigate to="/auth" replace />;
   }
   return (
-    <div className='px-10 flex items-center justify-center w-full h-full mb-8 gap-4'>
+    <div className='px-10 flex flex-col items-center justify-center w-full h-full mb-8 gap-4'>
       <div className='w-full h-screen  grid '>
         <section className='flex flex-col justify-center gap-2 h-full w-full'>
           <div className='flex flex-col h-full w-full items-center justify-center gap-3'>
