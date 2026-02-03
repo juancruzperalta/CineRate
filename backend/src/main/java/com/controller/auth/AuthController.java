@@ -1,4 +1,6 @@
 package com.controller.auth;
+import java.util.Map;
+
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,13 +42,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserEntity request) {
+    public ResponseEntity<Map<String,String>> login(@RequestBody UserEntity request) {
       try{
-        service.login(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok("Logged");
+        String token = service.login(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok(Map.of(
+                "message", "Logged",
+                "token", token
+            ));
       } catch (IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(e.getMessage());
+            .body(Map.of("message", e.getMessage()));
       }
     }
     @PostMapping("/register")
