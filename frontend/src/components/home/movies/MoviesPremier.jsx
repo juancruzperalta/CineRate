@@ -18,7 +18,7 @@ export const MoviesPremier = ({cant}) => {
           <span className='max-w-[100px] whitespace-nowrap text-ellipsis line-clamp-1  text-gray-200 font-bold'>{movie?.name}</span>
         </div>
         )
-          : (<div className='hidden'></div>)
+          : (<div><span className='max-w-[100px] whitespace-nowrap text-ellipsis line-clamp-1  text-gray-200 font-bold'>{movie?.name}</span></div>)
       ))}
       </div>
         <div className='h-20'>
