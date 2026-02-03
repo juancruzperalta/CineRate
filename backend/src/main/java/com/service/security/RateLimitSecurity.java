@@ -34,10 +34,10 @@ public class RateLimitSecurity {
       emailAndTimeAndCount.remove(email);
       return true;
     }
-    if (now - timeStart[0] < BLOCK_TIME && timeStart[1] >= countMax) {
+    if (now - timeStart[0] < BLOCK_TIME && timeStart[1] > countMax) {
       return false;
     }
-    return false;
+    return true;
   }
   public void isLogged(String email){
     emailAndTimeAndCount.remove(email);
