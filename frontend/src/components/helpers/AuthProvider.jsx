@@ -49,7 +49,8 @@ export const AuthProvider = ({ children }) => {
           },
           body: JSON.stringify({ email, password })
         });
-        const msg = await resLogin.text();
+        const data = await resLogin.json();
+        const msg = data.message;
         if (msg.includes("wait a few minutes")) {
           setLoggedRateLimit(true);
         }
@@ -61,7 +62,6 @@ export const AuthProvider = ({ children }) => {
           }, 3000);
           return;
         }
-        const data = await resLogin.json();
         localStorage.setItem("token", data.token);
         setIsLogged(true);
       }

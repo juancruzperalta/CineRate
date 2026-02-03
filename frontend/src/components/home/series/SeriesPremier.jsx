@@ -19,7 +19,10 @@ export const SeriesPremier = ({cant}) => {
           < img src={`https://image.tmdb.org/t/p/w500${serie?.backdrop_path ? serie?.backdrop_path : serie?.poster_path}`} alt={`${serie?.name}`} className='min-h-[180px] max-h-[180px] min-w-[120px] max-w-[120px] object-cover rounded-lg shadow-md cursor-pointer  hover:opacity-80' onClick={() => navigate(`/series/details/${serie?.id}`)} />
           <span className='max-w-[100px] whitespace-nowrap text-ellipsis line-clamp-1  text-gray-200 font-bold'>{serie?.name}</span>
           </div>
-        ):(<div><span className='max-w-[100px] whitespace-nowrap text-ellipsis line-clamp-1  text-gray-200 font-bold'>{serie?.name}</span></div>)
+        ):(<div key={serie?.id} className='flex h-full flex-col w-full items-center justify-center'>
+         <div className='min-h-[180px] max-h-[180px] min-w-[120px] max-w-[120px] object-cover rounded-lg shadow-md cursor-pointer bg-gray-700 hover:opacity-80' onClick={() => navigate(`/series/details/${serie?.id}`)}></div>
+          <span className='max-w-[100px] whitespace-nowrap text-ellipsis line-clamp-1  text-gray-200 font-bold'>{serie?.name}</span>
+        </div>)
       ))}
       </div>
         <div className='h-20'>
