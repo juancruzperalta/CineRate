@@ -29,15 +29,15 @@ public class RateLimitSecurity {
       return false;
     }
     timeStart[1]++;
-     long now = System.currentTimeMillis();
+    long now = System.currentTimeMillis();
     if (now - timeStart[0] > BLOCK_TIME) {
       emailAndTimeAndCount.remove(email);
       return true;
     }
-    if (now - timeStart[0] < BLOCK_TIME && timeStart[1] > countMax) {
+    if (now - timeStart[0] < BLOCK_TIME && timeStart[1] >= countMax) {
       return false;
     }
-    return timeStart[1] <= 3;
+    return false;
   }
   public void isLogged(String email){
     emailAndTimeAndCount.remove(email);

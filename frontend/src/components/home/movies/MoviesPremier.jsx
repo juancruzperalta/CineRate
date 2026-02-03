@@ -13,7 +13,10 @@ export const MoviesPremier = ({cant}) => {
 
       {premiereMovies?.results.slice(0,cant).map(movie => (
         <div key={movie?.id} className='flex h-full flex-col w-full items-center justify-center'>
+          {movie?.backdrop_path || movie?.poster_path ? 
           <img src={`https://image.tmdb.org/t/p/w500${movie?.backdrop_path ? movie?.backdrop_path : movie?.poster_path}`} alt={`Error to load movie image: ${movie?.name}`} className='min-h-[180px] max-h-[180px] min-w-[120px] max-w-[120px] object-cover rounded-lg shadow-md cursor-pointer  hover:opacity-80' onClick={() => navigate(`/movies/details/${movie?.id}`)}/>
+            :
+          <div className='hidden'></div>}
           <span className='max-w-[100px] whitespace-nowrap text-ellipsis line-clamp-1  text-gray-200 font-bold'>{movie?.name}</span>
         </div>
       ))}
