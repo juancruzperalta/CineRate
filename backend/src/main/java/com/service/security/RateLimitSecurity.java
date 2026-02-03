@@ -20,9 +20,9 @@ public class RateLimitSecurity {
   public boolean check(String email, boolean isSendEmail) {
     int countMax = 0;
     if (isSendEmail) {
-      countMax = 1;
+      countMax = 2;
     } else {
-      countMax = 3;
+      countMax = 5;
     }
     long[] timeStart = emailAndTimeAndCount.get(email);
     if (timeStart == null) {
@@ -34,7 +34,7 @@ public class RateLimitSecurity {
       emailAndTimeAndCount.remove(email);
       return true;
     }
-    if (now - timeStart[0] < BLOCK_TIME && timeStart[1] > countMax) {
+    if (now - timeStart[0] < BLOCK_TIME && timeStart[1] >= countMax) {
       return false;
     }
     return true;
