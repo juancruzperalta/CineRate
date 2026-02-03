@@ -20,8 +20,7 @@ public class CorsConfig {
       CorsConfiguration config = new CorsConfiguration();
 
     config.setAllowedOrigins(List.of(
-        // "https://cine-rate.site"
-        "http://localhost:5173"
+       "https://cine-rate.site"
     ));
 
     config.setAllowedMethods(List.of(
