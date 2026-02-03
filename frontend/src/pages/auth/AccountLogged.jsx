@@ -84,7 +84,7 @@ export const AccountLogged = () => {
 
       </div>
       <section className=' flex-col justify-center items-center gap-4 h-full w-full'>
-        <article className='flex items-center justify-center gap-2'>
+        <article className='flex items-center justify-center md:items-start md:justify-start gap-2'>
           <div className='gap-2 flex flex-col'>
             <h2 className='font-semibold uppercase text-[#0ed395]'>SERIES VIEW LATER</h2>
             <div className='grid justify-center items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2'>
@@ -95,7 +95,7 @@ export const AccountLogged = () => {
             </div>
           </div>
          </article>
-        <article className='flex items-center justify-center gap-2 mt-4'>
+        <article className='flex items-center justify-center md:items-start md:justify-start gap-2 mt-4'>
           <div className='gap-2 flex flex-col'>
             <h2  className='font-semibold uppercase text-[#0ed395]'>MOVIES VIEW LATER</h2>
             <div className='grid justify-center items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2'>
