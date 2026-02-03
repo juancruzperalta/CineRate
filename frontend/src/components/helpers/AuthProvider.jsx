@@ -51,11 +51,10 @@ export const AuthProvider = ({ children }) => {
         });
         const data = await resLogin.json();
         const msg = data.message;
-        if (msg.includes("wait a few minutes")) {
-          setLoggedRateLimit(true);
-        }
-        setErrorLogged(msg);
         if (!resLogin.ok) {
+          if (msg?.includes("wait a few minutes")) {
+            setLoggedRateLimit(true);
+          }
           setErrorLogged(msg);
           setTimeout(() => {
             setErrorLogged('');
