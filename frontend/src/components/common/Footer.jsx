@@ -20,12 +20,12 @@ export const Footer = () => {
         <p className='text-gray-500 bg-gray-900 inline-block px-2'>
             This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
             <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer"> 
-          <img className='w-40' src="frontend\public\blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" alt="" />
+          <img className='w-40' src="/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" alt="" />
             </a>
         </div>
       </div>
       <div className='flex items-center justify-center m-2 gap-2'>
-      <img className='w-12 h-12 rounded-full object-cover' src="../../src/assets/icons/logo.png" alt="" />
+      <img className='w-12 h-12 rounded-full object-cover'         src="/1fb4eb9d-c23b-4dcb-9818-c037389947c8.png" alt="Cine Rate" />
       <span className=' text-gray-500'>©CineRate 2025</span>
       </div>
     </footer>

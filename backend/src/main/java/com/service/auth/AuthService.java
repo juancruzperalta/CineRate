@@ -33,12 +33,12 @@ public class AuthService {
           if (!rateLimit.checkEmail(email)) {
             throw new IllegalArgumentException("You should wait a few minutes to login renew");
           }
+          if (password.isBlank() || email.isBlank()) {
+            throw new IllegalArgumentException("Credentials is blank");
+          }
           UserEntity user = repo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
             if (user==null) {
               throw new IllegalArgumentException("User not found");
-            }
-            if (password.isBlank() || email.isBlank()) {
-              throw new IllegalArgumentException("Credentials is blank");
             }
             if (!user.isActive()) {
               throw new IllegalArgumentException("User doesn't finish registration");
