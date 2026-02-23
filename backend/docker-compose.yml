@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: cinerate-db
+    environment:
+      POSTGRES_DB: cinerate
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: .
+    container_name: cinerate-backend
+    ports:
+      - "8085:8085"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
