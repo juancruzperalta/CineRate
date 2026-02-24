@@ -56,8 +56,8 @@ useEffect(() => {
       <div className="h-6 w-10 bg-gray-700 rounded animate-pulse"></div>
       </div>
       <div className="h-40 md:w-[400px] bg-gray-700/50 rounded animate-pulse mb-2"><span className='opacity-40 font-semibold'>Loading...</span></div>
-      <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"><span className='opacity-40 font-semibold'>Loading...</span></div>
-            <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"><span className='opacity-40 font-semibold'>Loading...</span></div>
+      <div className="h-6 w-24 bg-gray-700 rounded animate-pulse"><span className='opacity-40 font-semibold'>Loading...</span></div>
+            <div className="h-6 w-24 bg-gray-700 rounded animate-pulse"><span className='opacity-40 font-semibold'>Loading...</span></div>
             <div className="flex gap-2">
               <div className="h-8 w-24 bg-gray-700 rounded animate-pulse"><span className='opacity-40 font-semibold'>Loading...</span></div>
       <div className="h-8 w-24 bg-gray-700 rounded animate-pulse"><span className='opacity-40 font-semibold'>Loading...</span></div>
