@@ -69,10 +69,15 @@ public class EmailService {
     if (email == null || email.isBlank()) {
         throw new IllegalArgumentException("Email is empty");
     }
-    try{
-
       UserEntity nuevoUser = new UserEntity();
-      
+      Optional<UserEntity> userRepo = repo.findByEmail(email);
+      if (!userRepo.isEmpty()) {
+  if (userRepo.get().isActive()) {
+    throw new IllegalArgumentException("Your email has been registered before");
+      } else {
+        throw new IllegalArgumentException("Your email wait to verification");
+      }
+  }
       nuevoUser.setTokenTemp(tokenTemp);
       nuevoUser.setEmail(email);
       nuevoUser.setcreatedAt(LocalDateTime.now());
@@ -96,8 +101,5 @@ public class EmailService {
         }
         repo.save(nuevoUser);
                 return true;
-      } catch (DataIntegrityViolationException e) {
-        throw new IllegalArgumentException("Your email has been registered before");
-      }
   }
 }

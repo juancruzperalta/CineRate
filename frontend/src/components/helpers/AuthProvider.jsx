@@ -21,7 +21,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     setTokenTemp(searchParams.get("token"));
   }, [searchParams]);
+  let emailTimeout;
   const sendEmailRegister = async ({ email }) => {
+    setEmailSend("");
+    clearTimeout(emailTimeout);
     const respEmail = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/register-sendEmail`, {
           method: "POST",
           headers: {
@@ -32,9 +35,9 @@ export const AuthProvider = ({ children }) => {
     const msg = await respEmail.text();
     if (respEmail.ok) { 
       setEmailSend(msg);
-      setTimeout(() => {
+      emailTimeout = setTimeout(() => {
         setEmailSend('');
-      }, 3000);
+      }, 2000);
     }
     if (!respEmail.ok) {
       setEmailSend(msg);
