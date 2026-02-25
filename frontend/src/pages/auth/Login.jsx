@@ -66,7 +66,7 @@ export const Login = () => {
           setLoading(true);
           setTimeout(() => {
             setLoading(false)
-          }, 1500);
+          }, 1000);
           }} disabled={isDisabledButton}/>
         <span className='text-gray-300 text-sm'>You don't a account? <Link to="/auth/register" className='text-[#0ed395] font-semibold cursor-pointer'>Register</Link></span>
         <span className='text-gray-300 text-sm'>If you forgot your password? <Link to="/user/forgot-password" className='text-[#0ed395] font-semibold cursor-pointer'>Click here</Link></span>

@@ -18,7 +18,7 @@ public class EmailService {
   private final UserRepository repo;
   private final Resend resend;
   private RateLimitSecurity rateLimit;
- public EmailService(@Value("") String apiKey,UserRepository repo, RateLimitSecurity rateLimit) {
+ public EmailService(@Value("${RESEND_API_KEY}") String apiKey,UserRepository repo, RateLimitSecurity rateLimit) {
         this.repo = repo;
         this.resend = new Resend(apiKey);
         
