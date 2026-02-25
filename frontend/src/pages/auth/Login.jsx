@@ -43,21 +43,30 @@ export const Login = () => {
   }, [isLogged])
   const isDisabledButton = isLogged || blockedButton;
   return (
-    <div className='px-10 mt-12 w-full h-screen flex items-center justify-center'>
-      <form action="" className='flex items-center justify-center flex-col gap-3 bg-[#272b2f]/80 rounded-sm shadow-sm shadow-gray-900 p-4 h-[460px] w-[340px] relative'>
-                  <span className="text-2xl font-bold tracking-wide absolute top-2 mt-2">
+    <div className='px-10 bg-[radial-gradient(circle,_rgba(14,211,149,0.45)_1%,_rgba(14,211,149,0.2)_5%,_rgba(12,61,47,0.35)_15%,_rgba(0,0,0,1)_100%)] w-full h-screen flex flex-col items-center justify-center'>
+         <div className='flex mb-4 flex-col items-center justify-center'>
+         <div className='flex items-center justify-center'>
+          <img src="/public/logoSinFondo.png" alt="Cine Rate"  className='w-12 h-12'/>
+          <span className="text-2xl font-bold tracking-wide flex items-center justify-center">
           <span className="text-[var(--colorAccent)]">Cine</span>
           <span className="text-white">Rate</span>
           </span>
-        <input type="email" placeholder='email' className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} disabled={isLogged}  id="email" onChange={e => (setEmail(e.target.value))} required/>
-        <input type="password" placeholder='password' className='w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50' disabled={isLogged}  id="password"  onChange={p => (setPassword(p.target.value))} required/>
-        <input type="button" value="login" placeholder='Login' className='bg-white w-full rounded-sm p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80' onClick={() => {buttonLogin("login", email, password) }} disabled={isDisabledButton}/>
-        <span>¿You don't a account? <Link to="/auth/register" className='text-[#0ed395] font-semibold cursor-pointer'>Register</Link></span>
-        <span>¿If you forgot your password? <Link to="/user/forgot-password" className='text-[#0ed395] font-semibold cursor-pointer'>Click here</Link></span>
-        <span>{isLogged ? 'You already logged it' : ''}</span>
-        <span className='text-red-400 font-semibold ' >{errorLogged}</span>
-        <span className='text-red-400 font-semibold '>{!errorLogged && blockedButton ? `You should wait a ${BLOCK_TIME/60/1000} minutes to login renew` : ''}</span>
+         </div>
+          <span className='text-md text-gray-300 font-semibold'>Your experience in CineRate start here</span>
+         </div> 
+      <div>
+
+      <form action="" className='flex items-center justify-center flex-col gap-3 bg-[#272b2f] rounded-xl shadow-sm shadow-gray-900 py-8 px-6 h-full w-full md:min-w-[340px] relative'>
+        <input type="email" placeholder='email' className={`w-full p-2 bg-[#1a1a1a] text-gray-100 rounded-lg disabled:opacity-50`} disabled={isLogged}  id="email" onChange={e => (setEmail(e.target.value))} required/>
+        <input type="password" placeholder='password' className='w-full p-2 bg-[#1a1a1a] text-gray-100 rounded-lg disabled:opacity-50' disabled={isLogged}  id="password"  onChange={p => (setPassword(p.target.value))} required/>
+        <input type="button" value="login" placeholder='Login' className='bg-white w-full rounded-lg p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80' onClick={() => {buttonLogin("login", email, password) }} disabled={isDisabledButton}/>
+        <span className='text-gray-300 text-sm'>You don't a account? <Link to="/auth/register" className='text-[#0ed395] font-semibold cursor-pointer'>Register</Link></span>
+        <span className='text-gray-300 text-sm'>If you forgot your password? <Link to="/user/forgot-password" className='text-[#0ed395] font-semibold cursor-pointer'>Click here</Link></span>
+        <span className={`${isLogged ? 'flex' : 'hidden'}`}>You already logged it</span>
+        <span className={`text-red-400 font-semibold ${errorLogged ? 'flex' : 'hidden'}`} >{errorLogged}</span>
+        <span className={`text-red-400 font-semibold ${!errorLogged&&blockedButton ? 'flex' : 'hidden'}`}>{!errorLogged && blockedButton ? `You should wait a ${BLOCK_TIME/60/1000} minutes to login renew` : ''}</span>
       </form>
+          </div>
       </div>
   )
 }

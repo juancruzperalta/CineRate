@@ -51,11 +51,13 @@ export const AuthProvider = ({ children }) => {
         });
         const data = await resLogin.json();
         const msg = data.message;
+        console.log("status:", resLogin.status);
+console.log("data:", data);
         if (!resLogin.ok) {
           if (msg?.includes("wait a few minutes")) {
             setLoggedRateLimit(true);
           }
-          setErrorLogged(msg);
+        setErrorLogged(msg || "Password or email invalids");
           setTimeout(() => {
             setErrorLogged('');
           }, 3000);

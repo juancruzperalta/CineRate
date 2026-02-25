@@ -33,13 +33,10 @@ public class AuthService {
           if (!rateLimit.checkEmail(email)) {
             throw new IllegalArgumentException("You should wait a few minutes to login renew");
           }
-          if (password.isBlank() || email.isBlank()) {
-            throw new IllegalArgumentException("Credentials is blank");
+          if (password == null || email == null) {
+            throw new IllegalArgumentException("Credentials is not valid");
           }
-          UserEntity user = repo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
-            if (user==null) {
-              throw new IllegalArgumentException("User not found");
-            }
+          UserEntity user = repo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
             if (!user.isActive()) {
               throw new IllegalArgumentException("User doesn't finish registration");
             }
@@ -103,7 +100,7 @@ public class AuthService {
               throw new IllegalArgumentException("The email is distint for your registred");
             }
             if (passwordAct.isBlank() || newPassword.isBlank()) {
-                        throw new IllegalArgumentException("Password is null");
+                        throw new IllegalArgumentException("Password is empty");
           }
           if (!encoder.matches(passwordAct, user.getPassword())) {
             throw new IllegalArgumentException("Your current password is not correct");
@@ -122,7 +119,7 @@ public class AuthService {
             throw new IllegalArgumentException("Invalid token");
           }
           if (password.isBlank() || confirmPassword.isBlank()) {
-            throw new IllegalArgumentException("Password null");
+            throw new IllegalArgumentException("Password is empty");
           }
                       if (password.length() < 8 || password.isBlank()) {
             throw new IllegalArgumentException("The password length must be > 8 characters");

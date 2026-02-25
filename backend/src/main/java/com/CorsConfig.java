@@ -22,7 +22,7 @@ public class CorsConfig {
     config.setAllowedOrigins(List.of(
        "https://cine-rate.site"
     ));
-
+// https://cine-rate.site
     config.setAllowedMethods(List.of(
         "GET","POST","PUT","DELETE","OPTIONS"
     ));

@@ -1,5 +1,6 @@
 package com.service.auth;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,7 @@ public class EmailService {
   private final UserRepository repo;
   private final Resend resend;
   private RateLimitSecurity rateLimit;
- public EmailService(@Value("${RESEND_API_KEY}") String apiKey,UserRepository repo, RateLimitSecurity rateLimit) {
+ public EmailService(@Value("") String apiKey,UserRepository repo, RateLimitSecurity rateLimit) {
         this.repo = repo;
         this.resend = new Resend(apiKey);
         
@@ -64,16 +65,15 @@ public class EmailService {
     if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Invalid token");
     }
-    if (email.isBlank()) {
-            throw new IllegalArgumentException("Email null");
-          }
-    if (repo.existsByEmail(email)) {
-      throw new IllegalArgumentException("You already registred");
+    if (email == null || email.isBlank()) {
+        throw new IllegalArgumentException("Email is empty");
     }
-    if (repo.findBytokenTemp(tokenTemp).isPresent()) {
-      throw new IllegalArgumentException("You should wait a few minutes to send another email");
+
+    if (repo.findByEmail(email).isPresent()) {
+        throw new IllegalArgumentException("Your email has been registered before");
     }
     UserEntity nuevoUser = new UserEntity();
+
     nuevoUser.setTokenTemp(tokenTemp);
     nuevoUser.setEmail(email);
     nuevoUser.setcreatedAt(LocalDateTime.now());

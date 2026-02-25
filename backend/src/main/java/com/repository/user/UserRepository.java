@@ -25,4 +25,5 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     @Transactional
     @Query("DELETE FROM UserEntity u WHERE u.isActive = false AND u.createdAt < :limit")
     void deleteInactiveUsers(@Param("limit") LocalDateTime limit);
+
 }
