@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.model.user.UserEntity;
@@ -68,29 +69,35 @@ public class EmailService {
     if (email == null || email.isBlank()) {
         throw new IllegalArgumentException("Email is empty");
     }
+    try{
 
-    if (repo.findByEmail(email).isPresent()) {
+      UserEntity nuevoUser = new UserEntity();
+      
+      nuevoUser.setTokenTemp(tokenTemp);
+      nuevoUser.setEmail(email);
+      nuevoUser.setcreatedAt(LocalDateTime.now());
+      CreateEmailOptions sendEm = CreateEmailOptions.builder()
+      .from("CineRate <no-reply@cine-rate.site>")
+      .to(email)
+      .subject("Confirm your account")
+      .html("""
+        <h2>CineRate 🎬</h2>
+        <p>Click for confirm your account:</p>
+        <a href="https://cine-rate.site/auth/register/confirm?token=%s">
+        Confirm account
+        </a>
+        """.formatted(tokenTemp))
+        .build();
+        
+        try{
+          resend.emails().send(sendEm);
+        }catch(RuntimeException e){
+          return false;
+        }
+        repo.save(nuevoUser);
+                return true;
+      } catch (DataIntegrityViolationException e) {
         throw new IllegalArgumentException("Your email has been registered before");
-    }
-    UserEntity nuevoUser = new UserEntity();
-
-    nuevoUser.setTokenTemp(tokenTemp);
-    nuevoUser.setEmail(email);
-    nuevoUser.setcreatedAt(LocalDateTime.now());
-    repo.save(nuevoUser);
-    CreateEmailOptions sendEm = CreateEmailOptions.builder()
-       .from("CineRate <no-reply@cine-rate.site>")
-                .to(email)
-                .subject("Confirm your account")
-                .html("""
-                    <h2>CineRate 🎬</h2>
-                    <p>Click for confirm your account:</p>
-                    <a href="https://cine-rate.site/auth/register/confirm?token=%s">
-                        Confirm account
-                    </a>
-                """.formatted(tokenTemp))
-                .build();
-        resend.emails().send(sendEm);
-    return true;
+      }
   }
 }

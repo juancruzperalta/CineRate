@@ -60,7 +60,7 @@ console.log("data:", data);
         setErrorLogged(msg || "Password or email invalids");
           setTimeout(() => {
             setErrorLogged('');
-          }, 3000);
+          }, 1500);
           return;
         }
         localStorage.setItem("token", data.token);

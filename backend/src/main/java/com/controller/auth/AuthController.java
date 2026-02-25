@@ -69,9 +69,13 @@ public class AuthController {
     public ResponseEntity<String> registerSendEmail(@RequestBody UserEmailDTO email) throws ResendException {
       try{
         String tokenTemp = jwt.generateTokenTemp(email.getEmail());
-        emailService.registerSendEmail(email.getEmail(), tokenTemp);
-        return ResponseEntity.ok("Email has been send");
-      
+        boolean sent = emailService.registerSendEmail(email.getEmail(), tokenTemp);
+        if(sent){
+          return ResponseEntity.ok("Email has been send");
+        }else{
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Failed to send confirmation");
+        }
     } catch (IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(e.getMessage());
