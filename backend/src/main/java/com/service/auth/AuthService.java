@@ -113,7 +113,7 @@ public class AuthService {
         public boolean resetForgotPassowrd(String tokenTemp, String password, String confirmPassword) {
           
           if (tokenTemp == null || tokenTemp.isBlank()) {
-            throw new IllegalArgumentException("Invalid token");
+      throw new IllegalArgumentException("Your user is not registred");
           }
           if (password.isBlank() || confirmPassword.isBlank()) {
             throw new IllegalArgumentException("Password is empty");

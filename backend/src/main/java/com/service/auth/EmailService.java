@@ -43,12 +43,12 @@ public class EmailService {
 
   public boolean forgotPass(String email, String tokenTemp) throws ResendException {
     if (tokenTemp == null || tokenTemp.isBlank()) {
-      throw new IllegalArgumentException("Invalid token");
+      throw new IllegalArgumentException("Your user is not registred");
     }
     if (!rateLimit.existsEmail(email, true)) {
       rateLimit.create(email,true);
     }
-    if (!rateLimit.checkForgot(email)) {
+    if (!rateLimit.checkForgot(email) && !repo.findByEmail(email).isEmpty()) {
             throw new IllegalArgumentException("You should wait a few minutes to forgot renew");
           }
     if (repo.findByEmail(email).isEmpty()) {
@@ -64,7 +64,7 @@ public class EmailService {
   public boolean registerSendEmail(String email, String tokenTemp) throws ResendException {
     
     if (tokenTemp == null || tokenTemp.isBlank()) {
-      throw new IllegalArgumentException("Invalid token");
+      throw new IllegalArgumentException("Your user is not registred");
     }
     if (email == null || email.isBlank()) {
         throw new IllegalArgumentException("Email is empty");

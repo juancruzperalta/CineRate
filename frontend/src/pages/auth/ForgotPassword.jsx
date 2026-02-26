@@ -82,8 +82,8 @@ export const ForgotPassword = () => {
         <form action="" className='flex items-center justify-center flex-col gap-3 rounded-xl py-8 px-6 h-full w-full md:min-w-[340px] relative '>
           <input type="email" className={`w-full 
           px-3 py-2 rounded-2xl bg-[#171818]/80 text-white placeholder:text-gray-300/50 outline-none  transition`} placeholder='Email' id="email" onChange={(e) => setEmail(e.target.value)} required />
-          <input type="button" value="Forgot password" className={`w-full 
-          px-3 py-2 rounded-2xl bg-[#171818]/80 text-white placeholder:text-gray-300/50 outline-none  transition`} placeholder='Forgot Password' onClick={() => forgotPassword()} disabled={blockedButton} />
+          <input type="button" value="Forgot password" className={`w-full cursor-pointer 
+          px-3 py-2 rounded-2xl bg-white/90 text-black placeholder:text-gray-300/50 outline-none  transition`} placeholder='Forgot Password' onClick={() => forgotPassword()} disabled={blockedButton} />
           
           <span className={` ${Loading ? 'flex' : 'hidden'}`} ><SvgLoading/></span>
           {Loading ? <span className='absolute bottom-0'>{isCall}</span>:''}
