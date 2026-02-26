@@ -1,5 +1,6 @@
 package com.controller.auth;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.http.HttpStatus;
@@ -57,7 +58,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserEntity request) {
       try {
-            service.register(request.getTokenTemp(), request.getEmail(), request.getPassword());
+            service.register(request.getTokenTemp(), request.getPassword());
       return ResponseEntity.ok("Registred");
     } catch (IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -68,7 +69,7 @@ public class AuthController {
     @PostMapping("/register-sendEmail")
     public ResponseEntity<String> registerSendEmail(@RequestBody UserEmailDTO email) throws ResendException {
       try{
-        String tokenTemp = jwt.generateTokenTemp(email.getEmail());
+      String tokenTemp = "CR"+UUID.randomUUID().toString().replace("-", "").toUpperCase();
         boolean sent = emailService.registerSendEmail(email.getEmail(), tokenTemp);
         if(sent){
           return ResponseEntity.ok("Email has been send");

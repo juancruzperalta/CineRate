@@ -48,8 +48,8 @@ public class AuthService {
         }
         //registro un usuario. hasheo la password.
         //Verifico que no haya un email igual o existente.
-        public boolean register(String tokenTemp, String email, String password) {
-          if (email == null || password == null || tokenTemp == null) {
+        public boolean register(String tokenTemp, String password) {
+          if (password == null || tokenTemp == null) {
             return false;
           }
           if (password.length() < 8 || password.isBlank()) {
@@ -57,9 +57,6 @@ public class AuthService {
           }
           UserEntity nuevoUser = repo.findBytokenTemp(tokenTemp)
           .orElseThrow(() -> new RuntimeException("User not found"));
-          if (!email.equals(nuevoUser.getEmail()) || email.isBlank()) {
-            throw new IllegalArgumentException("The email is distint for your registred");
-          }
           if (nuevoUser.getCreatedAt()
         .isBefore(LocalDateTime.now().minusMinutes(15)))   {
             throw new IllegalArgumentException("Your token has been expired or incorrect");
@@ -68,7 +65,7 @@ public class AuthService {
             throw new IllegalArgumentException("You already registred");
           }
           nuevoUser.setTokenTemp(null);
-          nuevoUser.setEmail(email);
+          nuevoUser.setEmail(nuevoUser.getEmail());
           nuevoUser.setPassword(encoder.encode(password));
           nuevoUser.setIsActive(true);
           repo.save(nuevoUser);

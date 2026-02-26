@@ -41,6 +41,9 @@ export const AuthProvider = ({ children }) => {
     }
     if (!respEmail.ok) {
       setEmailSend(msg);
+      emailTimeout = setTimeout(() => {
+        setEmailSend('');
+      }, 2000);
     }
   }
     const LoginRegister = async ({ type, email, password }) => {
@@ -54,8 +57,6 @@ export const AuthProvider = ({ children }) => {
         });
         const data = await resLogin.json();
         const msg = data.message;
-        console.log("status:", resLogin.status);
-console.log("data:", data);
         if (!resLogin.ok) {
           if (msg?.includes("wait a few minutes")) {
             setLoggedRateLimit(true);
@@ -63,7 +64,7 @@ console.log("data:", data);
         setErrorLogged(msg || "Password or email invalids");
           setTimeout(() => {
             setErrorLogged('');
-          }, 1500);
+          }, 2000);
           return;
         }
         localStorage.setItem("token", data.token);
@@ -76,7 +77,7 @@ console.log("data:", data);
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify({ tokenTemp, email, password })
+            body: JSON.stringify({ tokenTemp, password })
           });
                const msg = await res.text();
           if (!res.ok) {
@@ -84,7 +85,7 @@ console.log("data:", data);
             setErrorRegister(msg);
             setTimeout(() => {
               setErrorRegister('');
-            }, 3000);
+            }, 2000);
             return;
           }
           setRegisterSuccess(true);

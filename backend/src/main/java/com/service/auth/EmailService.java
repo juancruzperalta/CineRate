@@ -81,18 +81,71 @@ public class EmailService {
       nuevoUser.setTokenTemp(tokenTemp);
       nuevoUser.setEmail(email);
       nuevoUser.setcreatedAt(LocalDateTime.now());
-      CreateEmailOptions sendEm = CreateEmailOptions.builder()
-      .from("CineRate <no-reply@cine-rate.site>")
-      .to(email)
-      .subject("Confirm your account")
-      .html("""
-        <h2>CineRate 🎬</h2>
-        <p>Click for confirm your account:</p>
-        <a href="https://cine-rate.site/auth/register/confirm?token=%s">
-        Confirm account
-        </a>
-        """.formatted(tokenTemp))
-        .build();
+CreateEmailOptions sendEm = CreateEmailOptions.builder()
+  .from("CineRate <no-reply@cine-rate.site>")
+  .to(email)
+  .subject("Confirm your account")
+  .html("""
+<!DOCTYPE html>
+<html>
+  <body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,Helvetica,sans-serif;">
+    <table width="100%%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="center" style="padding:40px 0;">
+          
+          <table width="420" cellpadding="0" cellspacing="0" 
+                 style="background:#ffffff;padding:32px;border-radius:12px;">
+            
+            <tr>
+              <td align="center">
+                <h2 style="margin:0 0 10px 0;">CineRate 🎬</h2>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="center">
+                <p style="margin:0 0 25px 0;color:#555;font-size:15px;">
+                  Click the button below to confirm your account.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="center">
+                <a href="https://cine-rate.site/auth/register/confirm?token=%s"
+                   style="display:inline-block;
+                          padding:12px 22px;
+                          background:#0ed395;
+                          color:#000000;
+                          text-decoration:none;
+                          border-radius:8px;
+                          font-weight:bold;
+                          font-size:14px;">
+                  Confirm Account
+                </a>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="center" style="padding-top:25px;">
+                <p style="font-size:12px;color:#888;margin:0;">
+                  If the button doesn’t work, copy and paste this link:
+                </p>
+                <p style="font-size:12px;color:#888;word-break:break-all;">
+                  https://cine-rate.site/auth/register/confirm?token=%s
+                </p>
+              </td>
+            </tr>
+
+          </table>
+
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+""".formatted(tokenTemp, tokenTemp))
+  .build();
         
         try{
           resend.emails().send(sendEm);
