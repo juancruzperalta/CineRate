@@ -14,7 +14,7 @@ export const Login = () => {
   const { isLogged, buttonLogin, errorLogged, LoggedRateLimit } = useAuth();
   const [blockedButton, setBlockedButton] = useState(false);
   const [Loading, setLoading] = useState(false);
-  const BLOCK_TIME = 15 * 60 * 1000; // 15 min
+  const BLOCK_TIME = 15 * 60 * 1000;
     const until = Date.now() + BLOCK_TIME;
   useEffect(() => {
     if (LoggedRateLimit) {

@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }) => {
           headers: {
             "Content-Type": "application/json"
           },
+          credentials: "include",
           body: JSON.stringify({ email, password })
         });
         const data = await resLogin.json();
@@ -70,7 +71,9 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("token", data.token);
         setIsLogged(true);
       }
-      if(type=="register"){
+    }
+    const RegisterFinish = async ({ type, password }) => {    
+         if(type=="register"){
          if (tokenTemp) {
           const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/register`, {
             method: "POST",
@@ -91,12 +94,18 @@ export const AuthProvider = ({ children }) => {
           setRegisterSuccess(true);
         }
       }
-    }
+      }
+  const buttonRegisterFinish = async(type, password)=>{
+    if(type && password)
+    await RegisterFinish(type, password);
+    return;
+  }
   const buttonLogin = async (type, email, password) => {
-    if (!password) {
+    if (!password && email) {
       await sendEmailRegister({email:email})
+      return;
     }
-    if (!isLogged) {
+    if (!isLogged && type) {
       if (type) {
         await LoginRegister({
           type: type,
@@ -128,7 +137,7 @@ export const AuthProvider = ({ children }) => {
   
   }, [isLogged])
     return (
-      <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess, setRegisterSuccess, errorRegister, emailSend, LoggedRateLimit}}>
+      <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess, setRegisterSuccess, errorRegister, emailSend, LoggedRateLimit,buttonRegisterFinish}}>
         {children}
       </AuthContext.Provider>
     );

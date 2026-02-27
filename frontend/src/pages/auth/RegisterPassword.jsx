@@ -9,18 +9,18 @@ export const RegisterPassword = () => {
   
     const [password, setPassword] = useState(null);
     const [passwordConfirm, setPasswordConfirm] = useState(null);
-    const { buttonLogin, registerSuccess, errorRegister } = useAuth();
+    const { buttonRegisterFinish, registerSuccess, errorRegister } = useAuth();
     const [errorEquals, setErrorEquals] = useState(false);
     const [Loading, setLoading] = useState(false);
     function confirmEquals(type, password) {
-        if (passwordConfirm != null || password != passwordConfirm) {
+        if (password != passwordConfirm) {
           setTimeout(() => {
             setErrorEquals(true);
           }, 3000);
           return;
         }
       setErrorEquals(false);
-      buttonLogin(type, password);
+      buttonRegisterFinish(type,password);
     }
     useEffect(() => {
       if (registerSuccess){
@@ -62,13 +62,13 @@ export const RegisterPassword = () => {
       px-3 py-2 rounded-2xl bg-[#171818]/80 text-white placeholder:text-gray-300/50 outline-none  transition`} disabled={registerSuccess}  id="passwordConfirm"  onChange={p => (setPasswordConfirm(p.target.value))} required/>
         <input type="button" value="register" placeholder='Register' className='bg-white w-full rounded-2xl p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80 cursor-pointer'  onClick={() => {confirmEquals("register", password) }} disabled={registerSuccess} />
                <span className={` ${Loading ? 'flex' : 'hidden'}`} ><SvgLoading/></span>
-        {Loading ? 
-        <>
+        {/* {Loading ? 
+        <> */}
         <span className={`${registerSuccess ? 'flex' : 'hidden'}`}>Registred</span>
         <span className={`absolute bottom-0 ${errorRegister ? 'flex' : 'hidden'}`}>{errorRegister}</span>
         <span className={`${errorEquals ? 'flex' : 'hidden'}`}>Don't equals password</span>
-        </>
-       : ''}
+        {/* </> */}
+       {/* : ''} */}
         
       </form>
       </div>

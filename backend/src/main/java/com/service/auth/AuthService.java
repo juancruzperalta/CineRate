@@ -1,9 +1,11 @@
 package com.service.auth;
+import java.net.http.HttpHeaders;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,7 +46,14 @@ public class AuthService {
               throw new IllegalArgumentException("Invalid credentials");
             }
             rateLimit.isLogged(email,false);
-            return jwt.generateToken(user);
+            ResponseCookie cookie = ResponseCookie.from("token", jwt.generateToken(user))
+            .httpOnly(true)
+            .secure(true) 
+            .path("/")
+            .sameSite("Strict")
+            .maxAge(86400)
+            .build();
+            return "Login successful";
         }
         //registro un usuario. hasheo la password.
         //Verifico que no haya un email igual o existente.
