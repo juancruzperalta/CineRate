@@ -13,9 +13,9 @@ export const ChangePassword = () => {
   const changePass = async (email, passwordAct, newPassword) => {
       const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/change-password`, {
         method: "POST",
+        credentials: "include",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ email, passwordAct, newPassword })
       })

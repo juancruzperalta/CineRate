@@ -1,18 +1,21 @@
 package com.service.auth;
-import java.net.http.HttpHeaders;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model.user.UserEntity;
 import com.repository.user.UserRepository;
 import com.service.security.RateLimitSecurity;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class AuthService {
@@ -28,7 +31,7 @@ public class AuthService {
               this.rateLimit = rateLimit;
             }
         //Logueo un usuario. Valido un email válido y macheo las password hasheadas
-        public String login(String email, String password) {
+        public String login(String email, String password,HttpServletResponse response) {
           if (!rateLimit.existsEmail(email,false)) { 
             rateLimit.create(email,false);
           }
@@ -39,26 +42,37 @@ public class AuthService {
             throw new IllegalArgumentException("Credentials is not valid");
           }
           UserEntity user = repo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
-            if (!user.isActive()) {
+          ResponseCookie cookie = ResponseCookie.from("token", jwt.generateToken(user))
+          .httpOnly(true)
+          // .secure(true) 
+          // .path("/")
+          // .sameSite("Strict")
+          .secure(false)
+          .path("/")
+          .sameSite("Lax")
+          .maxAge(86400)
+          .build();
+          response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+          if (!user.isActive()) {
               throw new IllegalArgumentException("User doesn't finish registration");
             }
             if (!encoder.matches(password, user.getPassword())) {
               throw new IllegalArgumentException("Invalid credentials");
             }
             rateLimit.isLogged(email,false);
-            ResponseCookie cookie = ResponseCookie.from("token", jwt.generateToken(user))
-            .httpOnly(true)
-            .secure(true) 
-            .path("/")
-            .sameSite("Strict")
-            .maxAge(86400)
-            .build();
-            return "Login successful";
+            return "Logged";
         }
         //registro un usuario. hasheo la password.
         //Verifico que no haya un email igual o existente.
-        public boolean register(String tokenTemp, String password) {
-          if (password == null || tokenTemp == null) {
+        public boolean register(String password, String tokenTemp,HttpServletResponse response) {
+          ResponseCookie cookie = ResponseCookie.from("tokenTemp", tokenTemp)
+          .httpOnly(true)
+          .secure(false)
+          .path("/")
+          .sameSite("Lax")
+          .maxAge(86400)
+          .build();
+          if (password == null) {
             return false;
           }
           if (password.length() < 8 || password.isBlank()) {
@@ -66,8 +80,7 @@ public class AuthService {
           }
           UserEntity nuevoUser = repo.findBytokenTemp(tokenTemp)
           .orElseThrow(() -> new RuntimeException("User not found"));
-          if (nuevoUser.getCreatedAt()
-        .isBefore(LocalDateTime.now().minusMinutes(15)))   {
+          if (nuevoUser.getCreatedAt().isBefore(LocalDateTime.now().minusMinutes(15)))   {
             throw new IllegalArgumentException("Your token has been expired or incorrect");
           }
           if (nuevoUser.isActive()) {
@@ -78,7 +91,8 @@ public class AuthService {
           nuevoUser.setPassword(encoder.encode(password));
           nuevoUser.setIsActive(true);
           repo.save(nuevoUser);
-          return true;
+          response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+            return true;
         }
 
         //busco por el email del username, para validar el token una vez el usuario
@@ -119,8 +133,14 @@ public class AuthService {
           return false;
         }
 
-        public boolean resetForgotPassowrd(String tokenTemp, String password, String confirmPassword) {
-          
+        public boolean resetForgotPassowrd(String tokenTemp, String password, String confirmPassword, HttpServletResponse response) {
+           ResponseCookie cookie = ResponseCookie.from("tokenTemp", tokenTemp)
+          .httpOnly(true)
+          .secure(false)
+          .path("/")
+          .sameSite("Lax")
+          .maxAge(86400)
+          .build();
           if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Your user is not registred");
           }
@@ -141,7 +161,21 @@ public class AuthService {
             us.setPassword(encoder.encode(password));
             us.setTokenTemp(null);
             repo.save(us);
+                      response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
             return true;
+        }
+        public void loggout() {
+         ResponseCookie cookie = ResponseCookie.from("token", "")
+          .httpOnly(true)
+          .secure(false)
+          .path("/")
+          .sameSite("Lax")
+          .maxAge(0)
+          .build();
+        ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body("Logged out");
         }
     
 }

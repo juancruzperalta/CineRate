@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 export const UserButtons = ({serieId, mediaType}) => {
   const [favorite, setFavorite] = useState(true);
   const [watchLater, setWatchLater] = useState(true);
   const [ratingBDLoad, setRatingBDLoad] = useState(0);
-  const token = localStorage.getItem("token");
   const [hover, setHover] = useState(0);
   const [rating, setRating] = useState(0);
-  if(token){
     useEffect(() => {
       infoWatchLater();
       infoFavorite();
       infoVote();
-      }, [])
-    }
+      }, []);
     const infoVote = async () => {
       const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/vote/${serieId}`, {
         method: "GET",
+        credentials: "include",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Content-Type": "application/json"
         },
       })
       if (!res.ok) {
@@ -46,12 +43,12 @@ export const UserButtons = ({serieId, mediaType}) => {
     const infoFavorite = async () => {
      const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/favorite/${serieId}`,{
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+        credentials: "include",
+            headers: {
+      "Content-Type": "application/json"
     },
           });
-    const data = await res.json();
+  const data = await res.json();
           if(!data){
             setFavorite(false);
             return;
@@ -62,9 +59,9 @@ export const UserButtons = ({serieId, mediaType}) => {
   const infoWatchLater = async () => {
   const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/watchLater/${serieId}`,{
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+        credentials: "include",
+            headers: {
+      "Content-Type": "application/json"
     },
           });
     const data = await res.json();
@@ -78,21 +75,21 @@ export const UserButtons = ({serieId, mediaType}) => {
   const favoriteButton = async (idSerMov, mediaType) => {
     const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/favorite/${idSerMov}/${mediaType}`,{
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+                credentials: "include",
+                    headers: {
+      "Content-Type": "application/json"
     },
     });
-if (res.ok) {
-    setFavorite(prev => !prev);
-  }
+    if (res.ok) {
+        setFavorite(prev => !prev);
+      }
   }
   const buttonVote = async (idSerMov, value, mediaType) => {
     const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/vote/${idSerMov}/${mediaType}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+                  credentials: "include",
+                        headers: {
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({ value })
     });
@@ -100,9 +97,9 @@ if (res.ok) {
   const buttonWatchLater = async (serieId, mediaType) => {
     const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/watchLater/${serieId}/${mediaType}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+                  credentials: "include",
+                        headers: {
+        "Content-Type": "application/json"
       },
     });
     if(res.ok){
@@ -124,7 +121,7 @@ if (res.ok) {
           <div className="star-rating text-2xl">
           <div className="flex flex-row-reverse justify-center gap-1 text-3xl">
                 {[5, 4, 3, 2, 1].map((stars) => (
-                 <button key={stars} type="button" className={`transition-colors ${(hover >= stars || rating >= stars || ratingBDLoad >= stars) ? "text-yellow-400" : "text-gray-400"}`} onMouseEnter={() => setHover(stars)} onMouseLeave={() => setHover(0)} onClick={() => {setRating(stars); buttonVote(serieId, stars, mediaType)}} disabled={!token}>
+                 <button key={stars} type="button" className={`transition-colors ${(hover >= stars || rating >= stars || ratingBDLoad >= stars) ? "text-yellow-400" : "text-gray-400"}`} onMouseEnter={() => setHover(stars)} onMouseLeave={() => setHover(0)} onClick={() => {setRating(stars); buttonVote(serieId, stars, mediaType)}}>
                     ★
                   </button>
                 ))}

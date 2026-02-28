@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.model.auth.UserTokenDTO;
@@ -22,6 +24,9 @@ import com.service.CallApiService;
 import com.service.auth.AuthService;
 import com.service.auth.EmailService;
 import com.service.auth.JWTService;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 import com.model.auth.ChangePasswordDTO;
 import com.model.auth.ForgotPasswordDTO;
 
@@ -43,9 +48,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String,String>> login(@RequestBody UserEntity request) {
+    public ResponseEntity<Map<String,String>> login(@RequestBody UserEntity request,HttpServletResponse response) {
       try{
-        String token = service.login(request.getEmail(), request.getPassword());
+        String token = service.login(request.getEmail(), request.getPassword(), response);
         return ResponseEntity.ok(Map.of(
                 "message", "Logged",
                 "token", token
@@ -55,10 +60,22 @@ public class AuthController {
             .body(Map.of("message", e.getMessage()));
       }
     }
+    @PostMapping("/logout")
+    public ResponseEntity<String> loggout() {
+        try{
+          service.loggout();
+          return ResponseEntity.ok("Logout");
+        }catch (IllegalArgumentException e) {
+          return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+      }
+    }
+    
+
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserEntity request) {
+    public ResponseEntity<String> register(@RequestBody UserEntity request, @RequestParam String tokenTemp, HttpServletResponse response) {
       try {
-            service.register(request.getTokenTemp(), request.getPassword());
+            service.register(request.getPassword(),tokenTemp,response);
       return ResponseEntity.ok("Registred");
     } catch (IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -109,7 +126,7 @@ public class AuthController {
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody UserEmailDTO email) throws ResendException {
       try{
-        String tokenTemp = jwt.generateTokenTemp(email.getEmail());
+      String tokenTemp = "CR"+UUID.randomUUID().toString().replace("-", "").toUpperCase();
         emailService.forgotPass(email.getEmail(), tokenTemp);
       return ResponseEntity.ok("Email has been send to forgot password");
     } catch (IllegalArgumentException e) {
@@ -119,10 +136,10 @@ public class AuthController {
     }
     // Postearemos segun el usuario nos envie confirmado por el email + el token + el new password.
     @PostMapping("/reset-forgot-password")
-    public ResponseEntity<String> resetForgotPassword(@RequestBody ForgotPasswordDTO forgotPassword) {
+    public ResponseEntity<String> resetForgotPassword(@RequestBody ForgotPasswordDTO forgotPassword, @RequestParam String tokenTemp, HttpServletResponse response) {
       try{
-        service.resetForgotPassowrd(forgotPassword.getTokenTemp(), forgotPassword.getPassword(),
-          forgotPassword.getConfirmPassword());
+        service.resetForgotPassowrd(tokenTemp, forgotPassword.getPassword(),
+          forgotPassword.getConfirmPassword(), response);
       return ResponseEntity.ok("Password has been changed");
     } catch (IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

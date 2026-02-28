@@ -1,5 +1,5 @@
 import React, { createContext,  useContext,  useEffect,  useState } from 'react'
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from "react-router-dom";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -9,29 +9,32 @@ export const AuthProvider = ({ children }) => {
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const [errorRegister, setErrorRegister] = useState(false);
   const [LoggedRateLimit, setLoggedRateLimit] = useState(false);
-  const [tokenTemp, setTokenTemp] = useState(null);
   const [emailSend, setEmailSend] = useState('');
-  const [searchParams] = useSearchParams();
-    const logout = () => {
-      localStorage.removeItem("token");
+      
+    const [searchParams] = useSearchParams();
+
+    const tokenTemp = searchParams.get("token");
+    const logout = async() => {
+        await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/logout`, {
+          method: "POST",
+          credentials: "include"
+        });
+
       setIsLogged(false);
       setUser(null);
   }
-
-  useEffect(() => {
-    setTokenTemp(searchParams.get("token"));
-  }, [searchParams]);
   let emailTimeout;
-  const sendEmailRegister = async ({ email }) => {
-    setEmailSend("");
-    clearTimeout(emailTimeout);
-    const respEmail = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/register-sendEmail`, {
-          method: "POST",
-          headers: {
-        "Content-Type": "application/json"
-          },
-          body: JSON.stringify({email})
-    })
+    const sendEmailRegister = async ({ email }) => {
+      setEmailSend("");
+      clearTimeout(emailTimeout);
+      const respEmail = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/register-sendEmail`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+          "Content-Type": "application/json"
+            },
+            body: JSON.stringify({email})
+      })
     const msg = await respEmail.text();
     if (respEmail.ok) { 
       setEmailSend(msg);
@@ -50,10 +53,10 @@ export const AuthProvider = ({ children }) => {
       if (type == "login") {
         const resLogin = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/login`, {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json"
           },
-          credentials: "include",
           body: JSON.stringify({ email, password })
         });
         const data = await resLogin.json();
@@ -74,15 +77,15 @@ export const AuthProvider = ({ children }) => {
     }
     const RegisterFinish = async ({ type, password }) => {    
          if(type=="register"){
-         if (tokenTemp) {
-          const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/register`, {
+          const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/register?tokenTemp=${tokenTemp}`, {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify({ tokenTemp, password })
+            body: JSON.stringify({ password })
           });
-               const msg = await res.text();
+        const msg = await res.text();
           if (!res.ok) {
             setRegisterSuccess(false);
             setErrorRegister(msg);
@@ -94,10 +97,9 @@ export const AuthProvider = ({ children }) => {
           setRegisterSuccess(true);
         }
       }
-      }
   const buttonRegisterFinish = async(type, password)=>{
     if(type && password)
-    await RegisterFinish(type, password);
+    await RegisterFinish({type, password});
     return;
   }
   const buttonLogin = async (type, email, password) => {
@@ -118,12 +120,11 @@ export const AuthProvider = ({ children }) => {
     }
   }
   const fetchUser = async () => { 
-    const token = localStorage.getItem("token");
-    if(!token){return}
     const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/user/data`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json"
+            },
     });
     if (!res.ok) {
       logout(); return;

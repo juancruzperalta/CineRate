@@ -1,38 +1,35 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../components/helpers/AuthProvider';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import { WatchLaterSerieItem } from '../../components/helpers/WatchLaterItem';
 export const AccountLogged = () => {
   const { isLogged, user } = useAuth();
   const [countVotes, setCountVotes] = useState(0)
   const [watchLaterMovies, setWatchLaterMovies] = useState([]);
   const [watchLaterSeries, setWatchLaterSeries] = useState([]);
-  const token = localStorage.getItem("token");
+        
   useEffect(() => {
     const getInfoVotes = async () => {
-      if (!token) return;
       const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/vote/getAll`, {
         method: "GET",
+        credentials: "include",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Content-Type": "application/json"
         },
       })
       if (!res.ok) {
-        console.log("error");
         return;
       }
       const data = await res.json();
       setCountVotes(data);
     }
     const getWatchLaterMovies = async () => {
-      if (!token) return;
       const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/watchLater/getAll?isSerie=false`, {
         method: "GET",
+        credentials: "include",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Content-Type": "application/json"
         }
       })
       if (!res.ok) {
@@ -43,12 +40,11 @@ export const AccountLogged = () => {
       setWatchLaterMovies(data);
     }
     const getWatchLaterSeries = async () => {
-      if (!token) return;
       const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/watchLater/getAll?isSerie=true`, {
         method: "GET",
+        credentials: "include",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Content-Type": "application/json"
         }
       })
       if (!res.ok) {
@@ -61,7 +57,7 @@ export const AccountLogged = () => {
     getWatchLaterSeries();
     getWatchLaterMovies();
     getInfoVotes();
-  }, [token])
+  }, [])
   if (!isLogged) {
     return <Navigate to="/auth" replace />;
   }

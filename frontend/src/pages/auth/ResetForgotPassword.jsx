@@ -1,21 +1,24 @@
 import React from 'react'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { SvgLoading } from '../../assets/icons/SvgLoading';
 
 export const ResetForgotPassword = () => {
 //obtengo el token que envian por url el usuario. 
-  const tokenTemp = new URLSearchParams(window.location.search).get("token");
+  
+      const [searchParams] = useSearchParams();
+      const tokenTemp = searchParams.get("token");
   const [passwordChange, setPasswordChange] = useState("");
   const navigate = useNavigate();
   const [Loading, setLoading] = useState(false);
   const resetForgotPassword = async (password, confirmPassword) => {
-      const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/reset-forgot-password`, {
+      const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/reset-forgot-password?tokenTemp=${tokenTemp}`, {
         method: "POST",
+        credentials: "include",
         headers: {
       "Content-Type": "application/json"
         },
-        body: JSON.stringify({tokenTemp,password,confirmPassword})
+        body: JSON.stringify({password,confirmPassword})
       })
           const msg = await res.text();
           if (!res.ok) {
