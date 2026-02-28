@@ -44,12 +44,9 @@ public class AuthService {
           UserEntity user = repo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
           ResponseCookie cookie = ResponseCookie.from("token", jwt.generateToken(user))
           .httpOnly(true)
-          // .secure(true) 
-          // .path("/")
-          // .sameSite("Strict")
-          .secure(false)
+          .secure(true)
           .path("/")
-          .sameSite("Lax")
+          .sameSite("None")
           .maxAge(86400)
           .build();
           response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
@@ -67,9 +64,9 @@ public class AuthService {
         public boolean register(String password, String tokenTemp,HttpServletResponse response) {
           ResponseCookie cookie = ResponseCookie.from("tokenTemp", tokenTemp)
           .httpOnly(true)
-          .secure(false)
+          .secure(true)
           .path("/")
-          .sameSite("Lax")
+          .sameSite("None")
           .maxAge(86400)
           .build();
           if (password == null) {
@@ -136,9 +133,9 @@ public class AuthService {
         public boolean resetForgotPassowrd(String tokenTemp, String password, String confirmPassword, HttpServletResponse response) {
            ResponseCookie cookie = ResponseCookie.from("tokenTemp", tokenTemp)
           .httpOnly(true)
-          .secure(false)
+          .secure(true)
           .path("/")
-          .sameSite("Lax")
+          .sameSite("None")
           .maxAge(86400)
           .build();
           if (tokenTemp == null || tokenTemp.isBlank()) {
@@ -168,9 +165,9 @@ public class AuthService {
         public void loggout() {
          ResponseCookie cookie = ResponseCookie.from("token", "")
           .httpOnly(true)
-          .secure(false)
+          .secure(true)
           .path("/")
-          .sameSite("Lax")
+          .sameSite("None")
           .maxAge(0)
           .build();
         ResponseEntity.ok()
