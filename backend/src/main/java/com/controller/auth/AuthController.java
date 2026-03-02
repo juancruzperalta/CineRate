@@ -61,9 +61,9 @@ public class AuthController {
       }
     }
     @PostMapping("/logout")
-    public ResponseEntity<String> loggout() {
+    public ResponseEntity<String> loggout(HttpServletResponse response) {
         try{
-          service.loggout();
+          service.loggout(response);
           return ResponseEntity.ok("Logout");
         }catch (IllegalArgumentException e) {
           return ResponseEntity.status(HttpStatus.BAD_REQUEST)

@@ -42,6 +42,12 @@ public class AuthService {
             throw new IllegalArgumentException("Credentials is not valid");
           }
           UserEntity user = repo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
+          if (!user.isActive()) {
+              throw new IllegalArgumentException("User doesn't finish registration");
+            }
+            if (!encoder.matches(password, user.getPassword())) {
+              throw new IllegalArgumentException("Invalid credentials");
+            }
           ResponseCookie cookie = ResponseCookie.from("token", jwt.generateToken(user))
           .httpOnly(true)
           .secure(true)
@@ -50,12 +56,6 @@ public class AuthService {
           .maxAge(86400)
           .build();
           response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-          if (!user.isActive()) {
-              throw new IllegalArgumentException("User doesn't finish registration");
-            }
-            if (!encoder.matches(password, user.getPassword())) {
-              throw new IllegalArgumentException("Invalid credentials");
-            }
             rateLimit.isLogged(email,false);
             return "Logged";
         }
@@ -162,7 +162,7 @@ public class AuthService {
 
             return true;
         }
-        public ResponseEntity<String> loggout() {
+        public String loggout(HttpServletResponse response) {
          ResponseCookie cookie = ResponseCookie.from("token", "")
           .httpOnly(true)
           .secure(true)
@@ -170,9 +170,8 @@ public class AuthService {
           .sameSite("None")
           .maxAge(0)
           .build();
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("Logged out");
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        return "Loggout";
         }
     
 }
