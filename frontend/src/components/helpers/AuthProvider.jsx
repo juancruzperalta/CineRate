@@ -5,12 +5,12 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [errorLogged, setErrorLogged] = useState('');
-  const [isLogged, setIsLogged] = useState(!!localStorage.getItem("token"));
+  const [isLogged, setIsLogged] = useState(false);
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const [errorRegister, setErrorRegister] = useState(false);
   const [LoggedRateLimit, setLoggedRateLimit] = useState(false);
   const [emailSend, setEmailSend] = useState('');
-      
+  
     const [searchParams] = useSearchParams();
     const tokenTemp = searchParams.get("token");
     const logout = async() => {
@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
             "Content-Type": "application/json"
           },
         });
-      localStorage.removeItem("token");
       setIsLogged(false);
       setUser(null);
   }
@@ -51,6 +50,7 @@ export const AuthProvider = ({ children }) => {
       }, 2000);
     }
   }
+  
     const LoginRegister = async ({ type, email, password }) => {
       if (type == "login") {
         const resLogin = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/login`, {
@@ -73,7 +73,6 @@ export const AuthProvider = ({ children }) => {
           }, 2000);
           return;
         }
-        localStorage.setItem("token", data.token);
         setIsLogged(true);
       }
     }
@@ -121,6 +120,19 @@ export const AuthProvider = ({ children }) => {
       console.log("You already logged it");
     }
   }
+  const checkUserLogged=async ()=>{
+    const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/user/checkLogged`, {
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json"
+            },
+    });
+    if(res.ok){
+      setIsLogged(true);
+    }else{
+      setIsLogged(false);
+    }
+  }
   const fetchUser = async () => { 
     const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/user/data`, {
             credentials: "include",
@@ -139,6 +151,9 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   
   }, [isLogged])
+  useEffect(()=>{
+    checkUserLogged();
+  },[])
     return (
       <AuthContext.Provider value={{ isLogged, user, buttonLogin, logout, errorLogged, registerSuccess, setRegisterSuccess, errorRegister, emailSend, LoggedRateLimit,buttonRegisterFinish}}>
         {children}
