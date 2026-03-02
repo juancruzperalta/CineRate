@@ -5,11 +5,12 @@ export const UserButtons = ({serieId, mediaType}) => {
   const [ratingBDLoad, setRatingBDLoad] = useState(0);
   const [hover, setHover] = useState(0);
   const [rating, setRating] = useState(0);
+  const token = localStorage.getItem("token");
     useEffect(() => {
       infoWatchLater();
       infoFavorite();
       infoVote();
-      }, []);
+      }, [token]);
     const infoVote = async () => {
       const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/vote/${serieId}`, {
         method: "GET",

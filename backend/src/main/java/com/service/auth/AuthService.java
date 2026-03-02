@@ -162,7 +162,7 @@ public class AuthService {
 
             return true;
         }
-        public void loggout() {
+        public ResponseEntity<String> loggout() {
          ResponseCookie cookie = ResponseCookie.from("token", "")
           .httpOnly(true)
           .secure(true)
@@ -170,7 +170,7 @@ public class AuthService {
           .sameSite("None")
           .maxAge(0)
           .build();
-        ResponseEntity.ok()
+        return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body("Logged out");
         }

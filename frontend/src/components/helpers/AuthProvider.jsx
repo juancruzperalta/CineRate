@@ -12,14 +12,16 @@ export const AuthProvider = ({ children }) => {
   const [emailSend, setEmailSend] = useState('');
       
     const [searchParams] = useSearchParams();
-
     const tokenTemp = searchParams.get("token");
     const logout = async() => {
         await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/logout`, {
           method: "POST",
-          credentials: "include"
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
         });
-
+      localStorage.removeItem("token");
       setIsLogged(false);
       setUser(null);
   }

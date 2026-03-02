@@ -9,6 +9,7 @@ export const AccountLogged = () => {
   const [watchLaterMovies, setWatchLaterMovies] = useState([]);
   const [watchLaterSeries, setWatchLaterSeries] = useState([]);
         
+  const token = localStorage.getItem("token");
   useEffect(() => {
     const getInfoVotes = async () => {
       const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/api/vote/getAll`, {
@@ -57,7 +58,7 @@ export const AccountLogged = () => {
     getWatchLaterSeries();
     getWatchLaterMovies();
     getInfoVotes();
-  }, [])
+  }, [token])
   if (!isLogged) {
     return <Navigate to="/auth" replace />;
   }
