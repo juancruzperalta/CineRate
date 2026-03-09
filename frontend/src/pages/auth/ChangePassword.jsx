@@ -3,12 +3,11 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../components/helpers/AuthProvider';
 
 export const ChangePassword = () => {
-  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const { isLogged } = useAuth();
   const [failToChange, setFailToChange] = useState("");
   useEffect(() => {
-    if (!token) { navigate("/", { replace: true }) };
+    if (!isLogged) { navigate("/", { replace: true }) };
   }, [isLogged])
   const changePass = async (email, passwordAct, newPassword) => {
       const res = await fetch(`${import.meta.env.VITE_PAGE_URL}/auth/change-password`, {
@@ -35,7 +34,7 @@ export const ChangePassword = () => {
   }
   const confirmPassword = ({ newPassword, confirmPassword }) =>{
     if (newPassword == confirmPassword) {
-      if (token) {
+      if (isLogged) {
         changePass(document.querySelector('#email').value, document.querySelector("#real-password").value, document.querySelector("#newPassword").value);
       }
     } else {

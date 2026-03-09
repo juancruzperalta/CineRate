@@ -17,7 +17,6 @@ export const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   
   const [heroImage, setHeroImage] = useState(null);
-  const {trailerKey} = useTrailerSerie(serieOne?.id);
 useEffect(() => {
   const update = () => {
     const isPortrait = window.innerWidth < window.innerHeight;
@@ -79,11 +78,7 @@ useEffect(() => {
   return (
     <>
           <div className='relative heroRight heroLeft  flex items-center justify-center w-full  h-svh overflow-hidden p-0 m-0  backdrop-brightness-[30%] mb-6 '>
-            {trailerKey ?
-            <ShowTrailerSerie serieId={showTrailerID} />
-        : 
         <img className="object-cover object-center opacity-55 absolute top-0 left-0 w-full h-full overflow-hidden object-top" src={`https://image.tmdb.org/t/p/original/${heroImage}`} alt={serieOne?.name} />
-        }
         <div className="text-left  2xl:text-[1.1rem] md:text-[1rem] sm:text-[0.9rem] text-[0.8rem]  z-20 text-gray-200  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col  h-full justify-end bottom-3 w-full px-10  mx-auto pb-3  inset-0 ">
           <h2 className='font-semibold uppercase text-[#0ed395]'>On Air Today</h2>
           <h3 className='text-2xl md:text-3xl 2xl:text-4xl font-bold uppercase text-white leading-tight'>
