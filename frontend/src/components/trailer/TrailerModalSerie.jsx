@@ -18,20 +18,26 @@ export const TrailerModalSerie = ({trailerID}) => {
   
   return (
     <>
-      {
-        closeTrailer &&
-        <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50" id="trailerContent" style={{ display: 'flex' }}>
-          <div className="relative">
-            <ShowTrailerSerie serieId={searchTrailerID} />
+      {closeTrailer && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center p-4'>
+          <div
+            className='absolute inset-0 bg-black/80 backdrop-blur-sm'
+            onClick={closeTrailerFunc}
+          />
+          <div className='relative z-10 w-full max-w-[960px] max-h-[90vh] rounded-2xl overflow-hidden shadow-2xl bg-[#0b0f19]/90'>
             <button
-              className="absolute cursor-pointer bottom-0 right-0 bg-[var(--colorAccent)] hover:bg-[var(--buttomActive)] h-10 w-10 rounded-full text-white"
-              onClick={() => closeTrailerFunc()}
+              className='absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--colorAccent)] text-white shadow-lg transition hover:bg-[var(--buttomActive)]'
+              onClick={closeTrailerFunc}
+              aria-label='Close trailer'
             >
-              X
+              ✕
             </button>
+            <div className='w-full h-full p-4 overflow-auto'>
+              <ShowTrailerSerie serieId={searchTrailerID} />
+            </div>
           </div>
         </div>
-      }
+      )}
     </>
-  )
+  );
 }

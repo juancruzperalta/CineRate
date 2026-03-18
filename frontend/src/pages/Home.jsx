@@ -6,39 +6,31 @@ import { useGetAiringTodaySerie } from '../hooks/series/useGetAiringTodaySerie';
 import { useNavigate } from 'react-router-dom';
 import { MoviesGrid } from '../components/home/movies/MoviesGrid';
 import { TrailerModalSerie } from '../components/trailer/TrailerModalSerie';
-import { ShowTrailerSerie } from '../components/trailer/ShowTrailerSerie';
-import { useTrailerSerie } from '../hooks/series/useTrailerSerie';
 
 export const Home = () => {
   const {currentSerie} = useGetAiringTodaySerie();
-  const [showTrailerID, setShowTrailer] = useState(null)
-  const serieOne = currentSerie?.results?.[0]; 
+  const [showTrailerID, setShowTrailer] = useState(null);
+  const serieOne = currentSerie?.results?.[0];
   const { currentSerieDetails } = useDetailsSerie(serieOne?.id);
-  const [isLoading, setIsLoading] = useState(true);
-  
+  const isLoading = !currentSerie || !serieOne;
+
   const [heroImage, setHeroImage] = useState(null);
-useEffect(() => {
-  const update = () => {
-    const isPortrait = window.innerWidth < window.innerHeight;
-
-    setHeroImage(
-      isPortrait
-        ? serieOne?.poster_path
-        : serieOne?.backdrop_path
-    );
-  };
-
-  update();
-  window.addEventListener("resize", update);
-  return () => window.removeEventListener("resize", update);
-}, [serieOne]); 
-  
-  const navigate = useNavigate();
   useEffect(() => {
-    if (currentSerie)
-      //si no viene la serie, la posiciono como "cargando"
-      setIsLoading(false);
-  }, [currentSerie])
+    const update = () => {
+      const isPortrait = window.innerWidth < window.innerHeight;
+
+      setHeroImage(
+        isPortrait ? serieOne?.poster_path : serieOne?.backdrop_path
+      );
+    };
+
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [serieOne]);
+
+  const navigate = useNavigate();
+
   if (isLoading) {
     return (
     <>
@@ -70,9 +62,10 @@ useEffect(() => {
   );
 }
 
-  function showTrailerFunc() {
-    setShowTrailer(serieOne.id)
-    //paso al usestate, la id con el trailer para buscar sobre esa id.
+  function showTrailerFunc(id) {
+    if (!id) return;
+    setShowTrailer(id);
+    // paso al usestate la id con el trailer para buscar sobre esa id.
   }
 
   return (
@@ -117,7 +110,7 @@ useEffect(() => {
             </span>
           </div>
           <div className='gap-4 flex flex-row items-center 2xl:text-[1.1rem] md:text-[1rem] sm:text-[0.9rem] text-[0.8rem]'>
-            <button className='p-2 bg-white text-gray-900 uppercase hover:bg-gray-300 font-semibold cursor-pointer' onClick={() => showTrailerFunc(serieOne)}>View Trailer</button>
+            <button className='p-2 bg-white text-gray-900 uppercase hover:bg-gray-300 font-semibold cursor-pointer' onClick={() => showTrailerFunc(serieOne?.id)}>View Trailer</button>
             <button className='p-2 text-white bg-gray-300/40 uppercase hover:bg-gray-700/60 cursor-pointer  backdrop-blur-md font-semibold' onClick={() => navigate(`/series/details/${serieOne.id}`)}>More Information</button>
           </div>
           {showTrailerID && <TrailerModalSerie trailerID={showTrailerID} />}

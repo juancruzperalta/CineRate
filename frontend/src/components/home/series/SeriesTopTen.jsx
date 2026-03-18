@@ -28,14 +28,26 @@ export const SeriesTopTen = () => {
   const scrollButton = (value) => {
     serieRef.current.scrollBy({ left: value, behavior: 'smooth' })
   }
+
+  const scrollToSerie = (index) => {
+    setSerieAct(index);
+    const items = serieRef.current?.querySelectorAll('[id]');
+    const item = items?.[index];
+    if (!item) return;
+    item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+  };
   
   return (
     <>
-      <div className="flex overflow-hidden mt-4 mb-4 h-[580px]">
-       <div className="md:w-[30%] flex-col max-h-full hidden md:flex">
+      <div className="flex overflow-hidden p-4 bg-[var(--bgSecondary)]/20 border border-white/10 rounded-2xl shadow-lg group">
+       <div className="md:w-[30%] flex-col max-h-full hidden md:flex overflow-y-hidden gap-1">
           {topSerie.slice(0, 10).map((serie, i) => (
-        <div key={serie.id} className='flex flex-col justify-center relative mr-4 max-h-[580px]'>
-        <div key={i} className='flex items-center mb-1 h-[54px] bg-[var(--bgSecondary)]/90 border border-gray-700 rounded-lg p-[2.2px] shadow-md hover:bg-[var(--bgSecondary)] transition-all duration-300 '  style={{  backgroundImage: `url(https://image.tmdb.org/t/p/w500${serie.backdrop_path})`,backgroundSize: "cover",backgroundRepeat: "no-repeat",backgroundPosition: "center",opacity: i === serieAct ? 0.80 : 0.15}}>
+        <div
+          key={serie.id}
+          className={`flex flex-col justify-center relative mr-4 max-h-full h-full cursor-pointer transition-all ${i === serieAct ? 'border-1 border-[#0ed395] rounded-xl' : ''}`}
+          onClick={() => scrollToSerie(i)}
+        >
+        <div key={i} className='flex items-center h-[54px] bg-[var(--bgSecondary)]/90 border border-gray-700 rounded-lg p-[2.2px] shadow-md hover:bg-[var(--bgSecondary)] transition-all duration-300 '  style={{  backgroundImage: `url(https://image.tmdb.org/t/p/w500${serie.backdrop_path})`,backgroundSize: "cover",backgroundRepeat: "no-repeat",backgroundPosition: "center",opacity: i === serieAct ? 0.80 : 0.15}}>
         </div>
           <span className={`absolute z-10 text-sm font-semibold px-2 ${i=== serieAct ? 'opacity-100' : 'opacity-60'}`}>
           <span className="text-yellow-300" >#{i + 1}</span> {serie.name} 
@@ -43,14 +55,14 @@ export const SeriesTopTen = () => {
     </div>
   ))}
         </div>
-        <div className='md:w-[70%] w-[100%] relative h-full md:max-h-[580px] max-h-[520px]'>
-         <div className='flex gap-4 overflow-hidden scroll-smooth h-full w-full' ref={serieRef}>
-            <button  className="absolute left-0.5 top-1/2 -translate-y-1/2 z-10 bg-black/90 text-white rounded-sm p-2 hover:bg-black" onClick={() => { scrollButton(-serieRef.current.querySelector('img').clientWidth - 16); setSerieAct(prev => Math.max(prev - 1, 0)); }}> 
-            <svg className='w-8 h-8 fill-white cursor-pointer' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M491 100.8C478.1 93.8 462.3 94.5 450 102.6L192 272.1L192 128C192 110.3 177.7 96 160 96C142.3 96 128 110.3 128 128L128 512C128 529.7 142.3 544 160 544C177.7 544 192 529.7 192 512L192 367.9L450 537.5C462.3 545.6 478 546.3 491 539.3C504 532.3 512 518.8 512 504.1L512 136.1C512 121.4 503.9 107.9 491 100.9z"/></svg>
+        <div className='md:w-[70%] w-[100%] relative h-full md:max-h-[620px] max-h-[520px]'>
+         <div className='flex gap-4 overflow-hidden scroll-smooth snap-x snap-mandatory h-full w-full' ref={serieRef}>
+            <button  className="absolute left-0.5 top-1/2 -translate-y-1/2 z-10 bg-black/70 rounded-full text-white/50 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black" onClick={() => scrollToSerie(Math.max(serieAct - 1, 0))}> 
+            <svg className='w-7 h-7 fill-white/80 cursor-pointer' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M491 100.8C478.1 93.8 462.3 94.5 450 102.6L192 272.1L192 128C192 110.3 177.7 96 160 96C142.3 96 128 110.3 128 128L128 512C128 529.7 142.3 544 160 544C177.7 544 192 529.7 192 512L192 367.9L450 537.5C462.3 545.6 478 546.3 491 539.3C504 532.3 512 518.8 512 504.1L512 136.1C512 121.4 503.9 107.9 491 100.9z"/></svg>
             </button>
             {topSerie.slice(0, 10).map((serie,i) => (
-              <div id={serie.id} key={serie.id} className='relative flex-shrink-0 transition-all duration-500 w-full h-full rounded-md bg-gradient-to-t from-black/80 via-black/30 to-transparent'>
-                <img key={serie.id} src={`https://image.tmdb.org/t/p/original/${update(serie)}`} alt={serie.name} className='w-full max-w-full h-[580px] object-cover  opacity-65 rounded-md' />
+              <div id={serie.id} key={serie.id} className='relative flex-shrink-0 snap-center transition-all duration-500 w-full h-full rounded-md bg-gradient-to-t from-black/80 via-black/30 to-transparent'>
+                <img key={serie.id} src={`https://image.tmdb.org/t/p/original/${update(serie)}`} alt={serie.name} className='w-full max-w-full h-full min-h-[520px] md:min-h-[620px] max-h-[520px] md:max-h-[620px]  object-cover  opacity-65 rounded-md' />
                 <span className='text-yellow-300 absolute left-0 top-0 right-0 m-auto text-xl md:text-2xl font-bold'>#{i+1}</span>
               <span className='absolute bottom-0 m-auto left-0 right-0 p-2 bg-gray-800/80'>
             <div className='flex items-center justify-center relative'>
@@ -79,11 +91,10 @@ export const SeriesTopTen = () => {
     ))}
             {trailerView && <TrailerModalSerie trailerID={trailerView} />}
                 <button
-                    className="absolute right-0.5 top-1/2 -translate-y-1/2 z-10 bg-black/90 text-white rounded-sm p-2 hover:bg-black" 
-                  onClick={() => { scrollButton(serieRef.current.querySelector('img').clientWidth + 16) ; setSerieAct(prev => Math.min(prev + 1, 9)); }
-                  }
+                    className="absolute right-0.5 top-1/2 -translate-y-1/2 z-10 bg-black/70 rounded-full text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black" 
+                  onClick={() => scrollToSerie(Math.min(serieAct + 1, Math.max(0, topSerie.length - 1)))}
                 >
-               <svg className='w-8 h-8 fill-white cursor-pointer' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M149 100.8C161.9 93.8 177.7 94.5 190 102.6L448 272.1L448 128C448 110.3 462.3 96 480 96C497.7 96 512 110.3 512 128L512 512C512 529.7 497.7 544 480 544C462.3 544 448 529.7 448 512L448 367.9L190 537.5C177.7 545.6 162 546.3 149 539.3C136 532.3 128 518.7 128 504L128 136C128 121.3 136.1 107.8 149 100.8z"/></svg>
+               <svg className='w-7 h-7 fill-white/80 cursor-pointer' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M149 100.8C161.9 93.8 177.7 94.5 190 102.6L448 272.1L448 128C448 110.3 462.3 96 480 96C497.7 96 512 110.3 512 128L512 512C512 529.7 497.7 544 480 544C462.3 544 448 529.7 448 512L448 367.9L190 537.5C177.7 545.6 162 546.3 149 539.3C136 532.3 128 518.7 128 504L128 136C128 121.3 136.1 107.8 149 100.8z"/></svg>
              </button>
            </div>
           </div>

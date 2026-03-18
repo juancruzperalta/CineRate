@@ -8,36 +8,20 @@ export const MovieCardDetails = ({movieId}) => {
     <>
     <div className='max-h-full z-10 relative 2xl:text-[1rem] md:text-[0.8rem] lg:text-[0.9rem] text-[0.7rem]'>
         <div className="pt-1 flex flex-col w-full justify-between text-gray-300   ">
-          <span className='font-semibold p-0 m-0' >(
-            {currentMovieDetails?.release_date ? new Date(currentMovieDetails?.release_date).getFullYear() : 'Loading...'})
-                    </span>
               
-          <ul className='flex items-center justify-center gap-1 '>{currentMovieDetails?.genres?.map((gen, index) => (
-            index <= 3 && (<li className="bg-[var(--colorAccent)]  max-h-6 font-semibold p-[0.16rem] rounded-sm text-[#0B0F19]  max-w-full overflow-hidden"  key={gen.id}
+          <ul className='flex items-center justify-start gap-1 '>{currentMovieDetails?.genres?.map((gen, index) => (
+            index <= 3 && (<li className="text-ellipsis truncate px-2 py-0.5 rounded bg-[var(--colorAccent)] text-[#0B0F19]"  key={gen.id}
               > {gen.name}</li>
             )
           ))}
         </ul>
        </div>
-       <div className="hidden md:flex flex-wrap items-center justify-center gap-2 text-gray-300">
-          <ul className='flex  items-center justify-center gap-1 font-semibold'>Languages{(currentMovieDetails?.languages?.length > 0 ? currentMovieDetails.languages : currentMovieDetails?.origin_country || ['Loading...']).map((lang) => (
-                  <span className='uppercase font-semibold text-[var(--colorAccent)]' key={lang}>
-              [{lang}]
-            </span>
-              ))
-              }
-        <p className='font-semibold'>Origin:</p>
-            <span className='font-semibold text-[var(--colorAccent)]'>{currentMovieDetails?.origin_country?.length > 0 ? (currentMovieDetails?.origin_country?.map(orig => (<span key={orig}>{orig}</span>))) : (
-                <span  className='uppercase font-semibold text-[var(--colorAccent)]'>Loading...</span>
-          )
-        }</span>
-          </ul>
-        </div>
-        <div className='flex items-center justify-center  gap-2 text-gray-300'>
-          <p className='flex flex-col'>Duration<span className="font-semibold text-[var(--colorAccent)] max-w-14 overflow-hidden">          {currentMovieDetails?.runtime
+        <div className='flex items-center justify-center lg:justify-start  gap-2 text-gray-300'>
+          <p className='flex flex-col'>Duration<span className="font-semibold text-[var(--colorAccent)] max-w-14 overflow-hidden">
+            {currentMovieDetails?.runtime
                       ? `${Math.floor(currentMovieDetails.runtime / 60)}h ${currentMovieDetails.runtime % 60}m`
                       : 'Loading...'}</span></p>
-                  <p className='flex flex-col'>Status<span className="font-semibold text-[var(--colorAccent)] max-w-14 overflow-hidden">{currentMovieDetails?.status ? currentMovieDetails?.status : 'Loading...'}</span></p>
+                  <p className='flex flex-col '>Status<span className="font-semibold text-[var(--colorAccent)] max-w-14 overflow-hidden text-ellipsis truncate">{currentMovieDetails?.status ? currentMovieDetails?.status : 'Loading...'}</span></p>
          </div>
         </div>
     </>

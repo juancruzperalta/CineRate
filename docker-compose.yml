@@ -1,4 +1,7 @@
+version: "3.9"
+
 services:
+
   postgres:
     image: postgres:15
     container_name: cinerate-db
@@ -8,13 +11,24 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: .
-    container_name: cinerate-backend
+    build: ./backend
     ports:
       - "8085:8085"
     depends_on:
       - postgres
     environment:
-      - SPRING_PROFILES_ACTIVE=local
+      SPRING_PROFILES_ACTIVE: local
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

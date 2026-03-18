@@ -4,77 +4,85 @@ import { UserButtons } from '../UserButtons';
 import { SeriesOrMovieDetails } from './SeriesOrMovieDetails';
 export const SeriesMoviesCards = ({seriesOrMovie}) => {
   const [isLoading, setIsLoading] = useState(true);
-  let isSerie = false;
   useEffect(() => {
     if (seriesOrMovie && seriesOrMovie.length > 0) {
       setIsLoading(false);
     }
   }, [seriesOrMovie]);
   return (
-    <div>
+    <div className='flex items-center justify-center gap-8 flex-col w-full h-full'>
       {
         isLoading ? (
-        <div className='lg:grid lg:grid-cols-[25%_35%_40%] flex flex-col items-center justify-center  overflow-hidden'>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <React.Fragment key={i}>
-            <div className='relative flex items-center mt-4 lg:mt-0 justify-center m-2 w-[220px] h-[300px] rounded-md bg-gray-800 animate-pulse shadow-[0_10px_10px_rgba(0,0,0,0.7)]'></div>
-            <div className='lg:relative h-full w-full flex items-start justify-start lg:items-center lg:justify-center '>
-                  
-              <div className="space-y-2  w-full flex-col flex items-start justify-start lg:items-center lg:justify-center ">
-              <div className="h-6 w-48 bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-4 w-64 bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-4 w-56 bg-gray-700 rounded animate-pulse"></div>
-
-              <div className="flex gap-4 mt-3 lg:absolute lg:bottom-2 ">
-              <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
-              <div className="h-4 w-24 bg-gray-700 rounded animate-pulse"></div>
+        <div className='w-full max-w-screen-xl flex flex-col gap-8 px-4'>
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className='w-full grid grid-cols-1 lg:grid-cols-[1fr_.8fr_.2fr] gap-6 items-center justify-center bg-gray-200/5 overflow-hidden border-b-2 border-gray-800/50 p-4 rounded-md'>
+              <div className='flex flex-col gap-4'>
+                <div className='w-full h-[220px] sm:h-[260px] md:h-[300px] lg:h-[340px] rounded-md bg-gray-800 animate-pulse shadow-[0_10px_10px_rgba(0,0,0,0.7)]'></div>
               </div>
+              <div className='flex flex-col gap-3'>
+                <div className='h-6 w-48 bg-gray-700 rounded animate-pulse'></div>
+                <div className='h-4 w-64 bg-gray-700 rounded animate-pulse'></div>
+                <div className='h-4 w-56 bg-gray-700 rounded animate-pulse'></div>
+                <div className='flex gap-4 mt-2'>
+                  <div className='h-4 w-24 bg-gray-700 rounded animate-pulse'></div>
+                  <div className='h-4 w-24 bg-gray-700 rounded animate-pulse'></div>
+                </div>
               </div>
-            </div>         
-                 <div className="space-y-2 flex items-center justify-center flex-col mt-4 lg:mt-0">
-                  <div className="h-10 w-10 bg-gray-700 animate-pulse rounded-full"></div>
-                  <div className="h-4 w-28 bg-gray-700 rounded animate-pulse"></div>
-               <div className="gap-2 flex items-center justify-center mt-4 lg:hidden">
-                <div className="h-4 w-28 bg-gray-700 rounded animate-pulse"></div>
-                  <div className="h-4 w-28 bg-gray-700 rounded animate-pulse"></div>
-                
-                </div> 
-              </div>  
-              </React.Fragment>
-            ))}
+                 <div className='flex gap-4 mt-2 items-center justify-center'>
+                 <div className='h-16 w-16 bg-gray-700 rounded-full animate-pulse'></div>
+                </div>
+            </div>
+          ))}
        </div>
         ) :(
-        seriesOrMovie?.map(serie => (
-          <div key={serie.id} className={`lg:grid lg:grid-cols-[30%_70%]  flex flex-col mt-0 items-center justify-center bg-gray-200/5 overflow-hidden ${(serie.backdrop_path || serie.poster_path) ? 'border-b-2 border-gray-800/50 p': 'border-b-0 p-0'}`}>
-          {(serie.backdrop_path || serie.poster_path) ?
-                <div  className='relative m-2 w-[220px] h-[300px]   backdrop-blur-md rounded-md shadow-[0_10px_10px_rgba(0,0,0,0.7)] hover:scale-[1.01] transition-all '>
-                  <h2 className='absolute top-0 left-0 right-0 z-10 bg-gray-800/50'>{serie.name}</h2>
-                  <img src={serie.backdrop_path ? `https://image.tmdb.org/t/p/w500${serie.backdrop_path}` : `https://image.tmdb.org/t/p/w500${serie.poster_path}`} alt={serie.name} className='h-[300px] w-[220px] object-cover rounded-md shadow-md cursor-pointer overflow-hidden' />
-                </div>
-                :
-                <div className="hidden overflow-hidden"></div>
-            }
+    seriesOrMovie?.map((serie) => {
+      const isSerie =
+        serie?.media_type === "tv" ||
+        (!serie?.media_type && !!serie?.name);
 
-            {
-              (serie.backdrop_path || serie.poster_path) ? <div className='ml-2 lg:relative max-w-full h-full overflow-hidden '>
-                {isSerie =
-                  serie?.media_type === "tv" ||
-                  (!serie?.media_type && !!serie?.name)}
-                
-                {/* Antes de pedir los detalles: mando si es tv o movie para que me mande los detalles correctos */}
-                {/* También si no viene con nada  como si no fuera serie(al estar reusando componentes) necesito comprobar que no es una película, si no, como a veces no vienen la media_type (como en el search) parece que es película y no la muestra.*/}
-            <SeriesOrMovieDetails
-              serieId={serie.id}
-              serie={isSerie}
+      return serie.backdrop_path ? (
+        <div
+          key={serie.id}
+          className={`w-full p-3 max-w-screen-xl grid grid-cols-1 lg:grid-cols-2 gap-8 mt-0 items-start justify-center bg-gray-200/5 overflow-hidden ${
+            serie.backdrop_path || serie.poster_path
+              ? "border-b-2 border-gray-800/50 p"
+              : "border-b-0 p-0"
+          }`}
+        >
+          <div className='flex flex-col relative gap-4'>
+            <div className='relative w-full max-w-full h-[240px] sm:h-[320px] md:h-[360px] lg:h-[400px] backdrop-blur-md rounded-md shadow-[0_10px_10px_rgba(0,0,0,0.7)] transition-all overflow-hidden'>
+              <h2 className='absolute top-0 left-0 right-0 z-10 bg-black/70 px-3 py-1 text-base sm:text-lg'>
+                {serie.name}
+              </h2>
+
+              <img
+                src={`https://image.tmdb.org/t/p/w500${serie.backdrop_path}`}
+                alt={serie.name}
+                className='w-full h-full object-cover rounded-md shadow-md cursor-pointer overflow-hidden'
               />
-                <div className='relative w-full'>
-                  <UserButtons serieId={serie.id} mediaType={isSerie} />
-                </div>
-              </div> : <div className='hidden'></div>
-            }
             </div>
-          ))
-      )}
-      </div>
+
+            <div className='flex absolute w-full bottom-0 gap-4 mt-4 lg:mt-0'>
+              <UserButtons
+                serieId={serie.id}
+                mediaType={isSerie}
+              />
+            </div>
+          </div>
+
+          {(serie.backdrop_path || serie.poster_path) && (
+            <div className='w-full lg:ml-2 relative max-w-full h-full overflow-hidden'>
+              <SeriesOrMovieDetails
+                serieId={serie.id}
+                serie={isSerie}
+              />
+
+            </div>
+          )}
+        </div>
+      ) : null;
+    })
   )
 }
+</div>
+)}

@@ -49,6 +49,12 @@ body {
   z-index: 5;
 }
 
+.glass-card {
+  backdrop-filter: blur(18px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.55);
+  border-radius: 1.25rem;
+}
+
 .moveCard:hover{
   background-color: gray;
 }
