@@ -26,7 +26,7 @@ export const Footer = ({ className = "" }) => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className={`w-full max-w-[100vw] px-10 overflow-hidden bg-gradient-to-b from-[var(--bgColor)] to-[var(--colorAccent)]/12 pt-2`}>
+    <footer className={`w-full max-w-[100vw] border-t-2 border-t-white px-10 overflow-hidden bg-gradient-to-b from-[var(--bgColor)] to-[var(--colorAccent)]/12 pt-2`}>
       <div className="">
         <div className="mx-auto w-full">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
