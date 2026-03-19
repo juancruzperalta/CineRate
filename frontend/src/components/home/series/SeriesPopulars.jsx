@@ -93,6 +93,7 @@ export const SeriesPopulars = () => {
                       ? 'opacity-100'
                       : 'opacity-40'
                   }`}
+                  onClick={() => navigate(`/series/details/${serieId.id}`)}
                   onMouseEnter={() => {
                     if (!isMobile) {
                       clearTimeout(leaveTimer.current);
@@ -110,7 +111,6 @@ export const SeriesPopulars = () => {
                     src={`https://image.tmdb.org/t/p/w500${serieId.backdrop_path}`}
                     alt={serieId.name}
                     className='h-[200px]  md:h-[240px] lg:h-[300px] object-cover rounded-lg cursor-pointer transition-transform duration-500 group-hover:scale-105'
-                    onClick={() => navigate(`/series/details/${serieId.id}`)}
                   />
                   {isMobile && (
                     <div className='absolute bottom-0 inset-0 flex  items-end text-white'>

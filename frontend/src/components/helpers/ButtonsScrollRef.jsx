@@ -17,7 +17,8 @@ export const ButtonsScrollRef = ({ serieRef, reload }) => {
     }, [reload]);
   
   const scrollButton = (value) => {
-
+    const isMobile = window.innerWidth < 768;
+    if(isMobile) value = value / 2;
     serieRef.current.scrollBy({left: value, behavior: 'smooth'})
   }
   return (

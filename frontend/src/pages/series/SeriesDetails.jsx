@@ -191,7 +191,7 @@ export const SeriesDetails = () => {
                     </>
                   }
                 </div>
-                <button className={`cursor-pointer mt-2 text-md rounded-md px-5 mb-4 py-2 bg-[var(--colorAccent)]/20 text-[var(--textPrimary)] hover:bg-[var(--colorAccent)]/40 transition ${isVisible ? 'hidden' : 'inline-flex'} ${visible?.length > 0 ? 'inline-flex' : 'hidden'}`} onClick={() => setIsVisible(true)}>Ver Más</button>
+                <button className={`cursor-pointer mt-2 text-md rounded-md px-5 mb-4 py-2 bg-[var(--colorAccent)]/20 text-[var(--textPrimary)] hover:bg-[var(--colorAccent)]/40 transition ${visible?.length > 0 ? 'inline-flex' : 'hidden'}`} onClick={() => setIsVisible(prev => !prev)}>{isVisible ? 'View Less' : 'View More'}</button>
               </div>
                 
             </div>
