@@ -62,8 +62,6 @@ export const SeriesPopulars = () => {
     const index = Math.round(el.scrollLeft / itemWidth);
     setCurrentSlide(index);
   };
-    const items = serieRef.current?.querySelectorAll('[data-index]');
-  console.log(items);
   return (
     <>
       {TrailerID && <TrailerModalSerie trailerID={TrailerID} />}
@@ -72,7 +70,7 @@ export const SeriesPopulars = () => {
         <div className='flex flex-col w-full'>
           <div className='relative w-full h-2 mb-4'>
           </div>
-            <div className='absolute inset-0 flex items-center justify-between px-2 pointer-events-none'>
+            <div className='absolute inset-0 flex items-center justify-between px-2 md:pointer-events-none'>
              <ButtonsScrollRef serieRef={serieRef} reload={series} />
             </div>
 
