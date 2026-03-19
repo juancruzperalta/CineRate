@@ -76,7 +76,6 @@ export const SeriesMoviesCards = ({seriesOrMovie}) => {
                 serieId={serie.id}
                 serie={isSerie}
               />
-
             </div>
           )}
         </div>

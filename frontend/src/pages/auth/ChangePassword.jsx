@@ -43,22 +43,37 @@ export const ChangePassword = () => {
     }
     
   }
-  
+
 
   return (
- <div className='px-10 mt-12 w-full h-screen flex items-center justify-center'>
-      <form action="" className='flex items-center justify-center flex-col gap-3 bg-[#272b2f]/80 rounded-sm shadow-sm shadow-gray-900 p-4 h-[460px] w-[340px] relative'>
-                  <span className="text-2xl font-bold tracking-wide absolute top-2 mt-2">
+    <div className='px-10  bg-[radial-gradient(circle,_rgba(14,211,149,0.15)_5%,_rgba(12,61,47,0.35)_15%,_rgba(0,0,0,1)_100%)] w-full min-h-screen flex flex-col items-center justify-center'>
+      <div className='flex items-center flex-col justify-center gap-2 mb-6'>
+        <span className="text-2xl font-bold tracking-wide flex items-center justify-center">
+          <img src="/logoSinFondo.png" alt="Cine Rate" className='w-12 h-12' />
           <span className="text-[var(--colorAccent)]">Cine</span>
           <span className="text-white">Rate</span>
-          </span>
-        <input type="email" className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='email' id="email" required />
-        <input type="password" className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='Real Password' id="real-password" required />
-        <input type="password" className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='new Password' id="newPassword" required />
-        <input type="password" className={`w-full p-2 bg-[#090c0f] text-gray-100 rounded-sm disabled:opacity-50`} placeholder='confirm password' id="confirmPassword" required/>
-        <input type="button" value="Change Password" className='bg-white w-full rounded-sm p-2 text-black uppercase font-semibold text-[0.9rem] disabled:opacity-80'  placeholder='Renew Password' onClick={() => confirmPassword(document.querySelector("#newPassword"), document.querySelector("#confirmPassword"))}/>
-        <span>{failToChange}</span>
-      </form>
+        </span>
+        <span className='text-sm font-semibold text-gray-300'>Update your password to keep your account secure</span>
       </div>
+
+      <div className='bg-[#232426c4] backdrop-blur-md border border-[#2c2d30] rounded-2xl shadow-2xl shadow-black/40 mt-4'>
+        <div className='px-6 pt-4 flex flex-col'>
+          <span className=' text-md uppercase font-semibold'>CHANGE PASSWORD</span>
+        </div>
+        <form action="" className='flex items-center justify-center flex-col gap-3 rounded-xl py-8 px-6 h-full w-full md:min-w-[340px] relative '>
+          <input type="email" className={`w-full 
+          px-3 py-2 rounded-2xl bg-[#171818]/80 text-white placeholder:text-gray-300/50 outline-none  transition`} placeholder='Email' id="email" required />
+          <input type="password" className={`w-full 
+          px-3 py-2 rounded-2xl bg-[#171818]/80 text-white placeholder:text-gray-300/50 outline-none  transition`} placeholder='Current password' id="real-password" required />
+          <input type="password" className={`w-full 
+          px-3 py-2 rounded-2xl bg-[#171818]/80 text-white placeholder:text-gray-300/50 outline-none  transition`} placeholder='New password' id="newPassword" required />
+          <input type="password" className={`w-full 
+          px-3 py-2 rounded-2xl bg-[#171818]/80 text-white placeholder:text-gray-300/50 outline-none  transition`} placeholder='Confirm new password' id="confirmPassword" required />
+          <input type="button" value="Change password" className={`w-full cursor-pointer 
+          px-3 py-2 rounded-2xl bg-white/90 text-black placeholder:text-gray-300/50 outline-none  transition`} placeholder='Renew Password' onClick={() => confirmPassword(document.querySelector("#newPassword"), document.querySelector("#confirmPassword"))} />
+          <span className='text-sm text-gray-200'>{failToChange}</span>
+        </form>
+      </div>
+    </div>
   )
 }

@@ -58,7 +58,7 @@ export const SeriesPremier = ({ cant }) => {
             <img
               src={`https://image.tmdb.org/t/p/w500${imagePath}`}
               alt={`${serie?.name}`}
-              className='max-w-full min-w-full object-cover rounded-lg shadow-md cursor-pointer  hover:opacity-80'
+              className='max-w-full max-h-[180px] min-h-[180px] md:max-h-[220px] md:min-h-[220px] min-w-full object-cover rounded-lg shadow-md cursor-pointer  hover:opacity-80'
               onClick={() => navigate(`/series/details/${serie?.id}`)}
             />
             <span className='max-w-full whitespace-nowrap text-ellipsis line-clamp-1  text-gray-200 font-bold'>

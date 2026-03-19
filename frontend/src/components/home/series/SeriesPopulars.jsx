@@ -110,8 +110,13 @@ export const SeriesPopulars = () => {
                     src={`https://image.tmdb.org/t/p/w500${serieId.backdrop_path}`}
                     alt={serieId.name}
                     className='h-[200px]  md:h-[240px] lg:h-[300px] object-cover rounded-lg cursor-pointer transition-transform duration-500 group-hover:scale-105'
+                    onClick={() => navigate(`/series/details/${serieId.id}`)}
                   />
-
+                  {isMobile && (
+                    <div className='absolute bottom-0 inset-0 flex  items-end text-white'>
+                    <span className='font-semibold text-center bg-black/50 w-full p-1  md:text-lg text-sm line-clamp-1'>{serieId.name}</span>
+                    </div>
+                  )}
                   <div
                     className={`absolute inset-0 bg-gradient-to-t hover:scale-105 from-black/80 via-black/40 to-transparent transition-opacity duration-300 ${
                       isActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'

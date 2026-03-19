@@ -86,7 +86,7 @@ public class TMDBSerieService {
 
 
     public ResponseEntity<String> getTopTen() {
-      String url = "https://api.themoviedb.org/3/tv/top_rated?language=es-ES&page=1";
+      String url = "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1";
                  ResponseEntity<String> response = this.serviceCall.getSerieInfo(url);
 
       if (response != null) {

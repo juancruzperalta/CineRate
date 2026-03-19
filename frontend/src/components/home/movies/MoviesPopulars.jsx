@@ -14,10 +14,17 @@ export const MoviesPopulars = () => {
   function viewDetails(movieId) {
       setDetailsID(movieId);
   }
-  
+    const [isMobile, setIsMobile] = useState(() => {
+      return typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+    });
   useEffect(() => {
     getPopularsMovies().then(setMovieId);
   }, [])
+    useEffect(() => {
+      const onResize = () => setIsMobile(window.innerWidth < 768);
+      window.addEventListener('resize', onResize);
+      return () => window.removeEventListener('resize', onResize);
+    }, []);
   return (
      <>
     <div className='flex flex-row relative group'>
@@ -49,7 +56,11 @@ export const MoviesPopulars = () => {
                 className='h-[200px] md:h-[240px] lg:h-[300px] object-cover rounded-lg cursor-pointer transition-transform duration-500 group-hover:scale-105'
                 onClick={() => navigate(`/movies/details/${movie.id}`)}
               />
-
+                  {isMobile && (
+                    <div className='absolute bottom-0 inset-0 flex  items-end text-white'>
+                    <span className='font-semibold text-center bg-black/50 w-full p-1  md:text-lg text-sm line-clamp-1'>{movie?.title}</span>
+                    </div>
+                  )}
               <div
                 className={`absolute inset-0 bg-gradient-to-t hover:scale-105 from-black/80 via-black/40 to-transparent transition-opacity duration-300 ${
                   movie.id === DetailsID ? 'opacity-100' : 'opacity-0'
