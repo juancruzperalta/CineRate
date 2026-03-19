@@ -16,4 +16,4 @@ COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8085
 
-ENTRYPOINT ["java","-jar","app.jar","--spring.profiles.active=local","--server.port=8085"]
+ENTRYPOINT ["java","-jar","app.jar","--server.port=8085"]

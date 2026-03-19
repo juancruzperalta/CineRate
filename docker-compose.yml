@@ -21,7 +21,7 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_PROFILES_ACTIVE: local
+      SPRING_PROFILES_ACTIVE: default
 
   frontend:
     build: ./frontend
