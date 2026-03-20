@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cine-rate.site/sitemap.xml
