@@ -112,7 +112,9 @@ export const MoviesDetails = () => {
             </div>
           </div>
             <div className='max-w-full w-full h-full md:min-h-[400px] md:max-h-[400px] flex overflow-hidden mt-2 items-center justify-center gap-6 relative rounded-2xl shadow-2xl bg-[rgba(0,0,0,0.2)]'>
-              <img className="w-full h-full object-cover object-center" src={`https://image.tmdb.org/t/p/original/${currentMovieDetails?.backdrop_path}`} alt={currentMovieDetails?.name} />
+              {currentMovieDetails?.backdrop_path ?( 
+              <img className="w-full h-full object-cover object-center" src={`https://image.tmdb.org/t/p/original/${currentMovieDetails?.backdrop_path}`} alt={currentMovieDetails?.name} /> 
+              ):  (<div className="w-full h-full flex items-center justify-center bg-gray-700 rounded animate-pulse"><span>{currentMovieDetails?.name} : IMAGE IS NOT LOAD</span></div>)}
               <div className='absolute text-sm left-1 bottom-1 flex items-center justify-center gap-2'>
                 <span className='border border-white/10 p-[0.28rem] bg-[rgba(14,211,149,0.15)] text-[var(--colorAccent)] font-semibold rounded-md'>{currentMovieDetails?.release_date?.slice(0, 4)}</span>
                 <span className={`text-sm border border-white/10 p-[0.28rem] bg-[rgba(14,211,149,0.15)] ${currentMovieDetails?.runtime ? 'flex' : 'hidden'} text-[var(--colorAccent)] font-semibold rounded-md`}>{currentMovieDetails?.runtime ? `${Math.floor(currentMovieDetails.runtime / 60)}h ${currentMovieDetails.runtime % 60}m` : ''}</span>
@@ -164,8 +166,12 @@ export const MoviesDetails = () => {
                   {visible?.length > 0 ? visible?.map(movie => (
                     <img key={movie.id} src={`https://image.tmdb.org/t/p/original${movie?.poster_path}`} alt={movie?.name} onClick={() => navigate(`/movies/details/${movie.id}`)} className='w-full h-[200px] rounded-md object-center cursor-pointer transition hover:scale-[1.02] duration-200' />
                   )): <>
+                    <div className='flex w-full gap-8'>
                     <Skeleton w={150} h={200} error={true} />
+                    </div>
+                                    <div className='flex w-full gap-8'>
                     <Skeleton w={150} h={200} error={true} />
+                                    </div>
                     </>
             }
             </div>  

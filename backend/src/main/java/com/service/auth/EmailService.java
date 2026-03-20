@@ -13,6 +13,8 @@ import com.resend.Resend;
 import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
 import com.service.security.RateLimitSecurity;
+
+import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class EmailService {
   private final UserRepository repo;
@@ -120,7 +122,7 @@ public class EmailService {
     return true;
 		}
 
-  public boolean registerSendEmail(String email, String tokenTemp) throws ResendException {
+  public boolean registerSendEmail(String email, String tokenTemp, HttpServletRequest request) throws ResendException {
     
     if (tokenTemp == null || tokenTemp.isBlank()) {
       throw new IllegalArgumentException("Your user is not registred");
@@ -128,6 +130,13 @@ public class EmailService {
     if (email == null || email.isBlank()) {
         throw new IllegalArgumentException("Email is empty");
     }
+         String ip = request.getHeader("CF-Connecting-IP");
+     if (!rateLimit.existsIP(ip)) {
+         rateLimit.createIP(ip);
+     }
+     if(!rateLimit.checkIp(ip)){
+       throw new IllegalArgumentException("You should wait a few minutes to register send renew");
+     }
       UserEntity nuevoUser = new UserEntity();
       Optional<UserEntity> userRepo = repo.findByEmail(email);
       if (!userRepo.isEmpty()) {

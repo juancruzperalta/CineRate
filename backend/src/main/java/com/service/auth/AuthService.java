@@ -15,6 +15,7 @@ import com.model.user.UserEntity;
 import com.repository.user.UserRepository;
 import com.service.security.RateLimitSecurity;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service
@@ -31,9 +32,18 @@ public class AuthService {
               this.rateLimit = rateLimit;
             }
         //Logueo un usuario. Valido un email válido y macheo las password hasheadas
-        public String login(String email, String password,HttpServletResponse response) {
+        public String login(String email, String password,HttpServletResponse response,HttpServletRequest request) {
           if (!rateLimit.existsEmail(email,false)) { 
             rateLimit.create(email,false);
+          }
+          //in cloudflare / production
+          // String ip = request.getRemoteAddr();
+          String ip = request.getHeader("CF-Connecting-IP");
+          if (!rateLimit.existsIP(ip)) {
+              rateLimit.createIP(ip);
+          }
+          if(!rateLimit.checkIp(ip)){
+            throw new IllegalArgumentException("You should wait a few minutes to login renew");
           }
           if (!rateLimit.checkEmail(email)) {
             throw new IllegalArgumentException("You should wait a few minutes to login renew");
@@ -61,7 +71,7 @@ public class AuthService {
         }
         //registro un usuario. hasheo la password.
         //Verifico que no haya un email igual o existente.
-        public boolean register(String password, String tokenTemp,HttpServletResponse response) {
+        public boolean register(String password, String tokenTemp,HttpServletResponse response,HttpServletRequest request) {
           ResponseCookie cookie = ResponseCookie.from("tokenTemp", tokenTemp)
           .httpOnly(true)
           .secure(true)
@@ -74,6 +84,13 @@ public class AuthService {
           }
           if (password.length() < 8 || password.isBlank()) {
             throw new IllegalArgumentException("The password length must be > 8 characters");
+          }
+          String ip = request.getHeader("CF-Connecting-IP");
+          if (!rateLimit.existsIP(ip)) {
+              rateLimit.createIP(ip);
+          }
+          if(!rateLimit.checkIp(ip)){
+            throw new IllegalArgumentException("You should wait a few minutes to login renew");
           }
           UserEntity nuevoUser = repo.findBytokenTemp(tokenTemp)
           .orElseThrow(() -> new RuntimeException("User not found"));

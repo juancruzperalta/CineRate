@@ -25,6 +25,7 @@ import com.service.auth.AuthService;
 import com.service.auth.EmailService;
 import com.service.auth.JWTService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.model.auth.ChangePasswordDTO;
@@ -48,9 +49,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String,String>> login(@RequestBody UserEntity request,HttpServletResponse response) {
+    public ResponseEntity<Map<String,String>> login(@RequestBody UserEntity request,HttpServletResponse response,HttpServletRequest req) {
       try{
-        String token = service.login(request.getEmail(), request.getPassword(), response);
+        String token = service.login(request.getEmail(), request.getPassword(), response, req);
         return ResponseEntity.ok(Map.of(
                 "message", "Logged",
                 "token", token
@@ -73,9 +74,9 @@ public class AuthController {
     
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserEntity request, @RequestParam String tokenTemp, HttpServletResponse response) {
+    public ResponseEntity<String> register(@RequestBody UserEntity request, @RequestParam String tokenTemp, HttpServletResponse response,HttpServletRequest req) {
       try {
-            service.register(request.getPassword(),tokenTemp,response);
+            service.register(request.getPassword(),tokenTemp,response,req);
       return ResponseEntity.ok("Registred");
     } catch (IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -84,10 +85,10 @@ public class AuthController {
     }
     
     @PostMapping("/register-sendEmail")
-    public ResponseEntity<String> registerSendEmail(@RequestBody UserEmailDTO email) throws ResendException {
+    public ResponseEntity<String> registerSendEmail(@RequestBody UserEmailDTO email, HttpServletRequest request) throws ResendException {
       try{
       String tokenTemp = "CR"+UUID.randomUUID().toString().replace("-", "").toUpperCase();
-        boolean sent = emailService.registerSendEmail(email.getEmail(), tokenTemp);
+        boolean sent = emailService.registerSendEmail(email.getEmail(), tokenTemp, request);
         if(sent){
           return ResponseEntity.ok("Email has been send");
         }else{

@@ -54,8 +54,8 @@ export const Login = () => {
   const isDisabledButton = isLogged || blockedButton;
   return (
 
-        <div className='px-10 bg-[radial-gradient(circle,_rgba(14,211,149,0.15)_5%,_rgba(12,61,47,0.35)_15%,_rgba(0,0,0,1)_100%)] w-full min-h-screen flex flex-col items-center justify-center'>
-         <div className='flex items-center flex-col justify-center gap-2 mb-6'>
+        <div className='px-10  bg-[radial-gradient(circle,_rgba(14,211,149,0.15)_5%,_rgba(12,61,47,0.35)_15%,_rgba(0,0,0,1)_100%)] w-full min-h-screen flex flex-col items-center justify-center'>
+         <div className='flex items-center flex-col justify-center gap-2 mb-6 mt-10 md:mt-0'>
           <span className="text-2xl font-bold tracking-wide flex items-center justify-center">
           <img src="/logoSinFondo.png" alt="Cine Rate"  className='w-12 h-12'/>
           <span className="text-[var(--colorAccent)]">Cine</span>

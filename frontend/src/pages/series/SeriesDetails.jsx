@@ -103,7 +103,7 @@ export const SeriesDetails = () => {
   
   return (
     <div className='flex flex-col mb-4 min-h-screen w-full px-10 overflow-hidden text-[var(--textPrimary)]'>
-          <div className='mt-24 w-full flex flex-col md:grid md:grid-cols-3 justify-between items-center gap-4 border border-white/10 bg-[rgba(255,255,255,0.08)] backdrop-blur-sm p-5 rounded-2xl shadow-lg'>
+          <div className='mt-24 w-full flex flex-col md:grid md:grid-cols-3 justify-between items-center gap-4 border border-white/10 bg-[var(--colorAccent)]/5 backdrop-blur-sm p-5 rounded-2xl shadow-lg'>
             <span className='text-start md:text-3xl text-xl text-[var(--textPrimary)] font-bold uppercase'>{currentSerieDetails?.name}</span>
             <div className='flex flex-row items-center justify-center gap-3'>
             <span className='flex items-center justify-center m-0 gap-2 text-[var(--textSecondary)]'><span className='text-[var(--colorAccent)] font-semibold'>TMDB</span><svg className='w-4 h-4 fill-[var(--colorAccent)]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M341.5 45.1C337.4 37.1 329.1 32 320.1 32C311.1 32 302.8 37.1 298.7 45.1L225.1 189.3L65.2 214.7C56.3 216.1 48.9 222.4 46.1 231C43.3 239.6 45.6 249 51.9 255.4L166.3 369.9L141.1 529.8C139.7 538.7 143.4 547.7 150.7 553C158 558.3 167.6 559.1 175.7 555L320.1 481.6L464.4 555C472.4 559.1 482.1 558.3 489.4 553C496.7 547.7 500.4 538.8 499 529.8L473.7 369.9L588.1 255.4C594.5 249 596.7 239.6 593.9 231C591.1 222.4 583.8 216.1 574.8 214.7L415 189.3L341.5 45.1z"/></svg><span className='text-[var(--textPrimary)] font-semibold'>{currentSerieDetails?.vote_average}</span></span>
@@ -115,7 +115,9 @@ export const SeriesDetails = () => {
               </div>
           </div>
             <div className='max-w-full w-full h-full min-h-[400px] max-h-full flex flex-col md:grid md:grid-cols-2 overflow-hidden mt-2 items-center justify-center gap-6 relative rounded-2xl shadow-2xl bg-[rgba(0,0,0,0.2)]'>
-                    <img className="w-full h-full object-cover object-center" src={`https://image.tmdb.org/t/p/original/${currentSerieDetails?.backdrop_path}`} alt={currentSerieDetails?.name} />
+                    {currentSerieDetails?.backdrop_path ? (
+                      <img className="w-full h-full object-cover object-center" src={`https://image.tmdb.org/t/p/original/${currentSerieDetails?.backdrop_path}`} alt={currentSerieDetails?.name} />
+                    ) : <div className="w-full h-full flex items-center justify-center bg-gray-700 rounded animate-pulse"><span>{currentSerieDetails?.name} : IMAGE IS NOT LOAD</span></div>}
               <ShowTrailerSerie serieId={id} />
               
               <span className={`hidden md:flex absolute text-sm bottom-1 p-[0.28rem] left-1 ${currentSerieDetails?.in_production ? 'bg-[rgba(14,211,149,0.15)] text-[var(--colorAccent)]' : 'hidden'} font-semibold rounded-md`}>{currentSerieDetails?.in_production ? "In Production" : ""}</span>
@@ -186,8 +188,12 @@ export const SeriesDetails = () => {
                 )
                     :
                     <>
-                              <Skeleton w={150} h={200} error={true} />
+                    <div className='flex w-full gap-8'>
                     <Skeleton w={150} h={200} error={true} />
+                    </div>
+                                    <div className='flex w-full gap-8'>
+                    <Skeleton w={150} h={200} error={true} />
+                                    </div>
                     </>
                   }
                 </div>

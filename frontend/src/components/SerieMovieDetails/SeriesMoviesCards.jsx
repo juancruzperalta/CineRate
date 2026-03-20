@@ -56,7 +56,7 @@ export const SeriesMoviesCards = ({seriesOrMovie}) => {
               </h2>
 
               <img
-                src={`https://image.tmdb.org/t/p/w500${serie.backdrop_path}`}
+                src={`${serie.backdrop_path ? `https://image.tmdb.org/t/p/w500${serie.backdrop_path}` : 'bg-gray-800'}`}
                 alt={serie.name}
                 className='w-full h-full object-cover rounded-md shadow-md cursor-pointer overflow-hidden'
               />
