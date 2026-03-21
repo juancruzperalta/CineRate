@@ -2,10 +2,15 @@ package com.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class TMDBSerieService {
@@ -122,4 +127,25 @@ public class TMDBSerieService {
       }
       throw new UnsupportedOperationException("Unimplemented method 'getSimilarSerie'");
     }
+
+    public static List<Integer> getPopularSeriesIds() {
+    java.util.List<Integer> serieIds = new LinkedList<>();
+    ResponseEntity<String> response = new TMDBSerieService().getPopularSeries();
+    if (response != null && response.getStatusCode().is2xxSuccessful()) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(response.getBody());
+
+                JsonNode results = root.get("results");
+
+                for (JsonNode serie : results) {
+                    serieIds.add(serie.get("id").asInt());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+          }
+    return serieIds;
+  }
 }

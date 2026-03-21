@@ -1,8 +1,16 @@
 package com.service;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @Service
 public class TMDBMovieService {
@@ -48,5 +56,24 @@ public class TMDBMovieService {
       }
       throw new UnsupportedOperationException("Unimplemented method 'getPremiereMovie");
   }
-  
+  public static List<Integer> getPopularMovieIds() {
+    java.util.List<Integer> movieIds = new LinkedList<>();
+    ResponseEntity<String> response = new TMDBMovieService().getPopularsMovies();
+    if (response != null && response.getStatusCode().is2xxSuccessful()) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(response.getBody());
+
+                JsonNode results = root.get("results");
+
+                for (JsonNode movie : results) {
+                    movieIds.add(movie.get("id").asInt());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+          }
+    return movieIds;
+  }
 }
