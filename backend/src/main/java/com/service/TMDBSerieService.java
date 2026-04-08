@@ -128,9 +128,9 @@ public class TMDBSerieService {
       throw new UnsupportedOperationException("Unimplemented method 'getSimilarSerie'");
     }
 
-    public static List<Integer> getPopularSeriesIds() {
+    public List<Integer> getPopularSeriesIds() {
     java.util.List<Integer> serieIds = new LinkedList<>();
-    ResponseEntity<String> response = new TMDBSerieService().getPopularSeries();
+    ResponseEntity<String> response = this.getPopularSeries();
     if (response != null && response.getStatusCode().is2xxSuccessful()) {
             try {
                 ObjectMapper mapper = new ObjectMapper();

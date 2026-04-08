@@ -56,9 +56,9 @@ public class TMDBMovieService {
       }
       throw new UnsupportedOperationException("Unimplemented method 'getPremiereMovie");
   }
-  public static List<Integer> getPopularMovieIds() {
+  public List<Integer> getPopularMovieIds() {
     java.util.List<Integer> movieIds = new LinkedList<>();
-    ResponseEntity<String> response = new TMDBMovieService().getPopularsMovies();
+    ResponseEntity<String> response = this.getPopularsMovies();
     if (response != null && response.getStatusCode().is2xxSuccessful()) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
