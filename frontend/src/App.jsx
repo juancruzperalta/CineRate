@@ -16,6 +16,8 @@ import { ForgotPassword } from "./pages/auth/ForgotPassword"
 import { ResetForgotPassword } from "./pages/auth/ResetForgotPassword"
 import { AccountLogged } from "./pages/auth/AccountLogged"
 import { RegisterPassword } from "./pages/auth/RegisterPassword"
+import { PrivacyPolicy } from "./pages/policies/PrivacyPolicy"
+import { PrivacyCookies } from "./pages/policies/PrivacyCookies"
 function App() {
   const location = useLocation();
   return (
@@ -40,6 +42,8 @@ function App() {
             <Route path="/user/changepassword" element={<ChangePassword />} />
             <Route path="/user/forgot-password" element={<ForgotPassword />} />
             <Route path="/user/reset-forgot-password" element={<ResetForgotPassword />} />
+          <Route path="/policies/privacy" element={<PrivacyPolicy />} />
+            <Route path="/policies/cookies" element={<PrivacyCookies />} />
 
         </Routes>
         <Footer className="mt-auto" />

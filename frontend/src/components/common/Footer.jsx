@@ -56,8 +56,8 @@ export const Footer = ({ className = "" }) => {
                     <path d="M12 .8a11.2 11.2 0 0 0-3.5 21.8c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.5-1.8-1.5-1.8-1.2-.8.1-.8.1-.8 1.3.1 2 .9 2 .9 1.2 2 3.2 1.4 4 .9.1-.9.5-1.4.8-1.7-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C16.7 4.7 17.8 5 17.8 5c.6 1.7.2 3 .1 3.3.8.8 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.5.4.9 1.2.9 2.3V22c0 .3.2.7.8.6A11.2 11.2 0 0 0 12 .8Z" />
                   </svg>
                 </SocialLink>
-                <FooterNavLink to="/privacity">Politicas de Privacidad</FooterNavLink>
-                <FooterNavLink to="/cookies">Politicas de Cookies</FooterNavLink>
+                <FooterNavLink to="/policies/privacy">Politicas de Privacidad</FooterNavLink>
+                <FooterNavLink to="/policies/cookies">Politicas de Cookies</FooterNavLink>
               </div>
             </div>
 
