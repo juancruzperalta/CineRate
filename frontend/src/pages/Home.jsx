@@ -56,7 +56,7 @@ export const Home = () => {
                   </div>
     </div>
         </div>
-            <div className="flex flex-col gap-2 text-gray-400 text-sm">
+            <div className="flex flex-col gap-2 text-gray-400 text-sm absolute top-[30%] left-0 right-0">
   <span className="font-semibold text-gray-200">
     ⏳ Starting server...
   </span>
