@@ -35,8 +35,7 @@ export const Home = () => {
     return (
     <>
 <div className="relative flex items-center justify-center w-full h-[100vh] overflow-hidden p-0 m-0   mb-6 bg-[#090c0f] overflow-y-hidden">
-        <div className="text-left text-[0.9rem]  z-20 text-gray-200  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col px-10  h-full justify-end bottom-3  mx-auto pb-3  inset-0 ">
-          
+        <div className="text-left text-[0.9rem]  z-20 text-gray-200  absolute  left-0 top-auto   mt-auto mb-auto gap-2 flex flex-col px-10  h-full justify-end bottom-3  mx-auto pb-3  inset-0 ">          
         <div className="flex flex-col gap-3 text-gray-300 ">
         
       <div className="h-6 w-32 bg-gray-700 rounded animate-pulse"><span className='opacity-40 font-semibold'>Loading...</span></div>
@@ -57,6 +56,14 @@ export const Home = () => {
                   </div>
     </div>
         </div>
+            <div className="flex flex-col gap-2 text-gray-400 text-sm">
+  <span className="font-semibold text-gray-200">
+    ⏳ Starting server...
+  </span>
+  <span className="opacity-80">
+     The first load may take a few seconds (free hosting)
+  </span>
+</div>
       </div>
     </>
   );
